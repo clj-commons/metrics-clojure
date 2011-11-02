@@ -92,12 +92,12 @@ Create your histogram:
     (use '[metrics.histograms :only (histogram)])
 
     (def search-results-returned
-      (meter "search-results-returned"))
+      (histogram "search-results-returned"))
 
 You can create a biased histogram by passing an extra boolean argument:
 
     (def search-results-returned-biased
-      (meter "search-results-returned-biased" true))
+      (histogram "search-results-returned-biased" true))
 
 Update the histogram when you have a new value to record:
 
@@ -197,7 +197,7 @@ to handle things:
     (def thing-given-to-user (agent (counter "thing-given-to-user")))
 
     (dosync
-       (send inc! thing-given-to-user)
+       (send thing-given-to-user inc!)
        (make-thing ...))
 
 This works because the recording functions for counters, meters and histograms
