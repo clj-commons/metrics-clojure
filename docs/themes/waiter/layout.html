@@ -1,0 +1,74 @@
+{% extends "basic/layout.html" %}
+
+{% block htmltitle %}
+    {{ super() }}
+
+    {% if using_theme %}
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    {% endif %}
+{% endblock %}
+
+{% block sidebarlogo %}
+    {{ super() }}
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+
+    <style type="text/css">
+      .badge {
+        position: fixed;
+        display: block;
+        bottom: 5px;
+        height: 40px;
+        text-indent: -9999em;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+        -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+      }
+      #version_menu {
+        position: fixed;
+        display: none;
+        bottom: 11px;
+        right: 166px;
+        list-style-type: none;
+        margin: 0;
+      }
+      .footer_popout:hover #version_menu {
+        display: block;
+      }
+      #version_menu li {
+        display: block;
+        float: right;
+      }
+      #version_menu li a {
+        display: block;
+        padding: 6px 10px 4px 10px;
+        margin: 7px 7px 0 0;
+        font-weight: bold;
+        font-size: 14px;
+        height: 20px;
+        line-height: 17px;
+        text-decoration: none;
+        color: #fff;
+        background: #8ca1af url(../images/gradient-light.png) bottom left repeat-x;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        box-shadow: 0 1px 1px #465158;
+        -moz-box-shadow: 0 1px 1px #465158;
+        -webkit-box-shadow: 0 1px 1px #465158;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+      }
+      #version_menu li a:hover {
+        text-decoration: none;
+        background-color: #697983;
+        box-shadow: 0 1px 0px #465158;
+        -moz-box-shadow: 0 1px 0px #465158;
+        -webkit-box-shadow: 0 1px 0px #465158;
+      }
+    </style>
+{% endblock %}
