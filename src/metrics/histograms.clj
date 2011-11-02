@@ -20,7 +20,7 @@
 
 (defn percentiles
   ([^HistogramMetric h]
-   (percentiles h [0.75 0.90 0.95 1.0]))
+   (percentiles h [0.75 0.95 0.99 0.999 1.0]))
   ([^HistogramMetric h ps]
    (zipmap ps
            (.percentiles h (double-array ps)))))
