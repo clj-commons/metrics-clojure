@@ -6,7 +6,7 @@
 
 ; Create ----------------------------------------------------------------------
 (defn histogram
-  ([title] (histogram title false))
+  ([title] (histogram title true))
   ([title biased]
    (Metrics/newHistogram (metric-name title) biased)))
 
