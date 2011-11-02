@@ -30,6 +30,7 @@
 (defn rate-mean [^TimerMetric m]
   (.meanRate m))
 
+
 (defn mean [^TimerMetric t]
   (.mean t))
 
@@ -42,6 +43,7 @@
   ([^TimerMetric t ps]
    (zipmap ps
            (.percentiles t (double-array ps)))))
+
 
 (defn number-recorded [^TimerMetric t]
   (.count t))
