@@ -40,11 +40,9 @@
 
 
 ; Write -----------------------------------------------------------------------
-(defn update!
-  ([^HistogramMetric h] (update! h 1))
-  ([^HistogramMetric h n]
-   (.update h (long n))
-   h))
+(defn update! [^HistogramMetric h n]
+  (.update h (long n))
+  h)
 
 (defn clear! [^HistogramMetric h]
   (.clear h)

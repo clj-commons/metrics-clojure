@@ -1,9 +1,9 @@
 metrics-clojure
 ===============
 
-`metrics-clojure <http://github.com/sjl/metrics-clojure>`_ is a thin Clojure
-façade around Coda Hale's wonderful `metrics
-<http://github.com/codahale/metrics/>`_ library.
+`metrics-clojure <http://metrics-clojure.rtfd.org/>`_ is a thin Clojure façade
+around Coda Hale's wonderful `metrics <http://github.com/codahale/metrics/>`_
+library.
 
 **metrics-clojure is currently being built.  A lot of things work, but don't
 complain if things change in backwards-incompatible ways.  Once it hits 1.0.0
@@ -36,3 +36,4 @@ Table of Contents
    names
    removing
    sideeffects
+   contributing

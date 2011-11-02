@@ -25,8 +25,22 @@ you have to pass it a function, not just a body::
       (gauge-fn "files-open"
              #(return-number-of-files-open ...)))
 
+Writing
+-------
+
+There is no writing.  Gauges execute the form(s) (or function) you passed when
+creating them every time they're read.  You don't need to do anything else.
+
 Reading
 -------
+
+There's only one way to get data from a gauge.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+``value``
+~~~~~~~~~
 
 You can read the value of a gauge at any time with ``value``::
 
