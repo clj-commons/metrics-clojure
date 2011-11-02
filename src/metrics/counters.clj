@@ -25,8 +25,9 @@
   ([^CounterMetric c] (dec! c 1))
   ([^CounterMetric c n]
    (.dec c n)
-   n))
+   c))
 
 (defn clear! [^CounterMetric c]
-  (.clear c))
+  (.clear c)
+  c)
 
