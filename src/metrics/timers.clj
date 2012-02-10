@@ -1,73 +1,72 @@
 (ns metrics.timers
-  (use [metrics.utils :only (metric-name)])
+  (use [metrics.utils :only (metric-name get-percentiles)])
   (import (com.yammer.metrics Metrics))
-  (import (com.yammer.metrics.core TimerMetric))
+  (import (com.yammer.metrics.core Timer MetricName))
   (import (java.util.concurrent TimeUnit)))
 
 
 ; Create ----------------------------------------------------------------------
 (defn timer [title]
-  (Metrics/newTimer (metric-name title)
+  (Metrics/newTimer ^MetricName (metric-name title)
                     TimeUnit/MILLISECONDS
                     TimeUnit/SECONDS))
 
 
 ; Read ------------------------------------------------------------------------
-(defn rates [^TimerMetric m]
+(defn rates [^Timer m]
   {1 (.oneMinuteRate m)
    5 (.fiveMinuteRate m)
    15 (.fifteenMinuteRate m)})
 
-(defn rate-one [^TimerMetric m]
+(defn rate-one [^Timer m]
   (.oneMinuteRate m))
 
-(defn rate-five [^TimerMetric m]
+(defn rate-five [^Timer m]
   (.fiveMinuteRate m))
 
-(defn rate-fifteen [^TimerMetric m]
+(defn rate-fifteen [^Timer m]
   (.fifteenMinuteRate m))
 
-(defn rate-mean [^TimerMetric m]
+(defn rate-mean [^Timer m]
   (.meanRate m))
 
 
-(defn mean [^TimerMetric t]
+(defn mean [^Timer t]
   (.mean t))
 
-(defn std-dev [^TimerMetric t]
+(defn std-dev [^Timer t]
   (.stdDev t))
 
 (defn percentiles
-  ([^TimerMetric t]
-   (percentiles t [0.75 0.90 0.95 1.0]))
-  ([^TimerMetric t ps]
-   (zipmap ps
-           (.percentiles t (double-array ps)))))
+  ([^Timer t]
+   (percentiles t [0.75 0.95 0.99 0.999 1.0]))
+  ([^Timer t ps]
+   (get-percentiles t ps)))
 
 
-(defn number-recorded [^TimerMetric t]
+(defn number-recorded [^Timer t]
   (.count t))
 
-(defn largest [^TimerMetric t]
+(defn largest [^Timer t]
   (.max t))
 
-(defn smallest [^TimerMetric t]
+(defn smallest [^Timer t]
   (.min t))
 
-(defn sample [^TimerMetric t]
-  (.values t))
+(defn sample [^Timer t]
+  (.getValues (.getSnapshot t)))
 
 
 ; Write -----------------------------------------------------------------------
-(defmacro time! [t & body]
-  `(.time ~t
+(defmacro time! [^Timer t & body]
+  `(.time ~(vary-meta t assoc :tag `Timer)
          (proxy [Callable] []
            (call [] (do ~@body)))))
 
-(defn time-fn! [t f]
+(defn time-fn! [^Timer t f]
   (.time t
          (proxy [Callable] []
            (call [] (f)))))
 
-(defn clear! [^TimerMetric t]
+(defn clear! [^Timer t]
   (.clear t))

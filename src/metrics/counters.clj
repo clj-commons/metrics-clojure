@@ -1,7 +1,7 @@
 (ns metrics.counters
-  (use [metrics.utils :only (metric-name)])
-  (import (com.yammer.metrics Metrics))
-  (import (com.yammer.metrics.core CounterMetric)))
+  (:use [metrics.utils :only (metric-name)])
+  (:import (com.yammer.metrics Metrics))
+  (:import (com.yammer.metrics.core Counter)))
 
 
 ; Create ----------------------------------------------------------------------
@@ -10,24 +10,24 @@
 
 
 ; Read ------------------------------------------------------------------------
-(defn value [^CounterMetric c]
+(defn value [^Counter c]
   (.count c))
 
 
 ; Write -----------------------------------------------------------------------
 (defn inc!
-  ([^CounterMetric c] (inc! c 1))
-  ([^CounterMetric c n]
+  ([^Counter c] (inc! c 1))
+  ([^Counter c n]
    (.inc c n)
    c))
 
 (defn dec!
-  ([^CounterMetric c] (dec! c 1))
-  ([^CounterMetric c n]
+  ([^Counter c] (dec! c 1))
+  ([^Counter c n]
    (.dec c n)
    c))
 
-(defn clear! [^CounterMetric c]
+(defn clear! [^Counter c]
   (.clear c)
   c)
 

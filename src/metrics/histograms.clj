@@ -1,50 +1,51 @@
 (ns metrics.histograms
-  (use [metrics.utils :only (metric-name)])
+  (use [metrics.utils :only (metric-name get-percentiles)])
   (import (com.yammer.metrics Metrics))
-  (import (com.yammer.metrics.core HistogramMetric)))
+  (import (com.yammer.metrics.core Histogram MetricName)))
 
 
 ; Create ----------------------------------------------------------------------
 (defn histogram
   ([title] (histogram title true))
   ([title biased]
-   (Metrics/newHistogram (metric-name title) biased)))
+   (Metrics/newHistogram
+     ^MetricName (metric-name title)
+     (boolean biased))))
 
 
 ; Read ------------------------------------------------------------------------
-(defn mean [^HistogramMetric h]
+(defn mean [^Histogram h]
   (.mean h))
 
-(defn std-dev [^HistogramMetric h]
+(defn std-dev [^Histogram h]
   (.stdDev h))
 
 (defn percentiles
-  ([^HistogramMetric h]
+  ([^Histogram h]
    (percentiles h [0.75 0.95 0.99 0.999 1.0]))
-  ([^HistogramMetric h ps]
-   (zipmap ps
-           (.percentiles h (double-array ps)))))
+  ([^Histogram h ps]
+   (get-percentiles h ps)))
 
 
-(defn number-recorded [^HistogramMetric h]
+(defn number-recorded [^Histogram h]
   (.count h))
 
-(defn largest [^HistogramMetric h]
+(defn largest [^Histogram h]
   (.max h))
 
-(defn smallest [^HistogramMetric h]
+(defn smallest [^Histogram h]
   (.min h))
 
-(defn sample [^HistogramMetric h]
-  (.values h))
+(defn sample [^Histogram h]
+  (.getValues (.getSnapshot h)))
 
 
 ; Write -----------------------------------------------------------------------
-(defn update! [^HistogramMetric h n]
+(defn update! [^Histogram h n]
   (.update h (long n))
   h)
 
-(defn clear! [^HistogramMetric h]
+(defn clear! [^Histogram h]
   (.clear h)
   h)
 
