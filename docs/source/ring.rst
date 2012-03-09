@@ -59,3 +59,11 @@ Each metric object will have a ``type`` attribute.  The rest of the attributes
 will depend on the type of metric.
 
 **TODO**: Document each individual type.
+
+Troubleshooting
+---------------
+
+If you're using these extras alongside Noir you'll need to be running the latest
+version of Noir to avoid dependency issues.
+
+If you're getting errors about overriding stuff in Jackson this is the problem.
