@@ -1,8 +1,8 @@
 (ns metrics.meters
-  (use [metrics.utils :only (metric-name)])
-  (import (com.yammer.metrics Metrics))
-  (import (com.yammer.metrics.core Meter))
-  (import (java.util.concurrent TimeUnit)))
+  (:use [metrics.utils :only (metric-name)])
+  (:import (com.yammer.metrics Metrics))
+  (:import (com.yammer.metrics.core Meter))
+  (:import (java.util.concurrent TimeUnit)))
 
 
 ; Create ----------------------------------------------------------------------
@@ -38,3 +38,4 @@
   ([^Meter m n]
    (.mark m (long n))
    m))
+

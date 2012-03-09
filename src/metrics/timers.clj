@@ -1,8 +1,8 @@
 (ns metrics.timers
-  (use [metrics.utils :only (metric-name get-percentiles)])
-  (import (com.yammer.metrics Metrics))
-  (import (com.yammer.metrics.core Timer MetricName))
-  (import (java.util.concurrent TimeUnit)))
+  (:use [metrics.utils :only (metric-name get-percentiles)])
+  (:import (com.yammer.metrics Metrics))
+  (:import (com.yammer.metrics.core Timer MetricName))
+  (:import (java.util.concurrent TimeUnit)))
 
 
 ; Create ----------------------------------------------------------------------
@@ -70,3 +70,4 @@
 
 (defn clear! [^Timer t]
   (.clear t))
+

@@ -13,8 +13,8 @@ Create your meter::
 
     (def files-served (meter "files-served" "files"))
 
-The second argument to `meter` is a string describing the "units" for the meter.
-In this example it's "files", as in "18732 files".
+The second argument to ``meter`` is a string describing the "units" for the
+meter.  In this example it's "files", as in "18732 files".
 
 Writing
 -------

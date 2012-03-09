@@ -16,8 +16,8 @@ Create your gauge::
 
 That's it.  Pretty simple.
 
-`gauge` is a macro.  If you need a function instead you can use `gauge-fn`, but
-you have to pass it a function, not just a body::
+``gauge`` is a macro.  If you need a function instead you can use ``gauge-fn``,
+but you have to pass it a function, not just a body::
 
     (use '[metrics.gauges :only (gauge-fn)])
 
@@ -35,9 +35,6 @@ Reading
 -------
 
 There's only one way to get data from a gauge.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 ``value``
 ~~~~~~~~~

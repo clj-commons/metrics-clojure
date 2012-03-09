@@ -36,4 +36,5 @@ Table of Contents
    names
    removing
    sideeffects
+   ring
    contributing

@@ -10,7 +10,7 @@ do something, and you do it twice, then it makes sense to record it each time.
 If you're recording how many responses get sent to a user, then you probably
 don't want to overcount them.
 
-`metrics-clojure` doesn't try to decide for you.  It leaves it up to you to
+``metrics-clojure`` doesn't try to decide for you.  It leaves it up to you to
 handle the issue.
 
 If you don't want to record something multiple times, an agent may be a good way
