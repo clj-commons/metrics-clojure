@@ -20,10 +20,9 @@
 (defmacro defcounter
   "Define a new Counter metric with a given title, or group, type and title."
   ([title]
-     `(def ~title (counter ~(str title))))
-
+   `(def ~title (counter ~(str title))))
   ([group type title]
-     `(def ~title (counter ~(vec (map str [group type title]))))))
+   `(def ~title (counter ~(vec (map str [group type title]))))))
 
 
 ; Read ------------------------------------------------------------------------
