@@ -11,6 +11,9 @@
                     TimeUnit/MILLISECONDS
                     TimeUnit/SECONDS))
 
+(defmacro deftimer [title]
+  `(def ~title (timer ~(str title))))
+
 
 ; Read ------------------------------------------------------------------------
 (defn rates [^Timer m]
