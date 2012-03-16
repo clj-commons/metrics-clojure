@@ -27,8 +27,8 @@
 (defmacro defgauge
   "Define a new Gauge metric with the given title.
 
-   The rest of the arguments may be a body form or function to call to
-   retrieve the value of the Gauge."
+  The rest of the arguments may be a body form or function to call to
+  retrieve the value of the Gauge."
   [title & body]
   (cond (and (= 1 (count body)) (and (symbol? (first body))
                                      (fn? (eval (first body)))))

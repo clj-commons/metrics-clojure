@@ -11,7 +11,9 @@
                     event-type
                     TimeUnit/SECONDS))
 
-(defmacro defmeter [title event-type]
+(defmacro defmeter
+  "Define a new Meter metric with a given title and event type."
+  [title event-type]
   `(def ~title (meter ~(str title) ~event-type)))
 
 

@@ -8,7 +8,8 @@
 (defn counter
   "Create and return a new Counter metric with the given title.
 
-  Title can be a plain string like \"foo\" or a vector of three strings like:
+  Title can be a plain string like \"foo\" or a vector of three strings (group,
+  type, and title) like:
 
       [\"myapp\" \"webserver\" \"connections\"]
 
