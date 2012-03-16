@@ -17,8 +17,9 @@
      ^MetricName (metric-name title)
      (boolean biased))))
 
-(defmacro defhistogram [title & args]
+(defmacro defhistogram
   "Define a Histogram metric with the given title."
+  [title & args]
   `(def ~title
      (histogram ~@(cons (str title) args))))
 
