@@ -11,6 +11,9 @@
                     event-type
                     TimeUnit/SECONDS))
 
+(defmacro defmeter [title event-type]
+  `(def ~title (meter ~(str title) ~event-type)))
+
 
 ; Read ------------------------------------------------------------------------
 (defn rates [^Meter m]
