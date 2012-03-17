@@ -19,7 +19,19 @@
 
 
 (defmacro defcounter
-  "Define a new Counter metric with the given title."
+  "Define a new Counter metric with the given title.
+
+  The title uses some basic desugaring to let you concisely define metrics:
+
+    ; Define a counter titled \"default.default.foo\" into var foo
+    (defcounter foo)
+    (defcounter \"foo\")
+
+    ; Define a counter titled \"a.b.c\" into var c
+    (defcounter [a b c])
+    (defcounter [\"a\" \"b\" \"c\"])
+    (defcounter [a \"b\" c])
+  "
   [title]
   (let [[s title] (desugared-title title)]
     `(def ~s (counter ~title))))

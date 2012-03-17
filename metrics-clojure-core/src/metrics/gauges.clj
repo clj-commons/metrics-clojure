@@ -29,7 +29,19 @@
   "Define a new Gauge metric with the given title.
 
   The rest of the arguments may be a body form or function to call to
-  retrieve the value of the Gauge."
+  retrieve the value of the Gauge.
+
+  The title uses some basic desugaring to let you concisely define metrics:
+
+    ; Define a gauge titled \"default.default.foo\" into var foo
+    (defgauge foo ,,,)
+    (defgauge \"foo\" ,,,)
+
+    ; Define a gauge titled \"a.b.c\" into var c
+    (defgauge [a b c] ,,,)
+    (defgauge [\"a\" \"b\" \"c\"] ,,,)
+    (defgauge [a \"b\" c] ,,,)
+  "
   [title & [b & bs :as body]]
   (let [[s title] (desugared-title title)]
     (if (and (empty? bs)

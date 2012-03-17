@@ -13,7 +13,19 @@
 
 
 (defmacro defmeter
-  "Define a new Meter metric with a given title and event type."
+  "Define a new Meter metric with a given title and event type.
+
+  The title uses some basic desugaring to let you concisely define metrics:
+
+    ; Define a meter titled \"default.default.foo\" into var foo
+    (defmeter foo ,,,)
+    (defmeter \"foo\" ,,,)
+
+    ; Define a meter titled \"a.b.c\" into var c
+    (defmeter [a b c] ,,,)
+    (defmeter [\"a\" \"b\" \"c\"] ,,,)
+    (defmeter [a \"b\" c] ,,,)
+  "
   [title event-type]
   (let [[s title] (desugared-title title)]
     `(def ~s (meter ~title ~event-type))))

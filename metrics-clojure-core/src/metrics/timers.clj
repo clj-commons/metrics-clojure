@@ -13,7 +13,19 @@
 
 
 (defmacro deftimer
-  "Define a new Timer metric with the given title."
+  "Define a new Timer metric with the given title.
+
+  The title uses some basic desugaring to let you concisely define metrics:
+
+    ; Define a timer titled \"default.default.foo\" into var foo
+    (deftimer foo)
+    (deftimer \"foo\")
+
+    ; Define a timer titled \"a.b.c\" into var c
+    (deftimer [a b c])
+    (deftimer [\"a\" \"b\" \"c\"])
+    (deftimer [a \"b\" c])
+  "
   [title]
   (let [[s title] (desugared-title title)]
     `(def ~s (timer ~title))))

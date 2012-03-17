@@ -19,7 +19,19 @@
 
 
 (defmacro defhistogram
-  "Define a Histogram metric with the given title."
+  "Define a Histogram metric with the given title.
+  
+  The title uses some basic desugaring to let you concisely define metrics:
+
+    ; Define a histogram titled \"default.default.foo\" into var foo
+    (defhistogram foo)
+    (defhistogram \"foo\")
+
+    ; Define a histogram titled \"a.b.c\" into var c
+    (defhistogram [a b c])
+    (defhistogram [\"a\" \"b\" \"c\"])
+    (defhistogram [a \"b\" c])
+  "
   [title & args]
   (let [[s title] (desugared-title title)]
     `(def ~s (histogram ~title ~@args))))
