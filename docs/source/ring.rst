@@ -1,7 +1,7 @@
 Extras for Ring
 ===============
 
-``metrics-clojure`` contains some extra glue code you can use with your `Ring
+metrics-clojure contains some extra glue code you can use with your `Ring
 <https://github.com/mmcgrana/ring>`_ apps.
 
 Installation
@@ -14,8 +14,8 @@ To install it, add this to your ``project.clj``'s dependencies::
 
     [metrics-clojure-ring "0.7.1"]
 
-**Note:** the versions of ``metrics-clojure`` and ``metrics-clojure-ring``
-should always be the same.
+**Note:** the versions of metrics-clojure and metrics-clojure-ring should always
+be the same.
 
 
 Exposing Metrics as JSON

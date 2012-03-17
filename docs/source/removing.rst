@@ -7,7 +7,8 @@ You can remove metrics as long as you know their names::
 
     (remove-metric "files-served")
 
-You can use the sequence form of metric names here too, of course::
+You can use the sequence form of :ref:`metric names <metric-names>` here too, of
+course::
 
     (remove-metric ["webservice" "views" "response-time"])
 

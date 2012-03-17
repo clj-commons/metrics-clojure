@@ -1,12 +1,17 @@
+.. _metric-names:
+
 Metric Names
 ============
 
-In all these examples we've used a string to name the metric.  The ``metrics``
-library actually names metrics with three-part names.  In Java and Scala those
-names are usually the package and class where the timer is being used.
+In all the examples we've used a string to name the metric.  The ``metrics``
+library actually names metrics with three-part names, sometimes called "group",
+"type", and "metric name".
+
+In Java and Scala those names are usually set to the package and class where the
+metric is being used.
 
 In Clojure you usually won't have a meaningful class name to record, and the
-package name would be a pain to find, so ``metrics-clojure`` uses "default" and
+package name would be a pain to find, so metrics-clojure uses "default" and
 "default" for those parts.  This results in a name like
 "default.default.my-metric".
 

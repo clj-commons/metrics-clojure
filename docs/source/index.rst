@@ -9,8 +9,8 @@ library.
 complain if things change in backwards-incompatible ways.  Once it hits 1.0.0
 it'll be stable, but until then use it at your own risk.**
 
-``metrics-clojure`` is a thin wrapper around metrics, so if you don't know what
-any of the words in this documentaion mean you should probably read the `metrics
+metrics-clojure is a thin wrapper around metrics, so if you don't know what any
+of the words in this documentaion mean you should probably read the `metrics
 documentation <https://github.com/codahale/metrics/tree/development/docs>`_
 and/or watch the `talk
 <http://pivotallabs.com/talks/139-metrics-metrics-everywhere>`_.
@@ -24,14 +24,14 @@ Table of Contents
 -----------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    installation
-   counters
-   gauges
-   meters
-   histograms
-   timers
+   metrics/counters
+   metrics/gauges
+   metrics/meters
+   metrics/histograms
+   metrics/timers
    reporting
    names
    removing

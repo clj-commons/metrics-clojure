@@ -9,7 +9,8 @@ All of the ``def[metric]`` macros (:ref:`defcounter <defcounter>`,
 argument.
 
 All of the macros will use this title as a symbol when binding it to a var, and
-will convert it to a string to use as the name of the metric.
+will convert it to a string to use as the :ref:`name <metric-names>` of the
+metric.
 
 For example, this::
 
