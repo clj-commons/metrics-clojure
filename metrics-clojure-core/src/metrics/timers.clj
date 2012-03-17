@@ -11,6 +11,7 @@
                     TimeUnit/MILLISECONDS
                     TimeUnit/SECONDS))
 
+
 (defmacro deftimer
   "Define a new Timer metric with the given title."
   [title]

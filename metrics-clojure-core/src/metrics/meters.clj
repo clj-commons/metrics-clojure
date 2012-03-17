@@ -11,6 +11,7 @@
                     event-type
                     TimeUnit/SECONDS))
 
+
 (defmacro defmeter
   "Define a new Meter metric with a given title and event type."
   [title event-type]
