@@ -17,6 +17,7 @@
   [title]
   (Metrics/newCounter (metric-name title)))
 
+
 (defmacro defcounter
   "Define a new Counter metric with a given title, or group, type and title."
   ([title]
