@@ -22,7 +22,7 @@
          ^String (last title))))
 
 (defn all-metrics []
-  (letfn [(parse-name [metric-name]
+  (letfn [(parse-name [^MetricName metric-name]
             (str (.getGroup metric-name)
                  "." (.getType metric-name)
                  "." (.getName metric-name)))
