@@ -20,7 +20,7 @@
 
 (defmacro defhistogram
   "Define a Histogram metric with the given title.
-  
+
   The title uses some basic desugaring to let you concisely define metrics:
 
     ; Define a histogram titled \"default.default.foo\" into var foo

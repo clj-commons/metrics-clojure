@@ -16,6 +16,18 @@ Create your meter::
 The second argument to ``meter`` is a string describing the "units" for the
 meter.  In this example it's "files", as in "18732 files".
 
+.. _defmeter:
+
+You can also use the ``defmeter`` macro to create a meter and bind it to a var
+in one concise, easy step::
+
+    (use '[metrics.meters :only (defmeter)])
+
+    (defmeter files-served "files")
+
+All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
+title to make it easier to define.
+
 Writing
 -------
 

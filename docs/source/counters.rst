@@ -12,6 +12,18 @@ Create your counter::
 
     (def users-connected (counter "users-connected"))
 
+.. _defcounter:
+
+You can also use the ``defcounter`` macro to create a counter and bind it to a var
+in one concise, easy step::
+
+    (use '[metrics.counters :only (defcounter)])
+
+    (defcounter users-connected)
+
+All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
+title to make it easier to define.
+
 Writing
 -------
 

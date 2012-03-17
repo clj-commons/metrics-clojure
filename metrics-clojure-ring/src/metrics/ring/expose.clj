@@ -10,6 +10,7 @@
   (:use [cheshire.core :only [generate-string]]))
 
 
+; Define rendering protocol ---------------------------------------------------
 (defprotocol RenderableMetric
   (render-to-basic [metric] "Turn a metric into a basic Clojure datastructure."))
 
@@ -52,6 +53,8 @@
     {:type :counter
      :value (counters/value c)}))
 
+
+; Utils -----------------------------------------------------------------------
 (defn- ensure-leading-slash [s]
   (if (not= \/ (first s))
     (str \/ s)
@@ -71,6 +74,8 @@
 (defn- render-metric [[metric-name metric]]
   [metric-name (render-to-basic metric)])
 
+
+; Exposing --------------------------------------------------------------------
 (defn- metrics-json [request]
   (let [metrics-map (into {} (map render-metric (all-metrics)))
         json (generate-string metrics-map)]

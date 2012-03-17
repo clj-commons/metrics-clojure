@@ -25,6 +25,22 @@ but you have to pass it a function, not just a body::
       (gauge-fn "files-open"
              #(return-number-of-files-open ...)))
 
+.. _defgauge:
+
+You can also use the ``defgauge`` macro to create a gauge and bind it to a var
+in one concise, easy step::
+
+    (use '[metrics.gauges :only (defgauge)])
+
+    (defgauge files-open
+      (return-number-of-files-open ...))
+
+``defgauge`` can take a body of statements like ``gauge`` or a function like
+``gauge-fn``.
+
+All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
+title to make it easier to define.
+
 Writing
 -------
 

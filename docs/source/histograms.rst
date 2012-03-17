@@ -13,10 +13,23 @@ Create your histogram::
     (def search-results-returned
       (histogram "search-results-returned"))
 
-You can create a biased histogram by passing an extra boolean argument::
+You can create an unbiased histogram by passing an extra boolean argument
+(though you probably don't want to)::
 
     (def search-results-returned-biased
-      (histogram "search-results-returned-biased" true))
+      (histogram "search-results-returned-unbiased" false))
+
+.. _defhistogram:
+
+You can also use the ``defhistogram`` macro to create a histogram and bind it to
+a var in one concise, easy step::
+
+    (use '[metrics.histograms :only (defhistogram)])
+
+    (defhistogram search-results-returned)
+
+All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
+title to make it easier to define.
 
 Writing
 -------

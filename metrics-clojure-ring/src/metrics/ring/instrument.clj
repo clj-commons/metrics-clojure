@@ -3,6 +3,7 @@
         [metrics.meters :only (meter mark!)]
         [metrics.timers :only (timer time!)]))
 
+
 (defn- mark-in! [metric-map k]
   (when-let [metric (metric-map k)]
     (mark! metric)))
@@ -10,7 +11,9 @@
 (defn instrument
   "Instrument a ring handler.
 
-  This middleware should be added as late as possible for maximum effect."
+  This middleware should be added as late as possible (nearest to the outside of
+  the \"chain\") for maximum effect.
+  "
   ([handler]
    (let [active-requests (counter ["ring" "requests" "active"])
          requests (meter ["ring" "requests" "rate"] "requests")

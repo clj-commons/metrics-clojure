@@ -12,6 +12,18 @@ Create your timer::
 
     (def image-processing-time (timer "image-processing-time"))
 
+.. _deftimer:
+
+You can also use the ``deftimer`` macro to create a timer and bind it to a var
+in one concise, easy step::
+
+    (use '[metrics.timers :only (deftimer)])
+
+    (deftimer image-processing-time)
+
+All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
+title to make it easier to define.
+
 Writing
 -------
 
