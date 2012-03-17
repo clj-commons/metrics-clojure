@@ -27,8 +27,8 @@ Table of Contents
    :maxdepth: 1
 
    installation
-   metrics/counters
    metrics/gauges
+   metrics/counters
    metrics/meters
    metrics/histograms
    metrics/timers

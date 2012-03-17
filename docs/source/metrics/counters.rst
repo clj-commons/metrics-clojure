@@ -1,7 +1,25 @@
 Counters
 ========
 
-Counters are values you can increment and decrement.
+Counters are integer values you can increment and decrement.
+
+They can be useful for tracking things that you don't have a particular list of,
+but you do control when they're added/removed/opened/closed.
+
+For example: it's not necessarily very easy to get a list of all the open HTTP
+connections for a web server, but it's often easy to wrap some "middleware" that
+increments the "open requests" counter when a request comes in and decrements it
+when the response goes out.
+
+They can also be useful for tracking simple "total" values like "total requests
+served in this app's entire lifetime".
+
+Examples of metrics you might want to track with a counter:
+
+* Number of http requests currently being processed.
+* Total number of requests/responses received/sent.
+
+**TODO:** More examples.
 
 Creating
 --------
@@ -12,7 +30,7 @@ Create your counter::
 
     (def users-connected (counter "users-connected"))
 
-.. _defcounter:
+.. _counters/defcounter:
 
 You can also use the ``defcounter`` macro to create a counter and bind it to a var
 in one concise, easy step::
@@ -27,12 +45,30 @@ title to make it easier to define.
 Writing
 -------
 
-Now increment and decrement it::
+Once you have a counter you can increment it and decrement it.
 
-    (use '[metrics.counters :only (inc! dec!)])
+.. _counters/inc!:
+
+``inc!``
+~~~~~~~~
+
+Increment counters with ``inc!``.  You can pass a number to increment it by, or
+omit it to increment by 1::
+
+    (use '[metrics.counters :only (inc!)])
 
     (inc! users-connected)
     (inc! users-connected 2)
+
+.. _counters/dec!:
+
+``dec!``
+~~~~~~~~
+
+Decrement counters with ``dec!``.  You can pass a number to decrement it by, or
+omit it to decrement by 1::
+
+    (use '[metrics.counters :only (dec!)])
 
     (dec! users-connected)
     (dec! users-connected 2)
@@ -41,6 +77,8 @@ Reading
 -------
 
 There's only one way to get data from a counter.
+
+.. _counters/value:
 
 ``value``
 ~~~~~~~~~

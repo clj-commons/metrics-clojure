@@ -3,10 +3,10 @@
 Title Desugaring by the ``def[metric]`` Macros
 ==============================================
 
-All of the ``def[metric]`` macros (:ref:`defcounter <defcounter>`,
-:ref:`defgauge <defgauge>`, :ref:`defhistogram <defhistogram>`, :ref:`defmeter
-<defmeter>`, and :ref:`deftimer <deftimer>`) take a title as their first
-argument.
+All of the ``def[metric]`` macros (:ref:`defcounter <counters/defcounter>`,
+:ref:`defgauge <gauges/defgauge>`, :ref:`defhistogram
+<histograms/defhistogram>`, :ref:`defmeter <meters/defmeter>`, and
+:ref:`deftimer <timers/deftimer>`) take a title as their first argument.
 
 All of the macros will use this title as a symbol when binding it to a var, and
 will convert it to a string to use as the :ref:`name <metric-names>` of the

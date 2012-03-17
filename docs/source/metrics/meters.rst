@@ -1,8 +1,27 @@
 Meters
 ======
 
-Meters are metrics that let you "mark" when something happens and tell you how
+Meters are metrics that let you "mark" when an event happens and tell you how
 often it occurs.
+
+Meters are used for events where the only thing you care about is "this event
+happened".
+
+If you need to record a value along with this you probably want a histogram.
+For example: "a user performed a search" could be tracked with a meter, but "a
+user performed a search *and got N results*" would need a histogram.
+
+Meters can tell you things like:
+
+    Over the past five minutes, an average of 6,500 searches were performed each
+    second.
+
+Examples of metrics you might want to track with a meter:
+
+* A user logged in.
+* A POST request was received.
+
+**TODO:** More examples.
 
 Creating
 --------
@@ -16,7 +35,7 @@ Create your meter::
 The second argument to ``meter`` is a string describing the "units" for the
 meter.  In this example it's "files", as in "18732 files".
 
-.. _defmeter:
+.. _meters/defmeter:
 
 You can also use the ``defmeter`` macro to create a meter and bind it to a var
 in one concise, easy step::
@@ -31,7 +50,14 @@ title to make it easier to define.
 Writing
 -------
 
-Mark the meter every time the event happens::
+Once you've got a meter you can mark occurrences of events.
+
+.. _meters/mark!:
+
+``mark!``
+~~~~~~~~~
+
+Mark the meter every time the event happens with ``mark!``::
 
     (use '[metrics.meters :only (mark!)])
 
@@ -42,6 +68,8 @@ Reading
 
 There are a few functions you can use to retrieve the rate at which the metered
 events occur.
+
+.. _meters/rates:
 
 ``rates``
 ~~~~~~~~~
@@ -60,6 +88,8 @@ In this example the event happened approximately 100 times per second during the
 last one minute period, 120 times per second in the last five minute period, and
 76 times per second in the last fifteen minute period.
 
+.. _meters/rate-one:
+
 ``rate-one``
 ~~~~~~~~~~~~
 
@@ -70,6 +100,8 @@ If you only care about the rate of events during the last minute you can use
 
     (rate-one files-served)
     => 100.0
+
+.. _meters/rate-five:
 
 ``rate-five``
 ~~~~~~~~~~~~~
@@ -82,6 +114,8 @@ use ``rate-five``::
     (rate-five files-served)
     => 120.0
 
+.. _meters/rate-fifteen:
+
 ``rate-fifteen``
 ~~~~~~~~~~~~~~~~
 
@@ -92,6 +126,8 @@ can use ``rate-fifteen``::
 
     (rate-fifteen files-served)
     => 76.0
+
+.. _meters/rate-mean:
 
 ``rate-mean``
 ~~~~~~~~~~~~~

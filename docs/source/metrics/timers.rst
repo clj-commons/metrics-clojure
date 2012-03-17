@@ -1,7 +1,16 @@
 Timers
 ======
 
-Timers record the time it takes to do stuff.
+Timers record the time it takes to do things.  They're a bit like histograms
+where the value being recorded is time.
+
+Timers should be a fairly intuitive concept.  They can tell you things like:
+
+    75% of all searches took 0.5 seconds or less.  95% of all searches took 1.0
+    seconds or less.
+
+Timers also track the rate of the timed events, so it's like they have a meter
+metric built-in for convenience.
 
 Creating
 --------
@@ -12,7 +21,7 @@ Create your timer::
 
     (def image-processing-time (timer "image-processing-time"))
 
-.. _deftimer:
+.. _timers/deftimer:
 
 You can also use the ``deftimer`` macro to create a timer and bind it to a var
 in one concise, easy step::
@@ -27,7 +36,14 @@ title to make it easier to define.
 Writing
 -------
 
-Now time something::
+Once you have a timer you can record times to it in two different ways.
+
+.. _timers/time!:
+
+``time!``
+~~~~~~~~~
+
+You can record the time it takes to evaluate one or more expressions with the ``time!`` macro::
 
     (use '[metrics.timers :only (time!)])
 
@@ -35,8 +51,14 @@ Now time something::
            (process-image-part-1 ...)
            (process-image-part-2 ...))
 
-``time!`` is a macro.  If you need a function instead, you can use ``time-fn!``,
-but you'll need to pass it a function instead of just a body::
+.. _timers/time-fn!:
+
+``time-fn!``
+~~~~~~~~~~~~
+
+``time!`` is a macro.  If you need a function instead (e.g.: for ``map``'ing
+over a list), you can use ``time-fn!``, but you'll need to pass it a function
+instead of a body::
 
     (use '[metrics.timers :only (time-fn!)])
 
@@ -47,6 +69,8 @@ but you'll need to pass it a function instead of just a body::
 
 Reading
 -------
+
+.. _timers/percentiles:
 
 ``percentiles``
 ~~~~~~~~~~~~~~~
@@ -79,6 +103,8 @@ If you want a different set of percentiles just pass them as a sequence::
     => { 0.50 182.11
          0.75 232.00 }
 
+.. _timers/number-recorded:
+
 ``number-recorded``
 ~~~~~~~~~~~~~~~~~~~
 
@@ -89,6 +115,8 @@ timers::
 
     (number-recorded image-processing-time)
     => 12882
+
+.. _timers/smallest:
 
 ``smallest``
 ~~~~~~~~~~~~
@@ -101,6 +129,8 @@ timer::
     (smallest image-processing-time)
     => 80.66
 
+.. _timers/largest:
+
 ``largest``
 ~~~~~~~~~~~
 
@@ -111,6 +141,8 @@ timer::
 
     (largest image-processing-time)
     => 903.1
+
+.. _timers/mean:
 
 ``mean``
 ~~~~~~~~
@@ -123,6 +155,8 @@ timer::
     (mean image-processing-time)
     => 433.12
 
+.. _timers/std-dev:
+
 ``std-dev``
 ~~~~~~~~~~~
 
@@ -133,6 +167,8 @@ lifetime of this timer::
 
     (std-dev image-processing-time)
     => 300.51
+
+.. _timers/sample:
 
 ``sample``
 ~~~~~~~~~~

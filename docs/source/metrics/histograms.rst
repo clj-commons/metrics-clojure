@@ -3,6 +3,35 @@ Histograms
 
 Histograms are used to record the distribution of a piece of data over time.
 
+They're used when you have a type of data for which the following are true:
+
+* There are distinct "events" for this type of data, such as "user performs
+  a search and we return N results".
+* Each event has a numeric value (the "N results" in our example).
+* Comparisons of these numeric values are meaningful.
+
+For example: HTTP status codes do *not* fit this because comparisons between the
+numeric values are not meaingful.  The fact that 404 happens to be less than 500
+doesn't tell you anything.
+
+Contrast this with something like "search results returned": one value being
+less than the other tells you something meaningful about the data.
+
+Histograms can tell you things like:
+
+    75% of all searches returned 100 or fewer results, while 95% got 200 or
+    fewer.
+
+If the numeric value you're recording is the amount of time taken to do
+something, you probably want a timer instead of a histogram.
+
+Examples of metrics you might want to track with a histogram:
+
+* Search results returned ("99% of searches returned 300 or fewer results").
+* Response body size ("75% of responses were 30kb or smaller").
+
+**TODO:** More examples.
+
 Creating
 --------
 
@@ -19,7 +48,7 @@ You can create an unbiased histogram by passing an extra boolean argument
     (def search-results-returned-biased
       (histogram "search-results-returned-unbiased" false))
 
-.. _defhistogram:
+.. _histograms/defhistogram:
 
 You can also use the ``defhistogram`` macro to create a histogram and bind it to
 a var in one concise, easy step::
@@ -34,7 +63,15 @@ title to make it easier to define.
 Writing
 -------
 
-Update the histogram when you have a new value to record::
+Once you've got a histogram you can update it with the numeric values of events
+as they occur.
+
+.. _histograms/update!:
+
+``update!``
+~~~~~~~~~~~
+
+Update the histogram when you have a new value to record with ``update!``::
 
     (use '[metrics.histograms :only (update!)])
 
@@ -44,6 +81,8 @@ Reading
 -------
 
 The data of a histogram metrics can be retrived in a bunch of different ways.
+
+.. _histograms/percentiles:
 
 ``percentiles``
 ~~~~~~~~~~~~~~~
@@ -76,6 +115,8 @@ If you want a different set of percentiles just pass them as a sequence::
     => { 0.50 100
          0.75 180 }
 
+.. _histograms/number-recorded:
+
 ``number-recorded``
 ~~~~~~~~~~~~~~~~~~~
 
@@ -86,6 +127,8 @@ histogram::
 
     (number-recorded search-results-returned)
     => 12882
+
+.. _histograms/smallest:
 
 ``smallest``
 ~~~~~~~~~~~~
@@ -98,6 +141,8 @@ histogram::
     (smallest search-results-returned)
     => 4
 
+.. _histograms/largest:
+
 ``largest``
 ~~~~~~~~~~~
 
@@ -108,6 +153,8 @@ histogram::
 
     (largest search-results-returned)
     => 1345
+
+.. _histograms/mean:
 
 ``mean``
 ~~~~~~~~
@@ -120,6 +167,8 @@ histogram::
     (mean search-results-returned)
     => 233.12
 
+.. _histograms/std-dev:
+
 ``std-dev``
 ~~~~~~~~~~~
 
@@ -130,6 +179,8 @@ lifetime of this histogram::
 
     (std-dev search-results-returned)
     => 80.2
+
+.. _histograms/sample:
 
 ``sample``
 ~~~~~~~~~~
