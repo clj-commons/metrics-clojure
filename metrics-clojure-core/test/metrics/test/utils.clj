@@ -16,5 +16,4 @@
                            ['a  'b  "c"]]]
            (let [[s title] (utils/desugared-title test-title)]
              (is (= s 'c))
-             (is (= title ["a" "b" "c"])))))
-  )
+             (is (= title ["a" "b" "c"]))))))

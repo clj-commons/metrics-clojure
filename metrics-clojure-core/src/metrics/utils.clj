@@ -10,8 +10,8 @@
 
 (defn get-percentiles [metric percentiles]
   (zipmap percentiles
-           (map (partial get-percentile metric)
-                percentiles)))
+          (map (partial get-percentile metric)
+               percentiles)))
 
 (defn metric-name ^MetricName [title]
   (if (string? title)
