@@ -30,10 +30,10 @@ Table of Contents
    metrics/meters
    metrics/histograms
    metrics/timers
-   reporting
    names
    removing
    sideeffects
-   title-desugaring
+   reporting
+   aggregation
    ring
    contributing
