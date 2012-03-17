@@ -1,19 +1,20 @@
-(ns metrics.test.utils)
+(ns metrics.test.utils
+  (:require [metrics.utils :as utils])
+  (:use [clojure.test]))
 
-(defn abs [n]
-  (if (> n 0) n (* -1 n)))
-
-(defn within-one [a b]
-  (<= (abs (- a b))
-      1))
-
-(defn within-ten [a b]
-  (<= (abs (- a b))
-      10))
-
-(defn maps-within-one [a b]
-  (when (= (set (keys a)) (set (keys b)))
-    (every? identity
-            (map #(within-one (a %) (b %))
-                 (keys a)))))
-
+(deftest test-desugared-title
+  (let [[s title] (utils/desugared-title "foo")]
+    (is (= s 'foo))
+    (is (= title "foo")))
+  (let [[s title] (utils/desugared-title 'foo)]
+    (is (= s 'foo))
+    (is (= title "foo")))
+  (dorun (for [test-title [["a" "b" "c"]
+                           ['a  'b  'c]
+                           ["a" 'b  'c]
+                           ["a" "b" 'c]
+                           ['a  'b  "c"]]]
+           (let [[s title] (utils/desugared-title test-title)]
+             (is (= s 'c))
+             (is (= title ["a" "b" "c"])))))
+  )

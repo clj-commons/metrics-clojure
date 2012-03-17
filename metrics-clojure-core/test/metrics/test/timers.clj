@@ -1,6 +1,6 @@
 (ns metrics.test.timers
   (:require [metrics.timers :as timers])
-  (:use [metrics.test.utils])
+  (:use [metrics.test.test-utils])
   (:use [clojure.test]))
 
 

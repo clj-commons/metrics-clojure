@@ -1,6 +1,6 @@
 (ns metrics.test.meters
   (:require [metrics.meters :as meters])
-  (:use [metrics.test.utils])
+  (:use [metrics.test.test-utils])
   (:use [clojure.test]))
 
 

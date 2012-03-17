@@ -1,6 +1,6 @@
 (ns metrics.test.histograms
   (:require [metrics.histograms :as histograms])
-  (:use [metrics.test.utils])
+  (:use [metrics.test.test-utils])
   (:use [clojure.test]))
 
 
