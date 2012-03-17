@@ -1,5 +1,5 @@
 (ns metrics.histograms
-  (:use [metrics.utils :only (metric-name get-percentiles)])
+  (:use [metrics.utils :only (metric-name get-percentiles desugared-title)])
   (:import (com.yammer.metrics Metrics))
   (:import (com.yammer.metrics.core Histogram MetricName)))
 
@@ -21,7 +21,8 @@
 (defmacro defhistogram
   "Define a Histogram metric with the given title."
   [title & args]
-  `(def ~title (histogram ~(str title) ~@args)))
+  (let [[s title] (desugared-title title)]
+    `(def ~s (histogram ~title ~@args))))
 
 
 ; Read ------------------------------------------------------------------------

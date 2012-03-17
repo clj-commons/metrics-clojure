@@ -30,3 +30,14 @@
             [(parse-name metric-name)
              metric])]
     (into {} (map parse-entry (.allMetrics (Metrics/defaultRegistry))))))
+
+(defn desugared-title
+  "Syntactic sugary goodness for defining metrics concisely with macros.
+
+  Returns a vector of: [symbol-to-define MetricName]"
+  [mn]
+  (cond
+    (string? mn) [(symbol mn) mn]
+    (symbol? mn) [mn (str mn)]
+    :else [(symbol (last mn))
+           (map str mn)]))

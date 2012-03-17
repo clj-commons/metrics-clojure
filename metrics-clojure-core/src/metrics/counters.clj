@@ -1,5 +1,5 @@
 (ns metrics.counters
-  (:use [metrics.utils :only (metric-name)])
+  (:use [metrics.utils :only (metric-name desugared-title)])
   (:import (com.yammer.metrics Metrics))
   (:import (com.yammer.metrics.core Counter)))
 
@@ -19,11 +19,10 @@
 
 
 (defmacro defcounter
-  "Define a new Counter metric with a given title, or group, type and title."
-  ([title]
-   `(def ~title (counter ~(str title))))
-  ([group type title]
-   `(def ~title (counter ~(vec (map str [group type title]))))))
+  "Define a new Counter metric with the given title."
+  [title]
+  (let [[s title] (desugared-title title)]
+    `(def ~s (counter ~title))))
 
 
 ; Read ------------------------------------------------------------------------

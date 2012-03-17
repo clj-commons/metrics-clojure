@@ -1,5 +1,5 @@
 (ns metrics.meters
-  (:use [metrics.utils :only (metric-name)])
+  (:use [metrics.utils :only (metric-name desugared-title)])
   (:import (com.yammer.metrics Metrics))
   (:import (com.yammer.metrics.core Meter))
   (:import (java.util.concurrent TimeUnit)))
@@ -15,7 +15,8 @@
 (defmacro defmeter
   "Define a new Meter metric with a given title and event type."
   [title event-type]
-  `(def ~title (meter ~(str title) ~event-type)))
+  (let [[s title] (desugared-title title)]
+    `(def ~s (meter ~title ~event-type))))
 
 
 ; Read ------------------------------------------------------------------------

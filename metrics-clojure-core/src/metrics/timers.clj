@@ -1,5 +1,5 @@
 (ns metrics.timers
-  (:use [metrics.utils :only (metric-name get-percentiles)])
+  (:use [metrics.utils :only (metric-name get-percentiles desugared-title)])
   (:import (com.yammer.metrics Metrics))
   (:import (com.yammer.metrics.core Timer MetricName))
   (:import (java.util.concurrent TimeUnit)))
@@ -15,7 +15,8 @@
 (defmacro deftimer
   "Define a new Timer metric with the given title."
   [title]
-  `(def ~title (timer ~(str title))))
+  (let [[s title] (desugared-title title)]
+    `(def ~s (timer ~title))))
 
 
 ; Read ------------------------------------------------------------------------

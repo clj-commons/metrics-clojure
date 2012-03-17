@@ -1,5 +1,5 @@
 (ns metrics.gauges
-  (:use [metrics.utils :only (metric-name)])
+  (:use [metrics.utils :only (metric-name desugared-title)])
   (:import (com.yammer.metrics Metrics))
   (:import (com.yammer.metrics.core Gauge)))
 
@@ -31,11 +31,12 @@
   The rest of the arguments may be a body form or function to call to
   retrieve the value of the Gauge."
   [title & [b & bs :as body]]
-  (if (and (empty? bs)
-           (symbol? b)
-           (fn? (eval b)))
-    `(def ~title (gauge-fn ~(str title) ~b))
-    `(def ~title (gauge ~(str title) ~@body))))
+  (let [[s title] (desugared-title title)]
+    (if (and (empty? bs)
+             (symbol? b)
+             (fn? (eval b)))
+      `(def ~s (gauge-fn ~title ~b))
+      `(def ~s (gauge ~title ~@body)))))
 
 
 ; Read ------------------------------------------------------------------------
