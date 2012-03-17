@@ -24,17 +24,18 @@
                     (proxy [Gauge] []
                       (value [] (f)))))
 
+
 (defmacro defgauge
   "Define a new Gauge metric with the given title.
 
   The rest of the arguments may be a body form or function to call to
   retrieve the value of the Gauge."
-  [title & body]
-  (cond (and (= 1 (count body)) (and (symbol? (first body))
-                                     (fn? (eval (first body)))))
-        `(gauge-fn ~(str title) ~(first body))
-        true
-        `(gauge ~(str title) ~@body)))
+  [title & [b & bs :as body]]
+  (if (and (empty? bs)
+           (symbol? b)
+           (fn? (eval b)))
+    `(def ~title (gauge-fn ~(str title) ~b))
+    `(def ~title (gauge ~(str title) ~@body))))
 
 
 ; Read ------------------------------------------------------------------------
