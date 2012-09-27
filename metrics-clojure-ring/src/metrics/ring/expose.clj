@@ -85,8 +85,8 @@
 (defn expose-metrics-as-json
   ([handler] (expose-metrics-as-json handler "/metrics"))
   ([handler uri]
-   (let [request-uri (:uri request)]
-     (fn [request]
+   (fn [request]
+     (let [request-uri (:uri request)]
        (if (or (.startsWith request-uri (sanitize-uri uri))
                (= request-uri uri))
          (metrics-json request)
