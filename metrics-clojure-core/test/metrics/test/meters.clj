@@ -43,3 +43,9 @@
     (meters/mark! m 20000)
     (Thread/sleep 8000)
     (is (every? #(> % 0.0) (vals (meters/rates m))))))
+
+(deftest test-count
+  (let [m (meters/meter ["test" "meters" "test-count"] "test-events")]
+    (is (zero? (meters/count m)))
+    (meters/mark! m)
+    (is (= 1 (meters/count m)))))
