@@ -1,5 +1,5 @@
 (ns metrics.meters
-  (:refer-clojure :except [count])
+  (:refer-clojure :exclude [count])
   (:use [metrics.utils :only (metric-name desugared-title)])
   (:import (com.yammer.metrics Metrics))
   (:import (com.yammer.metrics.core Meter))
