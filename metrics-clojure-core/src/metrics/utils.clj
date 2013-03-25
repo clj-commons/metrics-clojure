@@ -13,7 +13,7 @@
           (map (partial get-percentile metric)
                percentiles)))
 
-(defn metric-name ^MetricName [title]
+(defn ^MetricName metric-name [title]
   (if (string? title)
     (new MetricName "default" "default" ^String title)
     (new MetricName
