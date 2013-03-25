@@ -13,6 +13,7 @@ documentation <http://metrics.codahale.com/>`_ and/or watch the `talk
 * Source (Git): http://github.com/sjl/metrics-clojure/
 * Documentation: http://metrics-clojure.rtfd.org/
 * Issues: http://github.com/sjl/metrics-clojure/issues/
+* License: MIT/X11
 
 Table of Contents
 -----------------
