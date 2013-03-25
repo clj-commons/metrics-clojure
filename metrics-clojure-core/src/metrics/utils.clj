@@ -23,9 +23,10 @@
 
 (defn all-metrics []
   (letfn [(parse-name [^MetricName metric-name]
-            (str (.getGroup metric-name)
-                 "." (.getType metric-name)
-                 "." (.getName metric-name)))
+            (format "%s.%s.%s"
+                    (.getGroup metric-name)
+                    (.getType metric-name)
+                    (.getName metric-name)))
           (parse-entry [[metric-name metric]]
             [(parse-name metric-name)
              metric])]
