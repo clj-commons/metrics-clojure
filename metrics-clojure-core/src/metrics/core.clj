@@ -1,8 +1,8 @@
 (ns metrics.core
   (:use [metrics.utils :only (metric-name)])
-  (:import (com.yammer.metrics Metrics))
-  (:import (com.yammer.metrics.reporting ConsoleReporter))
-  (:import (java.util.concurrent TimeUnit)))
+  (:import com.yammer.metrics.Metrics
+           java.util.concurrent.TimeUnit
+           com.yammer.metrics.reporting.ConsoleReporter))
 
 
 (defn remove-metric

@@ -1,7 +1,7 @@
 (ns metrics.gauges
   (:use [metrics.utils :only (metric-name desugared-title)])
-  (:import (com.yammer.metrics Metrics))
-  (:import (com.yammer.metrics.core Gauge)))
+  (:import com.yammer.metrics.Metrics
+           com.yammer.metrics.core.Gauge))
 
 
 ; Create ----------------------------------------------------------------------

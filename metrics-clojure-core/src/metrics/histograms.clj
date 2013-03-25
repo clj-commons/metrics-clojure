@@ -1,7 +1,7 @@
 (ns metrics.histograms
   (:use [metrics.utils :only (metric-name get-percentiles desugared-title)])
-  (:import (com.yammer.metrics Metrics))
-  (:import (com.yammer.metrics.core Histogram MetricName)))
+  (:import com.yammer.metrics.Metrics
+           [com.yammer.metrics.core Histogram MetricName]))
 
 
 ; Create ----------------------------------------------------------------------

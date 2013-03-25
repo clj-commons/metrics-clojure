@@ -1,6 +1,6 @@
 (ns metrics.utils
-  (:import (com.yammer.metrics Metrics))
-  (:import (com.yammer.metrics.core Sampling MetricName)))
+  (:import com.yammer.metrics.Metrics
+           [com.yammer.metrics.core Sampling MetricName]))
 
 
 (defn get-percentile [^Sampling metric ^double percentile]
