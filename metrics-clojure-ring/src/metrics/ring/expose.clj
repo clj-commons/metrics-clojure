@@ -1,13 +1,13 @@
 (ns metrics.ring.expose
   (:import (com.yammer.metrics.core Gauge Timer Counter Histogram Meter))
-  (:require [metrics.gauges :as gauges])
-  (:require [metrics.meters :as meters])
-  (:require [metrics.histograms :as histograms])
-  (:require [metrics.counters :as counters])
-  (:require [metrics.timers :as timers])
-  (:use [ring.util.response :only [header response]])
-  (:use [metrics.utils :only [all-metrics]])
-  (:use [cheshire.core :only [generate-string]]))
+  (:require [metrics.gauges :as gauges]
+            [metrics.meters :as meters]
+            [metrics.histograms :as histograms]
+            [metrics.counters :as counters]
+            [metrics.timers :as timers])
+  (:use [ring.util.response :only [header response]]
+        [metrics.utils :only [all-metrics]]
+        [cheshire.core :only [generate-string]]))
 
 
 ; Define rendering protocol ---------------------------------------------------
@@ -83,7 +83,8 @@
       (header "Content-Type" "application/json"))))
 
 (defn expose-metrics-as-json
-  ([handler] (expose-metrics-as-json handler "/metrics"))
+  ([handler]
+     (expose-metrics-as-json handler "/metrics"))
   ([handler uri]
    (fn [request]
      (let [request-uri (:uri request)]
@@ -91,4 +92,3 @@
                (= request-uri uri))
          (metrics-json request)
          (handler request))))))
-
