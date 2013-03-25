@@ -49,6 +49,9 @@
 (defn rate-mean [^Meter m]
   (.meanRate m))
 
+(defn count
+  [^Meter m]
+  (.count m))
 
 ; Write -----------------------------------------------------------------------
 (defn mark!
