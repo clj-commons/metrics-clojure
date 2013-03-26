@@ -1,4 +1,4 @@
-(defproject metrics-clojure-ring "1.0.0"
+(defproject metrics-clojure-ring "1.0.1"
   :description "Various things gluing together metrics-clojure and ring."
   :dependencies [[cheshire "5.0.2"]
-                 [metrics-clojure "1.0.0"]])
+                 [metrics-clojure "1.0.1"]])
