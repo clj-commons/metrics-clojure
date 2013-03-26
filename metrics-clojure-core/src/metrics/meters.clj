@@ -29,7 +29,7 @@
   "
   [title event-type]
   (let [[s title] (desugared-title title)]
-    `(def ~s (meter ~title ~event-type))))
+    `(def ~s (meter '~title ~event-type))))
 
 
 ; Read ------------------------------------------------------------------------

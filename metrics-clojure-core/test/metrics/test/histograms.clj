@@ -3,6 +3,14 @@
   (:use [metrics.test.test-utils])
   (:use [clojure.test]))
 
+(histograms/defhistogram ["test" "histograms" "defhistogrammed"])
+
+(deftest test-defhistogram
+  (is (= (histograms/number-recorded defhistogrammed) 0))
+  (histograms/update! defhistogrammed 0)
+  (is (= (histograms/number-recorded defhistogrammed) 1))
+  (histograms/update! defhistogrammed 0)
+  (is (= (histograms/number-recorded defhistogrammed) 2)))
 
 (deftest test-mean
   (let [h (histograms/histogram ["test" "histograms" "test-mean"])]

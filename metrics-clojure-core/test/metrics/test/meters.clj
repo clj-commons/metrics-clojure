@@ -3,6 +3,12 @@
   (:use [metrics.test.test-utils])
   (:use [clojure.test]))
 
+(meters/defmeter ["test" "meters" "defmetered"] "test-events")
+
+(deftest test-defmeter
+  (is (= (meters/rate-mean defmetered) 0.0))
+  (meters/mark! defmetered)
+  (is (> (meters/rate-mean defmetered) 0.0)))
 
 (deftest test-rate-mean
   (let [m (meters/meter ["test" "meters" "test-rate-mean"] "test-events")]

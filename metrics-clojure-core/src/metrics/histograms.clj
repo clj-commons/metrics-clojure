@@ -34,7 +34,7 @@
   "
   [title & args]
   (let [[s title] (desugared-title title)]
-    `(def ~s (histogram ~title ~@args))))
+    `(def ~s (histogram '~title ~@args))))
 
 
 ; Read ------------------------------------------------------------------------

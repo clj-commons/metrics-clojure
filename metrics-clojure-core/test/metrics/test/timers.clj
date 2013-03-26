@@ -12,6 +12,12 @@
   (Thread/sleep 200)
   200)
 
+(timers/deftimer ["test" "timers" "deftimered"])
+
+(deftest test-deftimer
+  (is (= (timers/rate-mean deftimered) 0.0))
+  (is (= (timers/time! deftimered (sleep-100)) 100))
+  (is (> (timers/rate-mean deftimered) 0.0)))
 
 (deftest test-rate-mean
   (let [t (timers/timer ["test" "timers" "test-rate-mean"])]

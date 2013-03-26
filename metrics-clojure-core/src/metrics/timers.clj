@@ -28,7 +28,7 @@
   "
   [title]
   (let [[s title] (desugared-title title)]
-    `(def ~s (timer ~title))))
+    `(def ~s (timer '~title))))
 
 
 ; Read ------------------------------------------------------------------------

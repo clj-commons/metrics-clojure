@@ -2,6 +2,11 @@
   (:require [metrics.gauges :as gauges])
   (:use [clojure.test]))
 
+(gauges/defgauge ["test" "gauges" "defgauged"]
+  1001)
+
+(deftest test-defgauge
+  (is (= (gauges/value defgauged) 1001)))
 
 (deftest test-gauge
   (let [g (gauges/gauge ["test" "gauges" "test-gauge"]

@@ -35,7 +35,7 @@
   "
   [title]
   (let [[s title] (desugared-title title)]
-    `(def ~s (counter ~title))))
+    `(def ~s (counter '~title))))
 
 
 ; Read ------------------------------------------------------------------------

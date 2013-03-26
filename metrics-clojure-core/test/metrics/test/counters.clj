@@ -3,6 +3,13 @@
   (:use [clojure.test]))
 
 
+(counters/defcounter ["test" "counters" "defcountered"])
+
+(deftest test-defcounter
+  (is (= (counters/value defcountered) 0))
+  (counters/inc! defcountered)
+  (is (= (counters/value defcountered) 1)))
+
 (deftest test-inc
   (let [c (counters/counter ["test" "counters" "test-inc"])]
     (is (= (counters/value c) 0))

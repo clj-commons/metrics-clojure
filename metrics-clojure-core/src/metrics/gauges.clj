@@ -47,8 +47,8 @@
     (if (and (empty? bs)
              (symbol? b)
              (fn? (eval b)))
-      `(def ~s (gauge-fn ~title ~b))
-      `(def ~s (gauge ~title ~@body)))))
+      `(def ~s (gauge-fn '~title ~b))
+      `(def ~s (gauge '~title ~@body)))))
 
 
 ; Read ------------------------------------------------------------------------
