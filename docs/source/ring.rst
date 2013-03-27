@@ -12,7 +12,7 @@ library so you don't have to install it unless you want it.
 
 To install it, add this to your ``project.clj``'s dependencies::
 
-    [metrics-clojure-ring "1.0.0"]
+    [metrics-clojure-ring "1.0.1"]
 
 **Note:** the versions of metrics-clojure and metrics-clojure-ring should always
 be the same.
