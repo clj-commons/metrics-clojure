@@ -2,7 +2,7 @@
   (:use [metrics.utils :only (metric-name)])
   (:import com.yammer.metrics.Metrics
            java.util.concurrent.TimeUnit
-           com.yammer.metrics.reporting.ConsoleReporter))
+           [com.yammer.metrics.reporting ConsoleReporter JmxReporter]))
 
 
 (defn remove-metric
@@ -17,3 +17,7 @@
   (ConsoleReporter/enable seconds TimeUnit/SECONDS))
 
 
+(defn report-to-jmx
+  "Enables reporting your metrics as JMX MBeans"
+  []
+  (JmxReporter/startDefault (Metrics/defaultRegistry)))
