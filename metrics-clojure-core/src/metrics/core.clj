@@ -10,10 +10,8 @@
   [title]
   (.removeMetric (Metrics/defaultRegistry) (metric-name title)))
 
-
 (defn report-to-console
   "Report all metrics to standard out every few seconds."
   [seconds]
   (ConsoleReporter/enable seconds TimeUnit/SECONDS))
-
 

@@ -1,6 +1,7 @@
 (defproject metrics-clojure "1.1.0-SNAPSHOT"
   :description "A Clojure façade for Coda Hale's metrics library."
-  :dependencies [[org.clojure/clojure "1.5.1"]
+  :dependencies [[cheshire "5.0.2"]
+                 [org.clojure/clojure "1.5.1"]
                  [com.yammer.metrics/metrics-core "2.2.0"]]
   :repositories {"repo.codahale.com" "http://repo.codahale.com"
                  ;; to get Clojure snapshots
