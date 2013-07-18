@@ -4,8 +4,7 @@
             [metrics.histograms :as histograms]
             [metrics.counters :as counters]
             [metrics.timers :as timers]
-            [metrics.utils :as utils]
-            [cheshire.core :as json])
+            [metrics.utils :as utils])
   (:import (com.yammer.metrics.core Gauge Timer Counter Histogram Meter)))
 
 
@@ -56,6 +55,3 @@
 
 (defn clojure-data-metrics []
   (into {} (map render-metric (utils/all-metrics))))
-
-(defn json-metrics []
-  (json/encode (clojure-data-metrics)))

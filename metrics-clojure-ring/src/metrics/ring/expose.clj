@@ -1,5 +1,6 @@
 (ns metrics.ring.expose
-  (:use [ring.util.response :only [header response]]
+  (:use [cheshire.core :as json]
+        [ring.util.response :only [header response]]
         [metrics.expose :as expose]))
 
 
@@ -34,6 +35,7 @@
          (if (or (.startsWith request-uri (sanitize-uri uri))
                  (= request-uri uri))
            (-> (expose/json-metrics)
+               json/encode
                response
                (header "Content-Type" "application/json"))
            (handler request))))))
