@@ -34,7 +34,7 @@
        (let [request-uri (:uri request)]
          (if (or (.startsWith request-uri (sanitize-uri uri))
                  (= request-uri uri))
-           (-> (expose/json-metrics)
+           (-> (expose/clojure-data-metrics)
                json/encode
                response
                (header "Content-Type" "application/json"))
