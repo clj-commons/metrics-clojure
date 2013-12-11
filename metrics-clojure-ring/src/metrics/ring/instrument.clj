@@ -5,7 +5,7 @@
 
 
 (defn- mark-in! [metric-map k]
-  (when-let [metric (metric-map k)]
+  (when-let [metric (metric-map k (metric-map :other))]
     (mark! metric)))
 
 (defn instrument
@@ -27,20 +27,26 @@
                 :post    (timer ["ring" "handling-time" "POST"])
                 :head    (timer ["ring" "handling-time" "HEAD"])
                 :delete  (timer ["ring" "handling-time" "DELETE"])
-                :options (timer ["ring" "handling-time" "OPTIONS"])}
+                :options (timer ["ring" "handling-time" "OPTIONS"])
+                :trace   (timer ["ring" "handling-time" "TRACE"])
+                :connect (timer ["ring" "handling-time" "CONNECT"])
+                :other   (timer ["ring" "handling-time" "OTHER"])}
          request-methods {:get     (meter ["ring" "requests" "rate.GET"] "requests")
                           :put     (meter ["ring" "requests" "rate.PUT"] "requests")
                           :post    (meter ["ring" "requests" "rate.POST"] "requests")
                           :head    (meter ["ring" "requests" "rate.HEAD"] "requests")
                           :delete  (meter ["ring" "requests" "rate.DELETE"] "requests")
-                          :options (meter ["ring" "requests" "rate.OPTIONS"] "requests")}]
+                          :options (meter ["ring" "requests" "rate.OPTIONS"] "requests")
+                          :trace   (meter ["ring" "requests" "rate.TRACE"] "requests")
+                          :connect (meter ["ring" "requests" "rate.CONNECT"] "requests")
+                          :other   (meter ["ring" "requests" "rate.OTHER"] "requests")}]
      (fn [request]
        (inc! active-requests)
        (try
          (let [request-method (:request-method request)]
            (mark! requests)
            (mark-in! request-methods request-method)
-           (let [resp (time! (times request-method)
+           (let [resp (time! (times request-method (times :other))
                              (handler request))
                  status-code (or (:status resp) 404)]
              (mark! responses)
