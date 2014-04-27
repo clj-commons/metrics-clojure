@@ -20,9 +20,24 @@
                                         [(second title)
                                          (last title)]))))
 
+(defn add-metric
+  "Add a metric with the given title."
+  ([title ^Metric metric]
+   (add-metric default-registry title metric))
+  ([^MetricRegistry reg title ^Metric metric]
+   (.register reg (metric-name title) metric)))
+
 (defn remove-metric
   "Remove the metric with the given title."
   ([title]
    (remove-metric default-registry title))
   ([^MetricRegistry reg title]
    (.remove reg (metric-name title))))
+
+(defn replace-metric
+  "Replace a metric with the given title."
+  ([title ^Metric metric]
+   (replace-metric default-registry title metric))
+  ([^MetricRegistry reg title ^Metric metric]
+   (remove-metric reg (metric-name title))
+   (add-metric reg (metric-name title) metric)))
