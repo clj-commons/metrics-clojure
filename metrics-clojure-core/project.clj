@@ -1,7 +1,7 @@
 (defproject metrics-clojure "2.0.0-SNAPSHOT"
   :description "A Clojure façade for Coda Hale's metrics library."
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [com.yammer.metrics/metrics-core "2.2.0"]]
+                 [com.codahale.metrics/metrics-core "3.0.2"]]
   :repositories {"repo.codahale.com" "http://repo.codahale.com"
                  ;; to get Clojure snapshots
                  "sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
