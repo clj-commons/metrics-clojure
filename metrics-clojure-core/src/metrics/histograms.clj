@@ -1,6 +1,6 @@
 (ns metrics.histograms
   (:require [metrics.core :refer [default-registry metric-name]]
-            [metrics.utils :refer [get-percentiles desugared-title]])
+            [metrics.utils :refer [get-percentiles desugared-title snapshot]])
   (:import [com.codahale.metrics MetricRegistry Histogram Snapshot]))
 
 
@@ -36,11 +36,6 @@
   ([^MetricRegistry reg title]
      (let [[s title] (desugared-title title)]
        `(def ~s (histogram ~reg '~title)))))
-
-
-(defn ^Snapshot snapshot
-  [^Histogram h]
-  (.getSnapshot h))
 
 (defn mean
   "Return the mean value of the given histogram."

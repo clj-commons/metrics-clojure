@@ -1,70 +1,64 @@
 (ns metrics.test.timers
-  (:require [metrics.timers :as timers])
-  (:use [metrics.test.test-utils])
-  (:use [clojure.test]))
+  (:require [metrics.core :as mc]
+            [metrics.timers :as mt]
+            [metrics.test.test-utils :refer :all]
+            [clojure.test :refer :all]))
 
+(def ^:const expiration-delay 6000)
 
-(defn- sleep-100 []
+(defn- sleep-100
+  []
   (Thread/sleep 100)
   100)
 
-(defn- sleep-200 []
+(defn- sleep-200
+  []
   (Thread/sleep 200)
   200)
 
-(timers/deftimer ["test" "timers" "deftimered"])
+(let [reg (mc/new-registry)]
+  (mt/deftimer reg ["test" "timers" "deftimered"])
 
-(deftest test-deftimer
-  (is (= (timers/rate-mean deftimered) 0.0))
-  (is (= (timers/time! deftimered (sleep-100)) 100))
-  (is (> (timers/rate-mean deftimered) 0.0)))
+  (deftest test-deftimer
+    (is (= (mt/rate-mean deftimered) 0.0))
+    (is (= (mt/time! deftimered (sleep-100)) 100))
+    (is (> (mt/rate-mean deftimered) 0.0))))
+
 
 (deftest test-rate-mean
-  (let [t (timers/timer ["test" "timers" "test-rate-mean"])]
-    (is (= (timers/rate-mean t) 0.0))
-    (is (= (timers/time! t (sleep-100)) 100))
-    (is (> (timers/rate-mean t) 0.0))))
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-mean"])]
+    (is (= (mt/rate-mean t) 0.0))
+    (is (= (mt/time! t (sleep-100)) 100))
+    (is (> (mt/rate-mean t) 0.0))))
 
 (deftest test-rate-mean-fn
-  (let [t (timers/timer ["test" "timers" "test-rate-mean-fn"])]
-    (is (= (timers/rate-mean t) 0.0))
-    (is (= (timers/time-fn! t sleep-100) 100))
-    (is (> (timers/rate-mean t) 0.0))))
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-mean-fn"])]
+    (is (= (mt/rate-mean t) 0.0))
+    (is (= (mt/time-fn! t sleep-100) 100))
+    (is (> (mt/rate-mean t) 0.0))))
 
 (deftest test-rate-one
-  (let [t (timers/timer ["test" "timers" "test-rate-one"])]
-    (is (= (timers/rate-one t) 0.0))
-    (is (= (timers/time! t (sleep-100)) 100))
-    (Thread/sleep 8000)
-    (is (> (timers/rate-one t) 0.0))))
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-one"])]
+    (is (= (mt/rate-one t) 0.0))
+    (is (= (mt/time! t (sleep-100)) 100))
+    (Thread/sleep expiration-delay)
+    (is (> (mt/rate-one t) 0.0))))
 
 (deftest test-rate-five
-  (let [t (timers/timer ["test" "timers" "test-rate-five"])]
-    (is (= (timers/rate-five t) 0.0))
-    (is (= (timers/time! t (sleep-100)) 100))
-    (Thread/sleep 8000)
-    (is (> (timers/rate-five t) 0.0))))
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-five"])]
+    (is (= (mt/rate-five t) 0.0))
+    (is (= (mt/time! t (sleep-100)) 100))
+    (Thread/sleep expiration-delay)
+    (is (> (mt/rate-five t) 0.0))))
 
 (deftest test-rate-fifteen
-  (let [t (timers/timer ["test" "timers" "test-rate-fifteen"])]
-    (is (= (timers/rate-fifteen t) 0.0))
-    (is (= (timers/time! t (sleep-100)) 100))
-    (Thread/sleep 8000)
-    (is (> (timers/rate-fifteen t) 0.0))))
-
-
-(deftest test-largest
-  (let [t (timers/timer ["test" "timers" "test-largest"])]
-    (is (= (timers/largest t) 0.0))
-    (is (= (timers/time! t (sleep-100)) 100))
-    (is (within-ten (timers/largest t) 100.0))
-    (is (= (timers/time! t (sleep-200)) 200))
-    (is (within-ten (timers/largest t) 200.0))))
-
-(deftest test-smallest
-  (let [t (timers/timer ["test" "timers" "test-smallest"])]
-    (is (= (timers/smallest t) 0.0))
-    (is (= (timers/time! t (sleep-100)) 100))
-    (is (within-ten (timers/smallest t) 100.0))
-    (is (= (timers/time! t (sleep-200)) 200))
-    (is (within-ten (timers/smallest t) 100.0))))
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-fifteen"])]
+    (is (= (mt/rate-fifteen t) 0.0))
+    (is (= (mt/time! t (sleep-100)) 100))
+    (Thread/sleep expiration-delay)
+    (is (> (mt/rate-fifteen t) 0.0))))

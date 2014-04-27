@@ -1,7 +1,10 @@
 (ns metrics.utils
   (:require [metrics.core :refer [default-registry]])
-  (:import [com.codahale.metrics MetricRegistry Sampling]))
+  (:import [com.codahale.metrics MetricRegistry Sampling Snapshot]))
 
+(defn ^Snapshot snapshot
+  [^Sampling h]
+  (.getSnapshot h))
 
 (defn get-percentile
   [^Sampling metric ^double percentile]
