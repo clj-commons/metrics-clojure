@@ -1,4 +1,4 @@
-(defproject metrics-clojure "1.1.0"
+(defproject metrics-clojure "2.0.0-SNAPSHOT"
   :description "A Clojure façade for Coda Hale's metrics library."
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [com.yammer.metrics/metrics-core "2.2.0"]]
