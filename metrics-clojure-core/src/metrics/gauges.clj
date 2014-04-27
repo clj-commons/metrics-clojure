@@ -1,35 +1,28 @@
 (ns metrics.gauges
-  (:require [metrics.utils :refer [metric-name desugared-title]])
-  (:import com.yammer.metrics.Metrics
-           com.yammer.metrics.core.Gauge))
-
-
-; Create ----------------------------------------------------------------------
-(defmacro gauge
-  "Create a new Gauge metric with the given title.
-
-  The body exprs will be used to retrieve the value of the Gauge when requested."
-  [title & body]
-  `(Metrics/newGauge (metric-name ~title)
-                     (proxy [Gauge] []
-                       (value [] (do ~@body)))))
+  (:require [metrics.core :refer [default-registry metric-name]]
+            [metrics.utils :refer [desugared-title]])
+  (:import [com.codahale.metrics MetricRegistry Gauge]
+           clojure.lang.IFn))
 
 (defn gauge-fn
   "Create a new Gauge metric with the given title.
 
   The given function will be called (with no arguments) to retrieve the value of
   the Gauge when requested."
-  [title f]
-  (Metrics/newGauge (metric-name title)
-                    (proxy [Gauge] []
-                      (value [] (f)))))
+  ([title ^IFn f]
+     (gauge-fn default-registry title f))
+  ([^MetricRegistry reg title ^IFn f]
+     (let [g (reify Gauge
+               (getValue [this]
+                 (f)))
+           s (metric-name title)]
+       (.remove reg s)
+       (.register reg s g))))
 
 
 (defmacro defgauge
-  "Define a new Gauge metric with the given title.
-
-  The rest of the arguments may be a body form or function to call to
-  retrieve the value of the Gauge.
+  "Define a new Gauge metric with the given title and a function.
+   to call to retrieve the value of the Gauge.
 
   The title uses some basic desugaring to let you concisely define metrics:
 
@@ -42,18 +35,16 @@
     (defgauge [\"a\" \"b\" \"c\"] ,,,)
     (defgauge [a \"b\" c] ,,,)
   "
-  [title & [b & bs :as body]]
-  (let [[s title] (desugared-title title)]
-    (if (and (empty? bs)
-             (symbol? b)
-             (fn? (eval b)))
-      `(def ~s (gauge-fn '~title ~b))
-      `(def ~s (gauge '~title ~@body)))))
+  ([title ^clojure.lang.IFn f]
+     (let [[s title] (desugared-title title)]
+       `(def ~s (gauge-fn '~title ~f))))
+  ([^MetricRegistry reg title ^clojure.lang.IFn f]
+     (let [[s title] (desugared-title title)]
+       `(def ~s (gauge-fn ~reg '~title ~f)))))
 
 
-; Read ------------------------------------------------------------------------
 (defn value
   "Return the value of the given Gauge."
   [^Gauge g]
-  (.value g))
+  (.getValue g))
 
