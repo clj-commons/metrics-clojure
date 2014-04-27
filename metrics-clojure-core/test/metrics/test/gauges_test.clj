@@ -1,6 +1,6 @@
-(ns metrics.test.gauges
-  (:require [metrics.gauges :as gauges])
-  (:use [clojure.test]))
+(ns metrics.test.gauges-test
+  (:require [metrics.gauges :as gauges]
+            [clojure.test :refer :all]))
 
 (gauges/defgauge ["test" "gauges" "defgauged"]
   1001)
