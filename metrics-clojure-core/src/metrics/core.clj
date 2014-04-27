@@ -5,6 +5,10 @@
   default-registry
   (MetricRegistry.))
 
+(defn ^MetricRegistry new-registry
+  []
+  (MetricRegistry.))
+
 (defn ^String metric-name
   [title]
   (if (string? title)
