@@ -1,4 +1,4 @@
-## Changes Between 1.1.0 and 1.1.0
+## Changes Between 1.0.0 and 1.1.0
 
 ### Support for TRACE, OPTION, CONNECT HTTP Verbs
 
