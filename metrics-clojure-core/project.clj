@@ -15,4 +15,4 @@
                :1.6    {:dependencies [[org.clojure/clojure "1.6.0-master-SNAPSHOT"]]}
                :master {:dependencies [[org.clojure/clojure "1.6.0-master-SNAPSHOT"]]}}
   :aliases  {"all" ["with-profile" "+dev:+1.3:+1.4:+1.6:+master"]}
-  :warn-on-reflection true)
+  :global-vars {*warn-on-reflection* true})
