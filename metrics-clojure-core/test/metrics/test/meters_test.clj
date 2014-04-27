@@ -1,4 +1,4 @@
-(ns metrics.test.meters
+(ns metrics.test.meters-test
   (:require [metrics.meters :as meters]
             [metrics.test.test-utils :refer :all]
             [clojure.test :refer :all]))
