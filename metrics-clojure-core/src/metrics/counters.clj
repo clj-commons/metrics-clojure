@@ -1,6 +1,6 @@
 (ns metrics.counters
-  (:require [metrics.core  :refer [default-registry]]
-            [metrics.utils :refer [metric-name desugared-title]])
+  (:require [metrics.core  :refer [default-registry metric-name]]
+            [metrics.utils :refer [desugared-title]])
   (:import [com.codahale.metrics MetricRegistry Counter]
            java.util.concurrent.TimeUnit))
 
