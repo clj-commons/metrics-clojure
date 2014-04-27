@@ -24,9 +24,9 @@
 
 (defn all-metrics
   ([]
-     (all-metrics default-registry))
+   (all-metrics default-registry))
   ([^MetricRegistry reg]
-     (into {} (.getMetrics reg))))
+   (into {} (.getMetrics reg))))
 
 (defn desugared-title
   "Syntactic sugary goodness for defining metrics concisely with macros.

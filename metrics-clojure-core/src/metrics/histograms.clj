@@ -11,9 +11,9 @@
   if you know what you're doing you can pass false to create a uniform one
   instead."
   ([title]
-     (histogram default-registry title))
+   (histogram default-registry title))
   ([^MetricRegistry reg title]
-     (.histogram reg (metric-name title))))
+   (.histogram reg (metric-name title))))
 
 
 (defmacro defhistogram
@@ -31,11 +31,11 @@
     (defhistogram [a \"b\" c])
   "
   ([title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (histogram '~title))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (histogram '~title))))
   ([^MetricRegistry reg title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (histogram ~reg '~title)))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (histogram ~reg '~title)))))
 
 (defn mean
   "Return the mean value of the given histogram."
@@ -66,9 +66,9 @@
   If you don't pass a list of desired percentiles, the default will be
   [0.75 0.95 0.99 0.999 1.0]."
   ([^Histogram h]
-     (percentiles h [0.75 0.95 0.99 0.999 1.0]))
+   (percentiles h [0.75 0.95 0.99 0.999 1.0]))
   ([^Histogram h ps]
-     (get-percentiles h ps)))
+   (get-percentiles h ps)))
 
 
 (defn number-recorded

@@ -14,9 +14,9 @@
 
   "
   ([title]
-     (counter default-registry title))
+   (counter default-registry title))
   ([^MetricRegistry reg title]
-     (.counter reg (metric-name title))))
+   (.counter reg (metric-name title))))
 
 
 (defmacro defcounter
@@ -34,11 +34,11 @@
     (defcounter [a \"b\" c])
   "
   ([title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (counter ~default-registry '~title))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (counter ~default-registry '~title))))
   ([^MetricRegistry reg title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (counter ~reg '~title)))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (counter ~reg '~title)))))
 
 
 (defn value
@@ -50,18 +50,18 @@
 (defn inc!
   "Increment the counter by the given amount (or 1 if not specified)."
   ([^Counter c]
-     (inc! c 1))
+   (inc! c 1))
   ([^Counter c n]
-     (.inc c n)
-     c))
+   (.inc c n)
+   c))
 
 (defn dec!
   "Decrement the counter by the given amount (or 1 if not specified)."
   ([^Counter c]
-     (dec! c 1))
+   (dec! c 1))
   ([^Counter c n]
-     (.dec c n)
-     c))
+   (.dec c n)
+   c))
 
 (defn clear!
   "Clear the given counter, resetting its value to zero."

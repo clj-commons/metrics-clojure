@@ -7,9 +7,9 @@
 
 (defn ^Timer timer
   ([title]
-     (timer default-registry title))
+   (timer default-registry title))
   ([^MetricRegistry reg title]
-     (.timer reg (metric-name title))))
+   (.timer reg (metric-name title))))
 
 
 (defmacro deftimer
@@ -27,11 +27,11 @@
     (deftimer [a \"b\" c])
   "
   ([title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (timer '~title))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (timer '~title))))
   ([^MetricRegistry reg title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (timer ~reg '~title)))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (timer ~reg '~title)))))
 
 (defn rate-one
   [^Timer m]
@@ -66,9 +66,9 @@
 (defn percentiles
   "Returns timing percentiles seen by a timer, in nanoseconds"
   ([^Timer t]
-     (percentiles t [0.75 0.95 0.99 0.999 1.0]))
+   (percentiles t [0.75 0.95 0.99 0.999 1.0]))
   ([^Timer t ps]
-     (get-percentiles t ps)))
+   (get-percentiles t ps)))
 
 
 (defn ^long number-recorded
@@ -98,5 +98,4 @@
 
 (defn time-fn!
   [^Timer t ^clojure.lang.IFn f]
-  (.time t
-         (cast Callable f)))
+  (.time t (cast Callable f)))

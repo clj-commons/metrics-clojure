@@ -10,14 +10,14 @@
   The given function will be called (with no arguments) to retrieve the value of
   the Gauge when requested."
   ([title ^IFn f]
-     (gauge-fn default-registry title f))
+   (gauge-fn default-registry title f))
   ([^MetricRegistry reg title ^IFn f]
-     (let [g (reify Gauge
-               (getValue [this]
-                 (f)))
-           s (metric-name title)]
-       (.remove reg s)
-       (.register reg s g))))
+   (let [g (reify Gauge
+             (getValue [this]
+               (f)))
+         s (metric-name title)]
+     (.remove reg s)
+     (.register reg s g))))
 
 
 (defmacro defgauge
@@ -36,11 +36,11 @@
     (defgauge [a \"b\" c] ,,,)
   "
   ([title ^clojure.lang.IFn f]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (gauge-fn '~title ~f))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (gauge-fn '~title ~f))))
   ([^MetricRegistry reg title ^clojure.lang.IFn f]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (gauge-fn ~reg '~title ~f)))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (gauge-fn ~reg '~title ~f)))))
 
 
 (defn value

@@ -7,9 +7,9 @@
 
 (defn meter
   ([title]
-     (meter default-registry title)) 
+   (meter default-registry title)) 
   ([^MetricRegistry reg title]
-     (.meter reg (metric-name title))))
+   (.meter reg (metric-name title))))
 
 
 (defmacro defmeter
@@ -27,11 +27,11 @@
     (defmeter [a \"b\" c] ,,,)
   "
   ([title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (meter '~title))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (meter '~title))))
   ([^MetricRegistry reg title]
-     (let [[s title] (desugared-title title)]
-       `(def ~s (meter ~reg '~title)))))
+   (let [[s title] (desugared-title title)]
+     `(def ~s (meter ~reg '~title)))))
 
 (defn rate-one
   [^Meter m]
@@ -62,8 +62,8 @@
 
 (defn mark!
   ([^Meter m]
-     (mark! m 1))
+   (mark! m 1))
   ([^Meter m n]
-     (.mark m (long n))
-     m))
+   (.mark m (long n))
+   m))
 

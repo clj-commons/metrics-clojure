@@ -23,6 +23,6 @@
 (defn remove-metric
   "Remove the metric with the given title."
   ([title]
-     (remove-metric default-registry title))
+   (remove-metric default-registry title))
   ([^MetricRegistry reg title]
-     (.remove reg (metric-name title))))
+   (.remove reg (metric-name title))))
