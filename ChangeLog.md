@@ -1,3 +1,10 @@
+## Changes Between 1.1.0 and 2.0.0
+
+### Clojure 1.3 No Longer Supported
+
+Clojure 1.3 is no longer supported by the library.
+
+
 ## Changes Between 1.0.0 and 1.1.0
 
 ### Support for TRACE, OPTION, CONNECT HTTP Verbs
