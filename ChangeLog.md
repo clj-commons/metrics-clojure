@@ -1,5 +1,13 @@
 ## Changes Between 1.1.0 and 1.1.0
 
+### Support for TRACE, OPTION, CONNECT HTTP Verbs
+
+Ring integration now tracks rates of requests that use TRACE, OPTION,
+CONNECT, and non-standard HTTP verbs.
+
+Contributed by Joe Littlejohn (Nokia).
+
+
 ### Clojure 1.6
 
 The project now depends on `org.clojure/clojure` version `1.6.0`. It is
