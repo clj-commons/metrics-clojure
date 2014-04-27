@@ -1,4 +1,4 @@
-(ns metrics.test.timers
+(ns metrics.test.timers-test
   (:require [metrics.core :as mc]
             [metrics.timers :as mt]
             [metrics.test.test-utils :refer :all]
