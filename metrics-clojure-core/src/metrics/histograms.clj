@@ -1,5 +1,5 @@
 (ns metrics.histograms
-  (:use [metrics.utils :only (metric-name get-percentiles desugared-title)])
+  (:require [metrics.utils :refer [metric-name get-percentiles desugared-title]])
   (:import com.yammer.metrics.Metrics
            [com.yammer.metrics.core Histogram MetricName]))
 

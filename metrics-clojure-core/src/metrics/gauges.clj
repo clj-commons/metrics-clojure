@@ -1,5 +1,5 @@
 (ns metrics.gauges
-  (:use [metrics.utils :only (metric-name desugared-title)])
+  (:require [metrics.utils :refer [metric-name desugared-title]])
   (:import com.yammer.metrics.Metrics
            com.yammer.metrics.core.Gauge))
 

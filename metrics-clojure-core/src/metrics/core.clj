@@ -1,5 +1,5 @@
 (ns metrics.core
-  (:use [metrics.utils :only (metric-name)])
+  (:require [metrics.utils :refer [metric-name]])
   (:import com.yammer.metrics.Metrics
            java.util.concurrent.TimeUnit
            com.yammer.metrics.reporting.ConsoleReporter))

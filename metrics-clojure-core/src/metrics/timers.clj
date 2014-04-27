@@ -1,5 +1,5 @@
 (ns metrics.timers
-  (:use [metrics.utils :only (metric-name get-percentiles desugared-title)])
+  (:require [metrics.utils :refer [metric-name get-percentiles desugared-title]])
   (:import com.yammer.metrics.Metrics
            [com.yammer.metrics.core Timer MetricName]
            java.util.concurrent.TimeUnit))
