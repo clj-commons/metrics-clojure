@@ -1,4 +1,4 @@
-(ns metrics.test.histograms
+(ns metrics.test.histograms-test
   (:require [metrics.core :as mc]
             [metrics.histograms :as mh]
             [metrics.test.test-utils :refer :all]
