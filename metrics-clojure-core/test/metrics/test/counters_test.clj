@@ -1,7 +1,6 @@
-(ns metrics.test.counters
-  (:require [metrics.counters :as counters])
-  (:use [clojure.test]))
-
+(ns metrics.test.counters-test
+  (:require [metrics.counters :as counters]
+            [clojure.test :refer :all]))
 
 (counters/defcounter ["test" "counters" "defcountered"])
 

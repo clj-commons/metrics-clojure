@@ -1,16 +1,15 @@
 (ns metrics.meters
   (:refer-clojure :exclude [count])
-  (:require [metrics.utils :refer [metric-name desugared-title]])
-  (:import com.yammer.metrics.Metrics
-           com.yammer.metrics.core.Meter
-           java.util.concurrent.TimeUnit))
+  (:require [metrics.core :refer [default-registry metric-name]]
+            [metrics.utils :refer [desugared-title]])
+  (:import [com.codahale.metrics MetricRegistry Meter]))
 
 
-; Create ----------------------------------------------------------------------
-(defn meter [title event-type]
-  (Metrics/newMeter (metric-name title)
-                    event-type
-                    TimeUnit/SECONDS))
+(defn meter
+  ([title]
+   (meter default-registry title)) 
+  ([^MetricRegistry reg title]
+   (.meter reg (metric-name title))))
 
 
 (defmacro defmeter
@@ -27,34 +26,40 @@
     (defmeter [\"a\" \"b\" \"c\"] ,,,)
     (defmeter [a \"b\" c] ,,,)
   "
-  [title event-type]
-  (let [[s title] (desugared-title title)]
-    `(def ~s (meter '~title ~event-type))))
+  ([title]
+   (let [[s title] (desugared-title title)]
+     `(def ~s (meter '~title))))
+  ([^MetricRegistry reg title]
+   (let [[s title] (desugared-title title)]
+     `(def ~s (meter ~reg '~title)))))
 
+(defn rate-one
+  [^Meter m]
+  (.getOneMinuteRate m))
 
-; Read ------------------------------------------------------------------------
-(defn rates [^Meter m]
-  {1 (.oneMinuteRate m)
-   5 (.fiveMinuteRate m)
-   15 (.fifteenMinuteRate m)})
+(defn rate-five
+  [^Meter m]
+  (.getFiveMinuteRate m))
 
-(defn rate-one [^Meter m]
-  (.oneMinuteRate m))
+(defn rate-fifteen
+  [^Meter m]
+  (.getFifteenMinuteRate m))
 
-(defn rate-five [^Meter m]
-  (.fiveMinuteRate m))
-
-(defn rate-fifteen [^Meter m]
-  (.fifteenMinuteRate m))
-
-(defn rate-mean [^Meter m]
-  (.meanRate m))
+(defn rate-mean
+  [^Meter m]
+  (.getMeanRate m))
 
 (defn count
   [^Meter m]
-  (.count m))
+  (.getCount m))
 
-; Write -----------------------------------------------------------------------
+(defn rates
+  [^Meter m]
+  {1 (rate-one m)
+   5 (rate-five m)
+   15 (rate-fifteen m)
+   :total (count m)})
+
 (defn mark!
   ([^Meter m]
    (mark! m 1))

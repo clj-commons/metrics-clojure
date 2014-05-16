@@ -1,15 +1,15 @@
 (ns metrics.timers
-  (:require [metrics.utils :refer [metric-name get-percentiles desugared-title]])
-  (:import com.yammer.metrics.Metrics
-           [com.yammer.metrics.core Timer MetricName]
+  (:require [metrics.core :refer [default-registry metric-name]]
+            [metrics.utils :refer [get-percentiles desugared-title snapshot]])
+  (:import [com.codahale.metrics MetricRegistry Timer]
            java.util.concurrent.TimeUnit))
 
 
-; Create ----------------------------------------------------------------------
-(defn timer [title]
-  (Metrics/newTimer ^MetricName (metric-name title)
-                    TimeUnit/MILLISECONDS
-                    TimeUnit/SECONDS))
+(defn ^Timer timer
+  ([title]
+   (timer default-registry title))
+  ([^MetricRegistry reg title]
+   (.timer reg (metric-name title))))
 
 
 (defmacro deftimer
@@ -26,67 +26,76 @@
     (deftimer [\"a\" \"b\" \"c\"])
     (deftimer [a \"b\" c])
   "
-  [title]
-  (let [[s title] (desugared-title title)]
-    `(def ~s (timer '~title))))
+  ([title]
+   (let [[s title] (desugared-title title)]
+     `(def ~s (timer '~title))))
+  ([^MetricRegistry reg title]
+   (let [[s title] (desugared-title title)]
+     `(def ~s (timer ~reg '~title)))))
 
+(defn rate-one
+  [^Timer m]
+  (.getOneMinuteRate m))
 
-; Read ------------------------------------------------------------------------
-(defn rates [^Timer m]
-  {1 (.oneMinuteRate m)
-   5 (.fiveMinuteRate m)
-   15 (.fifteenMinuteRate m)})
+(defn rate-five
+  [^Timer m]
+  (.getFiveMinuteRate m))
 
-(defn rate-one [^Timer m]
-  (.oneMinuteRate m))
+(defn rate-fifteen
+  [^Timer m]
+  (.getFifteenMinuteRate m))
 
-(defn rate-five [^Timer m]
-  (.fiveMinuteRate m))
+(defn rate-mean
+  [^Timer m]
+  (.getMeanRate m))
 
-(defn rate-fifteen [^Timer m]
-  (.fifteenMinuteRate m))
+(defn rates
+  [^Timer m]
+  {1 (rate-one m)
+   5 (rate-five m)
+   15 (rate-fifteen m)})
 
-(defn rate-mean [^Timer m]
-  (.meanRate m))
+(defn mean
+  [^Timer t]
+  (.getMeanRate t))
 
-
-(defn mean [^Timer t]
-  (.mean t))
-
-(defn std-dev [^Timer t]
-  (.stdDev t))
+(defn std-dev
+  [^Timer t]
+  (.getStdDev (snapshot t)))
 
 (defn percentiles
+  "Returns timing percentiles seen by a timer, in nanoseconds"
   ([^Timer t]
    (percentiles t [0.75 0.95 0.99 0.999 1.0]))
   ([^Timer t ps]
    (get-percentiles t ps)))
 
 
-(defn number-recorded [^Timer t]
-  (.count t))
+(defn ^long number-recorded
+  [^Timer t]
+  (.getCount t))
 
-(defn largest [^Timer t]
-  (.max t))
+(defn largest
+  "Returns the greatest timing seen by a timer, in nanoseconds"
+  [^Timer t]
+  (.getMax (snapshot t)))
 
-(defn smallest [^Timer t]
-  (.min t))
+(defn smallest
+  "Returns the smallest timing seen by a timer, in nanoseconds"
+  [^Timer t]
+  (.getMin (snapshot t)))
 
-(defn sample [^Timer t]
-  (.getValues (.getSnapshot t)))
+(defn sample
+  [^Timer t]
+  (.getValues (snapshot t)))
 
 
-; Write -----------------------------------------------------------------------
-(defmacro time! [^Timer t & body]
+(defmacro time!
+  [^Timer t & body]
   `(.time ~(vary-meta t assoc :tag `Timer)
-         (proxy [Callable] []
-           (call [] (do ~@body)))))
+          (proxy [Callable] []
+            (call [] (do ~@body)))))
 
-(defn time-fn! [^Timer t f]
-  (.time t
-         (proxy [Callable] []
-           (call [] (f)))))
-
-(defn clear! [^Timer t]
-  (.clear t))
-
+(defn time-fn!
+  [^Timer t ^clojure.lang.IFn f]
+  (.time t (cast Callable f)))

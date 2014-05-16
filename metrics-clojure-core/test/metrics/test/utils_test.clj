@@ -1,4 +1,4 @@
-(ns metrics.test.utils
+(ns metrics.test.utils-test
   (:require [metrics.utils :as utils])
   (:use [clojure.test]))
 

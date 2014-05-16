@@ -1,21 +1,19 @@
 (ns metrics.histograms
-  (:require [metrics.utils :refer [metric-name get-percentiles desugared-title]])
-  (:import com.yammer.metrics.Metrics
-           [com.yammer.metrics.core Histogram MetricName]))
+  (:require [metrics.core :refer [default-registry metric-name]]
+            [metrics.utils :refer [get-percentiles desugared-title snapshot]])
+  (:import [com.codahale.metrics MetricRegistry Histogram Snapshot]))
 
 
-; Create ----------------------------------------------------------------------
 (defn histogram
   "Create and return a Histogram metric with the given title.
 
   By default a biased Histogram is created.  This is probably what you want, but
   if you know what you're doing you can pass false to create a uniform one
   instead."
-  ([title] (histogram title true))
-  ([title biased]
-   (Metrics/newHistogram
-     ^MetricName (metric-name title)
-     (boolean biased))))
+  ([title]
+   (histogram default-registry title))
+  ([^MetricRegistry reg title]
+   (.histogram reg (metric-name title))))
 
 
 (defmacro defhistogram
@@ -32,21 +30,24 @@
     (defhistogram [\"a\" \"b\" \"c\"])
     (defhistogram [a \"b\" c])
   "
-  [title & args]
-  (let [[s title] (desugared-title title)]
-    `(def ~s (histogram '~title ~@args))))
+  ([title]
+   (let [[s title] (desugared-title title)]
+     `(def ~s (histogram '~title))))
+  ([^MetricRegistry reg title]
+   (let [[s title] (desugared-title title)]
+     `(def ~s (histogram ~reg '~title)))))
 
-
-; Read ------------------------------------------------------------------------
 (defn mean
-  "Return the mean value of the given Histogram."
+  "Return the mean value of the given histogram."
   [^Histogram h]
-  (.mean h))
+  (let [sn (snapshot h)]
+    (.getMean sn)))
 
 (defn std-dev
   "Return the standard deviation of the given Histogram."
   [^Histogram h]
-  (.stdDev h))
+  (let [sn (snapshot h)]
+    (.getStdDev sn)))
 
 (defn percentiles
   "Return a mapping of percentiles to their values for the given Histogram.
@@ -73,37 +74,32 @@
 (defn number-recorded
   "Return the number of values recorded by the given Histogram."
   [^Histogram h]
-  (.count h))
+  (.getCount h))
 
 (defn largest
   "Return the largest value recorded by the given Histogram."
   [^Histogram h]
-  (.max h))
+  (let [sn (snapshot h)]
+    (.getMax sn)))
 
 (defn smallest
   "Return the smallest value recorded by the given Histogram."
   [^Histogram h]
-  (.min h))
+  (let [sn (snapshot h)]
+    (.getMin sn)))
 
 (defn sample
-  "Return the values in the given Histogram's current sampling.
+  "Return the values in the given histogram's current sampling.
 
-  This is almost certainly NOT what you want.  Read up on how these histograms
+  This is almost certainly NOT what you want. Read up on how these histograms
   work and make sure you understand it before using this function."
   [^Histogram h]
-  (.getValues (.getSnapshot h)))
+  (.getValues (snapshot h)))
 
 
-; Write -----------------------------------------------------------------------
 (defn update!
   "Record a value in the given Histogram."
   [^Histogram h n]
   (.update h (long n))
-  h)
-
-(defn clear!
-  "Clear all data from the given Histogram."
-  [^Histogram h]
-  (.clear h)
   h)
 
