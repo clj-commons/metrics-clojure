@@ -16,7 +16,7 @@ the issue.
 If you don't want to record something multiple times, an agent may be a good way
 to handle things::
 
-    (def thing-given-to-user (agent (counter "thing-given-to-user")))
+    (def thing-given-to-user (agent (counter reg "thing-given-to-user")))
 
     (dosync
        (send thing-given-to-user inc!)

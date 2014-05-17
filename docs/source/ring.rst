@@ -12,7 +12,7 @@ library so you don't have to install it unless you want it.
 
 To install it, add this to your ``project.clj``'s dependencies::
 
-    [metrics-clojure-ring "1.0.1"]
+    [metrics-clojure-ring "2.0.0"]
 
 **Note:** the versions of metrics-clojure and metrics-clojure-ring should always
 be the same.
@@ -24,7 +24,7 @@ Exposing Metrics as JSON
 You can expose your app's metrics as JSON by using the
 ``expose-metrics-as-json`` middleware::
 
-    (use '[metrics.ring.expose :only (expose-metrics-as-json)])
+    (require '[metrics.ring.expose :refer [expose-metrics-as-json]])
 
     (def app (expose-metrics-as-json app))
 
@@ -35,7 +35,7 @@ This middleware works great with Noir, too.
 
 If you want to use a different endpoint you can pass it as a parameter::
 
-    (use '[metrics.ring.expose :only (expose-metrics-as-json)])
+    (require '[metrics.ring.expose :refer [expose-metrics-as-json]])
 
     (def app (expose-metrics-as-json app "/admin/stats/"))
 
@@ -67,7 +67,7 @@ Instrumenting a Ring App
 
 You can add some common metrics by using the ``instrument`` middleware::
 
-    (use '[metrics.ring.instrument :only (instrument)])
+    (require '[metrics.ring.instrument :refer [instrument]])
 
     (def app (instrument app))
 
