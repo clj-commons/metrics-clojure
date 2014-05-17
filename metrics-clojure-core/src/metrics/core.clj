@@ -1,5 +1,5 @@
 (ns metrics.core
-  (:import [com.codahale.metrics MetricRegistry]))
+  (:import [com.codahale.metrics MetricRegistry Metric]))
 
 (def ^{:tag "MetricRegistry" :doc "Default registry used by public API functions when no explicit registry argument is given"}
   default-registry
