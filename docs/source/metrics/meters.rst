@@ -28,9 +28,11 @@ Creating
 
 Create your meter::
 
-    (use '[metrics.meters :only (meter)])
+    (require '[metrics.core :refer [new-registry]])
+    (require '[metrics.meters :refer [meter]])
 
-    (def files-served (meter "files-served" "files"))
+    (def reg (new-registry))
+    (def files-served (meter reg "files-served" "files"))
 
 The second argument to ``meter`` is a string describing the "units" for the
 meter.  In this example it's "files", as in "18732 files".
@@ -40,9 +42,9 @@ meter.  In this example it's "files", as in "18732 files".
 You can also use the ``defmeter`` macro to create a meter and bind it to a var
 in one concise, easy step::
 
-    (use '[metrics.meters :only (defmeter)])
+    (require '[metrics.meters :refer (defmeter)])
 
-    (defmeter files-served "files")
+    (defmeter reg files-served "files")
 
 All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
 title to make it easier to define.
@@ -59,7 +61,7 @@ Once you've got a meter you can mark occurrences of events.
 
 Mark the meter every time the event happens with ``mark!``::
 
-    (use '[metrics.meters :only (mark!)])
+    (require '[metrics.meters :refer [mark!]])
 
     (mark! files-served)
 
@@ -77,7 +79,7 @@ events occur.
 You can get a map containing the mean rates of the event considering the last
 one, five, and fifteen minute periods with ``rates``::
 
-    (use '[metrics.meters :only (rates)])
+    (require '[metrics.meters :refer (rates)])
 
     (rates files-served)
     => { 1 100.0,
@@ -96,7 +98,7 @@ last one minute period, 120 times per second in the last five minute period, and
 If you only care about the rate of events during the last minute you can use
 ``rate-one``::
 
-    (use '[metrics.meters :only (rate-one)])
+    (require '[metrics.meters :refer [rate-one]])
 
     (rate-one files-served)
     => 100.0
@@ -109,7 +111,7 @@ If you only care about the rate of events during the last minute you can use
 If you only care about the rate of events during the last five minutes you can
 use ``rate-five``::
 
-    (use '[metrics.meters :only (rate-five)])
+    (require '[metrics.meters :refer [rate-five]])
 
     (rate-five files-served)
     => 120.0
@@ -122,7 +124,7 @@ use ``rate-five``::
 If you only care about the rate of events during the last fifteen minutes you
 can use ``rate-fifteen``::
 
-    (use '[metrics.meters :only (rate-fifteen)])
+    (require '[metrics.meters :refer [rate-fifteen]])
 
     (rate-fifteen files-served)
     => 76.0
@@ -135,7 +137,7 @@ can use ``rate-fifteen``::
 If you really want the mean rate of events over the lifetime of the meter (hint:
 you probably don't) you can use ``rate-mean``::
 
-    (use '[metrics.meters :only (rate-mean)])
+    (require '[metrics.meters :refer [rate-mean]])
 
     (rate-mean files-served)
     => 204.123
