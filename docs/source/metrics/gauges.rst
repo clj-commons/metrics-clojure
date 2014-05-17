@@ -18,10 +18,13 @@ Creating
 
 Create your gauge::
 
+    (require '[metrics.core :refer [new-registry]])
     (require '[metrics.gauges :refer [gauge]])
 
+    (def reg (new-registry))
+
     (def files-open
-      (gauge "files-open"
+      (gauge reg "files-open"
              (fn [] (return-number-of-files-open ...))))
 
 That's it. Pretty simple.
