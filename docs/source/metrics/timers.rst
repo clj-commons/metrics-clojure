@@ -17,7 +17,8 @@ Creating
 
 Create your timer::
 
-    (use '[metrics.timers :only (timer)])
+    (require '[metrics.core :refer [new-registry]])
+    (require '[metrics.timers :refer [timer]])
 
     (def image-processing-time (timer "image-processing-time"))
 
@@ -26,7 +27,7 @@ Create your timer::
 You can also use the ``deftimer`` macro to create a timer and bind it to a var
 in one concise, easy step::
 
-    (use '[metrics.timers :only (deftimer)])
+    (require '[metrics.timers :refer [deftimer]])
 
     (deftimer image-processing-time)
 
@@ -45,7 +46,7 @@ Once you have a timer you can record times to it in two different ways.
 
 You can record the time it takes to evaluate one or more expressions with the ``time!`` macro::
 
-    (use '[metrics.timers :only (time!)])
+    (require '[metrics.timers :refer [time!]])
 
     (time! image-processing-time
            (process-image-part-1 ...)
@@ -60,7 +61,7 @@ You can record the time it takes to evaluate one or more expressions with the ``
 over a list), you can use ``time-fn!``, but you'll need to pass it a function
 instead of a body::
 
-    (use '[metrics.timers :only (time-fn!)])
+    (require '[metrics.timers :refer [time-fn!]])
 
     (time-fn! image-processing-time
               (fn []
@@ -78,7 +79,7 @@ Reading
 You can use ``percentiles`` to find the percentage of actions that take less
 than or equal to a certain amount of time::
 
-    (use '[metrics.timers :only (percentiles)])
+    (require '[metrics.timers :refer (percentiles)])
 
     (percentiles image-processing-time)
     => { 0.75  232.00
@@ -97,7 +98,7 @@ time taken for that percentile.  In this example:
 
 If you want a different set of percentiles just pass them as a sequence::
 
-    (use '[metrics.timers :only (percentiles)])
+    (require '[metrics.timers :refer [percentiles]])
 
     (percentiles image-processing-time [0.50 0.75])
     => { 0.50 182.11
@@ -111,7 +112,7 @@ If you want a different set of percentiles just pass them as a sequence::
 To get the number of data points recorded over the entire lifetime of this
 timers::
 
-    (use '[metrics.timers :only (number-recorded)])
+    (require '[metrics.timers :refer [number-recorded]])
 
     (number-recorded image-processing-time)
     => 12882
@@ -124,7 +125,7 @@ timers::
 To get the smallest data point recorded over the entire lifetime of this
 timer::
 
-    (use '[metrics.timers :only (smallest)])
+    (require '[metrics.timers :refer [smallest]])
 
     (smallest image-processing-time)
     => 80.66
@@ -137,7 +138,7 @@ timer::
 To get the largest data point recorded over the entire lifetime of this
 timer::
 
-    (use '[metrics.timers :only (largest)])
+    (require '[metrics.timers :refer [largest]])
 
     (largest image-processing-time)
     => 903.1
@@ -150,7 +151,7 @@ timer::
 To get the mean of the data points recorded over the entire lifetime of this
 timer::
 
-    (use '[metrics.timers :only (mean)])
+    (require '[metrics.timers :refer [mean]])
 
     (mean image-processing-time)
     => 433.12
@@ -163,7 +164,7 @@ timer::
 To get the standard deviation of the data points recorded over the entire
 lifetime of this timer::
 
-    (use '[metrics.histograms :only (std-dev)])
+    (require '[metrics.histograms :only [std-dev]])
 
     (std-dev image-processing-time)
     => 300.51
@@ -179,7 +180,7 @@ what you're doing.
 
 ::
 
-    (use '[metrics.timers :only (sample)])
+    (require '[metrics.timers :refer [sample]])
 
     (sample image-processing-time)
     => [803.234 102.223 ...]
