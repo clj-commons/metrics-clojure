@@ -57,7 +57,7 @@
 
 (defn mean
   [^Timer t]
-  (.getMeanRate t))
+  (.getMean (snapshot t)))
 
 (defn std-dev
   [^Timer t]
