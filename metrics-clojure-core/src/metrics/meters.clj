@@ -7,7 +7,7 @@
 
 (defn meter
   ([title]
-   (meter default-registry title)) 
+   (meter default-registry title))
   ([^MetricRegistry reg title]
    (.meter reg (metric-name title))))
 
