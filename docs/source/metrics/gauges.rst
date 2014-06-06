@@ -18,18 +18,21 @@ Creating
 
 Create your gauge::
 
-    (use '[metrics.gauges :only (gauge)])
+    (require '[metrics.core :refer [new-registry]])
+    (require '[metrics.gauges :refer [gauge]])
+
+    (def reg (new-registry))
 
     (def files-open
-      (gauge "files-open"
-             (return-number-of-files-open ...)))
+      (gauge reg "files-open"
+             (fn [] (return-number-of-files-open ...))))
 
-That's it.  Pretty simple.
+That's it. Pretty simple.
 
 ``gauge`` is a macro.  If you need a function instead you can use ``gauge-fn``,
 but you have to pass it a function, not just a body::
 
-    (use '[metrics.gauges :only (gauge-fn)])
+    (require '[metrics.gauges :refer [gauge-fn]])
 
     (def files-open
       (gauge-fn "files-open"
@@ -40,13 +43,13 @@ but you have to pass it a function, not just a body::
 You can also use the ``defgauge`` macro to create a gauge and bind it to a var
 in one concise, easy step::
 
-    (use '[metrics.gauges :only (defgauge)])
+    (require '[metrics.gauges :refer [defgauge]])
 
     (defgauge files-open
-      (return-number-of-files-open ...))
+      (fn []
+        (return-number-of-files-open ...)))
 
-``defgauge`` can take a body of statements like ``gauge`` or a function like
-``gauge-fn``.
+``defgauge`` takes a function like ``gauge-fn``.
 
 All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
 title to make it easier to define.
@@ -70,6 +73,6 @@ There's only one way to get data from a gauge.
 
 You can read the value of a gauge at any time with ``value``::
 
-    (use '[metrics.gauges :only (value)])
+    (require '[metrics.gauges :refer [value]])
 
     (value files-open)

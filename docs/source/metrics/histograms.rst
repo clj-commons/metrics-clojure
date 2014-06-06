@@ -37,7 +37,10 @@ Creating
 
 Create your histogram::
 
-    (use '[metrics.histograms :only (histogram)])
+    (require '[metrics.core :refer [new-registry]])
+    (require '[metrics.histograms :refer (histogram)])
+
+    (def reg (new-registry))
 
     (def search-results-returned
       (histogram "search-results-returned"))
@@ -46,16 +49,16 @@ You can create an unbiased histogram by passing an extra boolean argument
 (though you probably don't want to)::
 
     (def search-results-returned-biased
-      (histogram "search-results-returned-unbiased" false))
+      (histogram reg "search-results-returned-unbiased" false))
 
 .. _histograms/defhistogram:
 
 You can also use the ``defhistogram`` macro to create a histogram and bind it to
 a var in one concise, easy step::
 
-    (use '[metrics.histograms :only (defhistogram)])
+    (require '[metrics.histograms :refer [defhistogram]])
 
-    (defhistogram search-results-returned)
+    (defhistogram reg search-results-returned)
 
 All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
 title to make it easier to define.
@@ -73,7 +76,7 @@ as they occur.
 
 Update the histogram when you have a new value to record with ``update!``::
 
-    (use '[metrics.histograms :only (update!)])
+    (require '[metrics.histograms :refer [update!]])
 
     (update! search-results-returned 10)
 
@@ -90,7 +93,7 @@ The data of a histogram metrics can be retrived in a bunch of different ways.
 The function you'll usually want to use to pull data from a histogram is
 ``percentiles``::
 
-    (use '[metrics.histograms :only (percentiles)])
+    (require '[metrics.histograms :refer [percentiles]])
 
     (percentiles search-results-returned)
     => { 0.75   180
@@ -109,7 +112,7 @@ value for that percentile.  In this example:
 
 If you want a different set of percentiles just pass them as a sequence::
 
-    (use '[metrics.histograms :only (percentiles)])
+    (require '[metrics.histograms :refer [percentiles]])
 
     (percentiles search-results-returned [0.50 0.75])
     => { 0.50 100
@@ -123,7 +126,7 @@ If you want a different set of percentiles just pass them as a sequence::
 To get the number of data points recorded over the entire lifetime of this
 histogram::
 
-    (use '[metrics.histograms :only (number-recorded)])
+    (require '[metrics.histograms :refer [number-recorded]])
 
     (number-recorded search-results-returned)
     => 12882
@@ -136,7 +139,7 @@ histogram::
 To get the smallest data point recorded over the entire lifetime of this
 histogram::
 
-    (use '[metrics.histograms :only (smallest)])
+    (require '[metrics.histograms :refer [smallest]])
 
     (smallest search-results-returned)
     => 4
@@ -149,7 +152,7 @@ histogram::
 To get the largest data point recorded over the entire lifetime of this
 histogram::
 
-    (use '[metrics.histograms :only (largest)])
+    (require '[metrics.histograms :refer [largest]])
 
     (largest search-results-returned)
     => 1345
@@ -162,7 +165,7 @@ histogram::
 To get the mean of the data points recorded over the entire lifetime of this
 histogram::
 
-    (use '[metrics.histograms :only (mean)])
+    (require '[metrics.histograms :refer [mean]])
 
     (mean search-results-returned)
     => 233.12
@@ -175,7 +178,7 @@ histogram::
 To get the standard deviation of the data points recorded over the entire
 lifetime of this histogram::
 
-    (use '[metrics.histograms :only (std-dev)])
+    (require '[metrics.histograms :refer [std-dev]])
 
     (std-dev search-results-returned)
     => 80.2
@@ -191,7 +194,7 @@ know what you're doing.
 
 ::
 
-    (use '[metrics.histograms :only (sample)])
+    (require '[metrics.histograms :refer [sample]])
 
     (sample search-results-returned)
     => [12 2232 234 122]

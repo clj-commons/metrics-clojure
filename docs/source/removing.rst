@@ -3,7 +3,7 @@ Removing Metrics
 
 You can remove metrics as long as you know their names::
 
-    (use '[metrics.core :only (remove-metric)])
+    (require '[metrics.core :refer [remove-metric]])
 
     (remove-metric "files-served")
 

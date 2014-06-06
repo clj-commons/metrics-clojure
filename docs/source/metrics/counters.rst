@@ -26,18 +26,20 @@ Creating
 
 Create your counter::
 
-    (use '[metrics.counters :only (counter)])
+    (require '[metrics.core :refer [new-registry]])
+    (require '[metrics.counters :refer [counter]])
 
-    (def users-connected (counter "users-connected"))
+    (def reg (new-registry))
+    (def users-connected (counter reg "users-connected"))
 
 .. _counters/defcounter:
 
 You can also use the ``defcounter`` macro to create a counter and bind it to a var
 in one concise, easy step::
 
-    (use '[metrics.counters :only (defcounter)])
+    (require '[metrics.counters :refer [defcounter]])
 
-    (defcounter users-connected)
+    (defcounter reg users-connected)
 
 All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
 title to make it easier to define.
@@ -55,7 +57,7 @@ Once you have a counter you can increment it and decrement it.
 Increment counters with ``inc!``.  You can pass a number to increment it by, or
 omit it to increment by 1::
 
-    (use '[metrics.counters :only (inc!)])
+    (require '[metrics.counters :refer [inc!]])
 
     (inc! users-connected)
     (inc! users-connected 2)
@@ -68,7 +70,7 @@ omit it to increment by 1::
 Decrement counters with ``dec!``.  You can pass a number to decrement it by, or
 omit it to decrement by 1::
 
-    (use '[metrics.counters :only (dec!)])
+    (require '[metrics.counters :refer [dec!]])
 
     (dec! users-connected)
     (dec! users-connected 2)
@@ -85,6 +87,6 @@ There's only one way to get data from a counter.
 
 You can get the current value of a counter with ``value``::
 
-    (use '[metrics.counters :only (value)])
+    (require '[metrics.counters :refer [value]])
 
     (value users-connected)

@@ -18,10 +18,13 @@ package name would be a pain to find, so metrics-clojure uses "default" and
 If you want to specify something other than "default" you can pass a collection
 of three strings instead of a single string::
 
-    (use '[metrics.timers :only (timer)])
+    (require '[metrics.core :refer [new-registry]])
+    (require '[metrics.timers :refer [timer]])
+
+    (def reg (new-registry))
 
     (def response-time
-      (timer ["webservice" "views" "response-time"]))
+      (timer reg ["webservice" "views" "response-time"]))
 
 This will result in a name like "webservice.views.response-time".
 
@@ -44,20 +47,20 @@ For example, this::
 
 is equivalent to::
 
-    (def post-requests (meter "post-requests"))
+    (def post-requests (meter reg "post-requests"))
 
 If you want to define a metric with a name outside of the default group/type,
 you can use a vector of three strings and/or symbols instead of a bare symbol.
 The last entry in the vector will be used as the symbol for the var (and will be
 coerced if necessary). For example, all of these::
 
-    (defcounter ["mysite.http" api post-requests])
-    (defcounter ["mysite.http" "api" post-requests])
-    (defcounter ["mysite.http" "api" "post-requests"])
+    (defcounter reg ["mysite.http" api post-requests])
+    (defcounter reg ["mysite.http" "api" post-requests])
+    (defcounter reg ["mysite.http" "api" "post-requests"])
 
 are equivalent to::
 
-    (def post-requests (meter ["mysite.http" "api" "post-requests"]))
+    (def post-requests (meter reg ["mysite.http" "api" "post-requests"]))
 
 If you need more control than this (e.g.: if you want a var named differently
 than the last segment of the metric name) you should use the normal creation
