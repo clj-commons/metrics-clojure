@@ -1,7 +1,9 @@
 (ns metrics.ring.instrument
   (:use [metrics.counters :only (counter inc! dec!)]
         [metrics.meters :only (meter mark!)]
-        [metrics.timers :only (timer time!)]))
+        [metrics.timers :only (timer time!)])
+  (:import [com.codahale.metrics MetricRegistry])
+  )
 
 
 (defn- mark-in! [metric-map k]
@@ -14,32 +16,32 @@
   This middleware should be added as late as possible (nearest to the outside of
   the \"chain\") for maximum effect.
   "
-  ([handler]
-   (let [active-requests (counter ["ring" "requests" "active"])
-         requests (meter ["ring" "requests" "rate"] "requests")
-         responses (meter ["ring" "responses" "rate"] "responses")
-         statuses {2 (meter ["ring" "responses" "rate.2xx"] "responses")
-                   3 (meter ["ring" "responses" "rate.3xx"] "responses")
-                   4 (meter ["ring" "responses" "rate.4xx"] "responses")
-                   5 (meter ["ring" "responses" "rate.5xx"] "responses")}
-         times {:get     (timer ["ring" "handling-time" "GET"])
-                :put     (timer ["ring" "handling-time" "PUT"])
-                :post    (timer ["ring" "handling-time" "POST"])
-                :head    (timer ["ring" "handling-time" "HEAD"])
-                :delete  (timer ["ring" "handling-time" "DELETE"])
-                :options (timer ["ring" "handling-time" "OPTIONS"])
-                :trace   (timer ["ring" "handling-time" "TRACE"])
-                :connect (timer ["ring" "handling-time" "CONNECT"])
-                :other   (timer ["ring" "handling-time" "OTHER"])}
-         request-methods {:get     (meter ["ring" "requests" "rate.GET"] "requests")
-                          :put     (meter ["ring" "requests" "rate.PUT"] "requests")
-                          :post    (meter ["ring" "requests" "rate.POST"] "requests")
-                          :head    (meter ["ring" "requests" "rate.HEAD"] "requests")
-                          :delete  (meter ["ring" "requests" "rate.DELETE"] "requests")
-                          :options (meter ["ring" "requests" "rate.OPTIONS"] "requests")
-                          :trace   (meter ["ring" "requests" "rate.TRACE"] "requests")
-                          :connect (meter ["ring" "requests" "rate.CONNECT"] "requests")
-                          :other   (meter ["ring" "requests" "rate.OTHER"] "requests")}]
+  ([handler ^MetricRegistry reg]
+   (let [active-requests (counter reg ["ring" "requests" "active"])
+         requests (meter reg ["ring" "requests" "rate"])
+         responses (meter reg ["ring" "responses" "rate"])
+         statuses {2 (meter reg ["ring" "responses" "rate.2xx"])
+                   3 (meter reg ["ring" "responses" "rate.3xx"])
+                   4 (meter reg ["ring" "responses" "rate.4xx"])
+                   5 (meter reg ["ring" "responses" "rate.5xx"])}
+         times {:get     (timer reg ["ring" "handling-time" "GET"])
+                :put     (timer reg ["ring" "handling-time" "PUT"])
+                :post    (timer reg ["ring" "handling-time" "POST"])
+                :head    (timer reg ["ring" "handling-time" "HEAD"])
+                :delete  (timer reg ["ring" "handling-time" "DELETE"])
+                :options (timer reg ["ring" "handling-time" "OPTIONS"])
+                :trace   (timer reg ["ring" "handling-time" "TRACE"])
+                :connect (timer reg ["ring" "handling-time" "CONNECT"])
+                :other   (timer reg ["ring" "handling-time" "OTHER"])}
+         request-methods {:get     (meter reg ["ring" "requests" "rate.GET"])
+                          :put     (meter reg ["ring" "requests" "rate.PUT"])
+                          :post    (meter reg ["ring" "requests" "rate.POST"])
+                          :head    (meter reg ["ring" "requests" "rate.HEAD"])
+                          :delete  (meter reg ["ring" "requests" "rate.DELETE"])
+                          :options (meter reg ["ring" "requests" "rate.OPTIONS"])
+                          :trace   (meter reg ["ring" "requests" "rate.TRACE"])
+                          :connect (meter reg ["ring" "requests" "rate.CONNECT"])
+                          :other   (meter reg ["ring" "requests" "rate.OTHER"])}]
      (fn [request]
        (inc! active-requests)
        (try
