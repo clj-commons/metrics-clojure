@@ -1,3 +1,21 @@
+## Changes Between 2.0.2 and 2.0.3
+
+### timers/mean Returns Value (Not Rate)
+
+`metrics.timers/mean` now returns mean value (not rate)
+of the timer.
+
+Contributed by Steve Miner.
+
+
+### Ring Extension Updated for 2.0
+
+The Ring extension is now updated for Metrics core 2.0 API.
+
+Contributed by John Cowie (ThoughtWorks).
+
+
+
 ## Changes Between 1.1.0 and 2.0.0
 
 ### Metrics Registries
