@@ -4,10 +4,10 @@
             [metrics.meters :as meters]
             [metrics.histograms :as histograms]
             [metrics.counters :as counters]
-            [metrics.timers :as timers])
-  (:use [ring.util.response :only [header response]]
-        [metrics.utils :only [all-metrics]]
-        [cheshire.core :only [generate-string]]))
+            [metrics.timers :as timers]
+            [ring.util.response :refer [header response]]
+            [metrics.utils :refer [all-metrics]]
+            [cheshire.core :refer [generate-string]]))
 
 
 ; Define rendering protocol ---------------------------------------------------
