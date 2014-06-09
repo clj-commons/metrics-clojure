@@ -1,16 +1,16 @@
 (ns metrics.reporters.console
   "Console reporting"
+  (:require [metrics.core  :refer [default-registry]])
   (:import java.util.concurrent.TimeUnit
-           [com.codahale.metrics Metrics MetricsRegistry ConsoleReporter ConsoleReporter$Builder Clock MetricsFilter]
+           [com.codahale.metrics Metric MetricRegistry ConsoleReporter Clock MetricFilter]
            java.io.PrintStream
            java.util.Locale))
 
 (defn ^ConsoleReporter reporter
   ([opts]
-   (reporter (Metrics/defaultRegistry)
-             opts))
-  ([^MetricsRegistry reg opts]
-   (let [b (ConsoleReporter$Builder. reg)]
+   (reporter default-registry opts))
+  ([^MetricRegistry reg opts]
+   (let [b (ConsoleReporter/forRegistry reg)]
      (when-let [^PrintStream s (:stream opts)]
        (.outputTo b s))
      (when-let [^Locale l (:locale opts)]
@@ -21,7 +21,7 @@
        (.convertRatesTo b ru))
      (when-let [^TimeUnit du (:duration-unit opts)]
        (.convertDurationsTo b du))
-     (when-let [^MetricsFilter f (:filter opts)]
+     (when-let [^MetricFilter f (:filter opts)]
        (.filter b f))
      (.build b))))
 

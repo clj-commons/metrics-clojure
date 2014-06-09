@@ -1,5 +1,5 @@
 (ns metrics.ring.expose
-  (:import (com.yammer.metrics.core Gauge Timer Counter Histogram Meter))
+  (:import (com.codahale.metrics Gauge Timer Counter Histogram Meter))
   (:require [metrics.gauges :as gauges]
             [metrics.meters :as meters]
             [metrics.histograms :as histograms]
