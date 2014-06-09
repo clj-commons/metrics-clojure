@@ -1,3 +1,39 @@
+## Changes Between 2.0.x and 2.1.0
+
+### JVM Instrumentation Extension
+
+The project now also has a JVM instrumentation extension that covers:
+
+ * Number of threads and their states
+ * GC stats, heap, off heap memory
+ * File descriptors
+
+To enable full instrumenting, use
+
+``` clojure
+(require '[metrics.jvm.core :refer [instrument-jvm]])
+
+(instrument-jvm metric-registry)
+```
+
+Contributed by John Cowie (ThoughtWorks).
+
+
+### timers/mean Returns Value (Not Rate)
+
+`metrics.timers/mean` now returns mean value (not rate)
+of the timer.
+
+Contributed by Steve Miner.
+
+
+### Ring Extension Updated for 2.0
+
+The Ring extension is now updated for Metrics core 2.0 API.
+
+Contributed by John Cowie (ThoughtWorks).
+
+
 ## Changes Between 1.1.0 and 2.0.0
 
 ### Metrics Registries
