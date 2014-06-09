@@ -1,9 +1,8 @@
 (ns metrics.ring.instrument
-  (:use [metrics.counters :only (counter inc! dec!)]
-        [metrics.meters :only (meter mark!)]
-        [metrics.timers :only (timer time!)])
-  (:import [com.codahale.metrics MetricRegistry])
-  )
+  (:require [metrics.counters :refer (counter inc! dec!)]
+            [metrics.meters :refer (meter mark!)]
+            [metrics.timers :refer (timer time!)])
+  (:import [com.codahale.metrics MetricRegistry]))
 
 
 (defn- mark-in! [metric-map k]

@@ -1,6 +1,6 @@
 (ns metrics.test.utils-test
-  (:require [metrics.utils :as utils])
-  (:use [clojure.test]))
+  (:require [metrics.utils :as utils]
+            [clojure.test :refer :all]))
 
 (deftest test-desugared-title
   (let [[s title] (utils/desugared-title "foo")]
