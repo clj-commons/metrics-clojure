@@ -7,7 +7,8 @@ Installation
 ------------
 
 The extra JVM-related functionality is in a separate ``metrics-clojure-jvm``
-library so it's installation is optional.
+library so its installation is optional.
+
 
 To install it, add this to your ``project.clj``'s dependencies::
 
