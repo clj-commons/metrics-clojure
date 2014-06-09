@@ -23,8 +23,7 @@ More Information
 ----------------
 
 * Documentation: <http://metrics-clojure.rtfd.org/>
-* Source (Mercurial): <http://bitbucket.org/sjl/metrics-clojure/>
 * Source (Git): <http://github.com/sjl/metrics-clojure/>
-* License: MIT/X11
 * Issues: <http://github.com/sjl/metrics-clojure/issues/>
+* License: MIT/X11
 
