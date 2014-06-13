@@ -95,9 +95,11 @@
   ([handler]
      (expose-metrics-as-json handler "/metrics"))
   ([handler uri]
-   (fn [request]
-     (let [request-uri (:uri request)]
-       (if (or (.startsWith request-uri (sanitize-uri uri))
-               (= request-uri uri))
-         (serve-metrics request)
-         (handler request))))))
+    (expose-metrics-as-json handler uri default-registry))
+  ([handler uri registry]
+    (fn [request]
+      (let [request-uri (:uri request)]
+        (if (or (.startsWith request-uri (sanitize-uri uri))
+                (= request-uri uri))
+          (serve-metrics request registry)
+          (handler request))))))
