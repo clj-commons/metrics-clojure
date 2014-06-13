@@ -87,7 +87,7 @@
      (serve-metrics request default-registry))
   ([request registry]
      (serve-metrics request registry false))
-  ([request registry pretty-print?]
+  ([request registry {:keys [pretty-print?] :as opts}]
      (let [metrics-map (into {} (map render-metric (all-metrics registry)))
            json        (generate-string metrics-map {:pretty pretty-print?})]
        (-> (response json)
@@ -99,11 +99,11 @@
   ([handler uri]
     (expose-metrics-as-json handler uri default-registry))
   ([handler uri registry]
-    (expose-metrics-as-json handler uri default-registry false))
-  ([handler uri registry pretty-print?]
+    (expose-metrics-as-json handler uri default-registry {:pretty-print? false}))
+  ([handler uri registry opts]
     (fn [request]
       (let [request-uri (:uri request)]
         (if (or (.startsWith request-uri (sanitize-uri uri))
                 (= request-uri uri))
-          (serve-metrics request registry pretty-print?)
+          (serve-metrics request registry opts)
           (handler request))))))
