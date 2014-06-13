@@ -4,7 +4,7 @@
   (:import [com.codahale.metrics MetricRegistry]))
 
 (deftest test-instrument
-  "Shouldn't blow up with ClassCastException when passing in a request"
-    (let [dummy-handler (fn [handler] (fn [request] request))]
-         (instrument dummy-handler (MetricRegistry. ))))
+  ;; ensure that ring.instrument compiles
+  (let [dummy-handler (fn [handler] (fn [request] request))]
+    (instrument dummy-handler (MetricRegistry. ))))
 

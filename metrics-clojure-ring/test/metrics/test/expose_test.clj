@@ -4,7 +4,7 @@
   (:import [com.codahale.metrics MetricRegistry]))
 
 (deftest test-expose-metrics-as-json
-  "Ensure that the handler can be called without blowing up."
+  ;; Ensure that ring.expose compiles
   (expose-metrics-as-json (constantly nil)))
 
 
