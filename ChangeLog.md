@@ -1,5 +1,16 @@
 ## Changes Between 2.0.x and 2.1.0
 
+### Ring Extension Supports Multiple Registries
+
+It is now possible to use `metrics.ring.expose` with a custom
+registry:
+
+``` clojure
+(require '[metrics.ring.expose :refer [expose-metrics-as-json]])
+
+(expose-metrics-as-json ring-app "/ops/metrics" registry)
+```
+
 ### JVM Instrumentation Extension
 
 The project now also has a JVM instrumentation extension that covers:
