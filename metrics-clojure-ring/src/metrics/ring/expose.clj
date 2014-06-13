@@ -6,6 +6,7 @@
             [metrics.counters :as counters]
             [metrics.timers :as timers]
             [ring.util.response :refer [header response]]
+            [metrics.core :refer [default-registry]]
             [metrics.utils :refer [all-metrics]]
             [cheshire.core :refer [generate-string]]))
 
@@ -53,8 +54,10 @@
     {:type :counter
      :value (counters/value c)}))
 
+;;
+;; Implementation
+;;
 
-; Utils -----------------------------------------------------------------------
 (defn- ensure-leading-slash [s]
   (if (not= \/ (first s))
     (str \/ s)
@@ -75,12 +78,18 @@
   [metric-name (render-to-basic metric)])
 
 
-; Exposing --------------------------------------------------------------------
-(defn- metrics-json [request]
-  (let [metrics-map (into {} (map render-metric (all-metrics)))
-        json (generate-string metrics-map)]
-    (-> (response json)
-      (header "Content-Type" "application/json"))))
+;;
+;; API
+;;
+
+(defn serve-metrics
+  ([request]
+     (serve-metrics default-registry))
+  ([request registry]
+     (let [metrics-map (into {} (map render-metric (all-metrics registry)))
+           json        (generate-string metrics-map)]
+       (-> (response json)
+         (header "Content-Type" "application/json")))))
 
 (defn expose-metrics-as-json
   ([handler]
@@ -90,5 +99,5 @@
      (let [request-uri (:uri request)]
        (if (or (.startsWith request-uri (sanitize-uri uri))
                (= request-uri uri))
-         (metrics-json request)
+         (serve-metrics request)
          (handler request))))))
