@@ -1,4 +1,4 @@
-(defproject metrics-clojure-graphite "2.2.0-SNAPSHOT"
+(defproject metrics-clojure-graphite "2.2.0-beta1"
   :description "Graphite reporter integration for metrics-clojure"
-  :dependencies [[metrics-clojure "2.2.0-SNAPSHOT"]
+  :dependencies [[metrics-clojure "2.2.0-beta1"]
                  [com.codahale.metrics/metrics-graphite "3.0.2"]])
