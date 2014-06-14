@@ -1,8 +1,9 @@
 (ns metrics.reporters.console
   "Console reporting"
-  (:require [metrics.core  :refer [default-registry]])
+  (:require [metrics.core  :refer [default-registry]]
+            [metrics.reporters :as mrep])
   (:import java.util.concurrent.TimeUnit
-           [com.codahale.metrics Metric MetricRegistry ConsoleReporter Clock MetricFilter]
+           [com.codahale.metrics Metric MetricRegistry ScheduledReporter ConsoleReporter Clock MetricFilter]
            java.io.PrintStream
            java.util.Locale))
 
@@ -27,5 +28,5 @@
 
 (defn start
   "Report all metrics to standard out periodically"
-  [^ConsoleReporter r ^long seconds]
-  (.start r seconds TimeUnit/SECONDS))
+  [^ScheduledReporter r ^long seconds]
+  (mrep/start r seconds))
