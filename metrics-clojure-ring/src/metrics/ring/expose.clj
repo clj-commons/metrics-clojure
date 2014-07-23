@@ -99,7 +99,7 @@
   ([handler uri]
     (expose-metrics-as-json handler uri default-registry))
   ([handler uri registry]
-    (expose-metrics-as-json handler uri default-registry {:pretty-print? false}))
+    (expose-metrics-as-json handler uri registry {:pretty-print? false}))
   ([handler uri registry opts]
     (fn [request]
       (let [request-uri (:uri request)]
