@@ -1,3 +1,20 @@
+## Changes Between 2.1.x and 2.2.0
+
+### Graphite Extension
+
+`metrics.reporters.graphite` is a new sub-project that contains
+a Graphite reporter.
+
+
+### Ring Extension Now Respects User-provided Registry
+
+The Ring extension now respects user-provided registries
+instead of always using the default one.
+
+Contributed by David Smith.
+
+
+
 ## Changes Between 2.0.x and 2.1.0
 
 ### Ring Extension Supports Multiple Registries and Options
