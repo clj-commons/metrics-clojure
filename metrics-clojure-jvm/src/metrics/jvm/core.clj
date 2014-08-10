@@ -2,7 +2,7 @@
   (:import (com.codahale.metrics MetricRegistry JvmAttributeGaugeSet)
            (com.codahale.metrics.jvm ThreadStatesGaugeSet GarbageCollectorMetricSet FileDescriptorRatioGauge
                                      MemoryUsageGaugeSet))
-  (:require [metrics.core :refer [add-metric]]))
+  (:require [metrics.core :refer [add-metric default-registry]]))
 
 (defn register-jvm-attribute-gauge-set
   ([^MetricRegistry reg]
@@ -35,10 +35,12 @@
    (add-metric reg title (new ThreadStatesGaugeSet))))
 
 (defn instrument-jvm
-  [^MetricRegistry reg]
-  (doseq [register-metric-set [register-jvm-attribute-gauge-set
-                               register-memory-usage-gauge-set
-                               register-file-descriptor-ratio-gauge-set
-                               register-garbage-collector-metric-set
-                               register-thread-state-gauge-set]]
-    (register-metric-set reg)))
+  ([]
+   (instrument-jvm default-registry))
+  ([^MetricRegistry reg]
+   (doseq [register-metric-set [register-jvm-attribute-gauge-set
+                                register-memory-usage-gauge-set
+                                register-file-descriptor-ratio-gauge-set
+                                register-garbage-collector-metric-set
+                                register-thread-state-gauge-set]]
+     (register-metric-set reg))))
