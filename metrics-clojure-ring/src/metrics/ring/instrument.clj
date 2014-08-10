@@ -1,5 +1,6 @@
 (ns metrics.ring.instrument
-  (:require [metrics.counters :refer (counter inc! dec!)]
+  (:require [metrics.core :refer [default-registry]]
+            [metrics.counters :refer (counter inc! dec!)]
             [metrics.meters :refer (meter mark!)]
             [metrics.timers :refer (timer time!)])
   (:import [com.codahale.metrics MetricRegistry]))
@@ -15,6 +16,8 @@
   This middleware should be added as late as possible (nearest to the outside of
   the \"chain\") for maximum effect.
   "
+  ([handler]
+   (instrument handler default-registry))
   ([handler ^MetricRegistry reg]
    (let [active-requests (counter reg ["ring" "requests" "active"])
          requests (meter reg ["ring" "requests" "rate"])
