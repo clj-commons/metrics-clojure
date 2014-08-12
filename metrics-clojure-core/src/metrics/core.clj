@@ -17,8 +17,9 @@
     (MetricRegistry/name
      ^String (first title)
      ^"[Ljava.lang.String;" (into-array String
-                                        [(second title)
-                                         (last title)]))))
+                                        (if (= 3 (count title))
+                                          [(second title) (last title)]
+                                          (rest title))))))
 
 (defn add-metric
   "Add a metric with the given title."
