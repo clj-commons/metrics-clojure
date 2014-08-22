@@ -13,6 +13,11 @@ instead of always using the default one.
 
 Contributed by David Smith.
 
+### Bugfixes
+
+- Fixed `metrics.core/default-registry` to have a valid reflection
+  hint (no longer causes compile error when used in interop.) Fix
+  planned on 2.1.x as well. Contributed by Tim McCormack.
 
 
 ## Changes Between 2.0.x and 2.1.0
