@@ -1,3 +1,11 @@
+## Changes Between 2.1.1 and 2.1.2
+
+### Bugfixes
+
+- Fixed `metrics.core/default-registry` to have a valid
+  reflection hint (no longer causes compile error when used in
+  interop.) Contributed by Tim McCormack.
+
 ## Changes Between 2.1.0 and 2.1.1
 
 ### Ring Extension Now Respects User-provided Registry
