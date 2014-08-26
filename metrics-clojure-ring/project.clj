@@ -1,5 +1,5 @@
-(defproject metrics-clojure-ring "2.2.0-beta2-SNAPSHOT"
+(defproject metrics-clojure-ring "2.2.0"
   :description "Various things gluing together metrics-clojure and ring."
   :dependencies [[cheshire "5.3.1"]
-                 [metrics-clojure "2.2.0-beta2-SNAPSHOT"]]
+                 [metrics-clojure "2.2.0"]]
   :profiles {:dev {:dependencies [[ring "1.3.0"]]}})
