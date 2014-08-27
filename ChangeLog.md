@@ -1,5 +1,9 @@
 ## Changes Between 2.2.x and 2.3.0
 
+## Added Jmx Reporter and documentation
+
+Contributed by Jason Whitlark.
+
 ## Graphite reporter API in Line With the Console One
 
 `metrics.reporters.graphite/start` is a function that starts the reporter,
