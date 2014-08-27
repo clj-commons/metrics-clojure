@@ -7,6 +7,12 @@ added, but backwards-incompatible changes should be very rare.
 We use `semantic versioning <http://semver.org/>`_ to decide how to number
 versions, so you know what's going to happen when you upgrade.
 
+2.3.0
+-----
+
+- Updated graphite reporter api to bring it in line with the console reporter
+- Updated docs for console reporter and graphite reporter.
+
 2.0.0
 -----
 
