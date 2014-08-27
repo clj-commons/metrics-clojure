@@ -41,10 +41,13 @@ metrics-clojure supports reporting metrics into csv files (one file per metric):
 
 This will tell ``metrics`` to append the most recent value or each
 metric (every second), to a file named after the metric, in
-``/tmp/csv_reporter``. Note that the directory name is required. The
-directory (and parents) will be created if they doesn't exist, it will
-throw an exception if it is not writable, or if the given path is not
-a directory.
+``/tmp/csv_reporter``. The directory name is required. The directory
+(and parents) will be created if they doesn't exist, it will throw an
+exception if it is not writable, or if the given path is not a
+directory.
+
+To use this reporter, you may need to sanitize your metric names to
+ensure that they are valid filenames for your system.
 
 Optional arguments to csv/reporter are:
 
