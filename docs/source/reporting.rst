@@ -34,8 +34,29 @@ JMX and ``jvisualvm``
 
 metrics-clojure also supports `JMX reporting
 <http://metrics.codahale.com/manual.html#jmx-reporter>`_, since it's built into
-``metrics`` itself.
+``metrics`` itself.::
 
-In a nutshell: you can open ``jvisualvm`` (which you probably already have as
+    (require '[metrics.reporters.jmx :as jmx])
+
+    (def JR (jmx/reporter {}))
+    (jmx/start JR)
+
+This will tell ``metrics`` to make all metrics available via ``JMX`` under ``metrics`` domain.
+
+Once this is done, you can open ``jvisualvm`` (which you probably already have as
 it's included in many Java distributions), connect to a process, and view
 metrics in the MBeans tab.
+
+Optional arguments to jmx/reporter are:
+
+- :domain
+- :rate-unit
+- :duration-unit
+- :filter
+
+Note that there are options available to the JMX reporter that are not
+visible through the Clojure interface. I'm not that familiar with JMX,
+and didn't know how to handle things like ObjectNameFactory.
+
+See https://github.com/dropwizard/metrics/blob/master/metrics-core/src/main/java/com/codahale/metrics/JmxReporter.java
+for the original code.
