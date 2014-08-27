@@ -29,6 +29,30 @@ Optional arguments to console/reporter are:
 - :duration-unit
 - :filter
 
+CSV Reporting
+-------------
+
+metrics-clojure supports reporting metrics into csv files (one file per metric)::
+
+    (require '[metrics.reporters.csv :as csv])
+
+    (def CR (csv/reporter "/tmp/csv_reporter" {}))
+    (csv/start CR 1)
+
+This will tell ``metrics`` to append the most recent value or each
+metric (every second), to a file named after the metric, in
+``/tmp/csv_reporter``. Note that the directory name is required. The
+directory (and parents) will be created if they doesn't exist, it will
+throw an exception if it is not writable, or if the given path is not
+a directory.
+
+Optional arguments to csv/reporter are:
+
+- :locale
+- :rate-unit
+- :duration-unit
+- :filter
+
 JMX and ``jvisualvm``
 ---------------------
 
