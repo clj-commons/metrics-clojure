@@ -12,12 +12,22 @@ Console
 metrics-clojure supports reporting metrics through the console (on standard
 error)::
 
-    (use '[metrics.core :only (report-to-console)])
+    (require '[metrics.reporters.console :as console])
 
-    (report-to-console 10)
+    (def CR (console/reporter {}))
+    (console/start CR 10)
 
 This will tell ``metrics`` to print all metrics to the console every ten
 seconds.
+
+Optional arguments to console/reporter are:
+
+- :stream
+- :locale
+- :clock
+- :rate-unit
+- :duration-unit
+- :filter
 
 JMX and ``jvisualvm``
 ---------------------
