@@ -23,3 +23,8 @@
   "Report all metrics via JMX"
   [^JmxReporter r]
   (.start ^JmxReporter r))
+
+(defn stop
+  "Stop reporting metrics via JMX"
+  [^JmxReporter r]
+  (.stop ^JmxReporter r))
