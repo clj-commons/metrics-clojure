@@ -1,3 +1,17 @@
+## Changes Between 2.2.x and 2.3.0
+
+## Graphite reporter API in Line With the Console One
+
+`metrics.reporters.graphite/start` is a function that starts the reporter,
+just like other reporter namespaces (e.g. console) do.
+
+Contributed by Jason Whitlark.
+
+### Graphite and Console Reporters Documentation Improvements
+
+Contributed by Jason Whitlark.
+
+
 ## Changes Between 2.1.x and 2.2.0
 
 ### Graphite Extension
