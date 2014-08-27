@@ -17,7 +17,33 @@ an existing utility that metrics-clojure provides support for.
 Sending Metrics to Graphite
 ---------------------------
 
-**TODO**
+metrics-clojure supports aggregating metrics to graphite::
+
+You must include ``metrics-clojure-graphite`` in your project.clj.
+
+    (require '[metrics.reporters.graphite :as graphite])
+    (import '[java.util.concurrent.TimeUnit])
+    (import '[com.codahale.metrics MetricFilter])
+
+    (def GR (graphite/reporter {:host "your.graphite.host"
+                                :prefix "my-api.common.prefix"
+                                :rate-unit TimeUnit/SECONDS
+                                :duration-unit TimeUnit/MILLISECONDS
+                                :filter MetricFilter/ALL}))
+    (graphite/start GR 10)
+
+This will tell ``metrics`` to aggregate all metrics to graphite every
+ten seconds.
+
+Optional arguments to graphite/reporter are:
+
+- :host
+- :port
+- :prefix
+- :clock
+- :rate-unit
+- :duration-unit
+- :filter
 
 Sending Metrics to Ganglia
 --------------------------
