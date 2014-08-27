@@ -17,9 +17,9 @@ an existing utility that metrics-clojure provides support for.
 Sending Metrics to Graphite
 ---------------------------
 
-metrics-clojure supports aggregating metrics to graphite::
+Note: You must include ``metrics-clojure-graphite`` in your project.clj.
 
-You must include ``metrics-clojure-graphite`` in your project.clj.
+metrics-clojure supports aggregating metrics to graphite::
 
     (require '[metrics.reporters.graphite :as graphite])
     (import '[java.util.concurrent.TimeUnit])
