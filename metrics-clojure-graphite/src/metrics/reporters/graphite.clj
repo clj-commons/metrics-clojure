@@ -33,3 +33,8 @@
   "Report all metrics to graphite periodically."
   [^GraphiteReporter r ^long seconds]
   (mrep/start r seconds))
+
+(defn stop
+  "Stops reporting."
+  [^GraphiteReporter r]
+  (mrep/stop r))
