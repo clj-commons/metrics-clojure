@@ -1,12 +1,19 @@
 ## Changes Between 2.2.x and 2.3.0
 
+
 ## Added first cut of a Ganglia reporter
+
+Contributed by Jason Whitlark.
+
+## Added CSV Reporter and documentation
 
 Contributed by Jason Whitlark.
 
 ## Added Jmx Reporter and documentation
 
 Contributed by Jason Whitlark.
+
+## Added stop fn to all reporter namespaces
 
 ## Graphite reporter API in Line With the Console One
 
@@ -18,7 +25,6 @@ Contributed by Jason Whitlark.
 ### Graphite and Console Reporters Documentation Improvements
 
 Contributed by Jason Whitlark.
-
 
 ## Changes Between 2.1.x and 2.2.0
 

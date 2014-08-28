@@ -30,3 +30,8 @@
   "Report all metrics to standard out periodically"
   [^ScheduledReporter r ^long seconds]
   (mrep/start r seconds))
+
+(defn stop
+  "Stops reporting all metrics to standard out."
+  [^ScheduledReporter r]
+  (mrep/stop r))
