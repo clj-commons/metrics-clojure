@@ -1,5 +1,8 @@
 ## Changes Between 2.2.x and 2.3.0
 
+## Added metrics.health to provide healthchecks
+
+Contributed by Jason Whitlark.
 
 ## Added first cut of a Ganglia reporter
 

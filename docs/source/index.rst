@@ -33,5 +33,6 @@ Table of Contents
    reporting
    aggregation
    ring
+   healthchecks
    contributing
    changelog
