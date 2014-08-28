@@ -1,5 +1,10 @@
 ## Changes Between 2.2.x and 2.3.0
 
+
+## Added first cut of a Ganglia reporter
+
+Contributed by Jason Whitlark.
+
 ## Added CSV Reporter and documentation
 
 Contributed by Jason Whitlark.
