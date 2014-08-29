@@ -1,7 +1,7 @@
 (ns metrics.timers
   (:require [metrics.core :refer [default-registry metric-name]]
             [metrics.utils :refer [get-percentiles desugared-title snapshot]])
-  (:import [com.codahale.metrics MetricRegistry Timer]
+  (:import [com.codahale.metrics MetricRegistry Timer Timer$Context]
            java.util.concurrent.TimeUnit))
 
 
@@ -99,3 +99,15 @@
 (defn time-fn!
   [^Timer t ^clojure.lang.IFn f]
   (.time t (cast Callable f)))
+
+(defn start
+  "Start a timer, returning the context object that will be used to
+  stop this particular instance."
+  ^Timer$Context [^Timer t]
+  (.time t))
+
+(defn stop
+  "Stop an instance of a timer, given the Timer$Context instance that
+  was returned when it was started."
+  [^Timer$Context tc]
+  (.stop tc))
