@@ -5,11 +5,17 @@
 Added convenience fns and updated documentation.
 Contributed by Jason Whitlark.
 
-## Added metrics.health to provide healthchecks
+## metrics.health
+
+`metrics-clojure-health` is a new sub-project that makes implementing
+[health checks](http://metrics.codahale.com/manual/healthchecks/) easier in Clojure.
 
 Contributed by Jason Whitlark.
 
-## Added first cut of a Ganglia reporter
+## Ganglia Reporter
+
+`metrics-clojure-ganglia` is a new sub-project that makes using the Ganglia
+reporter easier from Clojure.
 
 Contributed by Jason Whitlark.
 
