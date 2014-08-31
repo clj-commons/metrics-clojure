@@ -1,8 +1,9 @@
 ## Changes Between 2.2.x and 2.3.0
 
-## Enhanced timers
+## Enhanced Timers
 
-Added convenience fns and updated documentation.
+`metrics.timers` now provides two new functions, `start` and `stop`.
+
 Contributed by Jason Whitlark.
 
 ## metrics.health
@@ -19,17 +20,26 @@ reporter easier from Clojure.
 
 Contributed by Jason Whitlark.
 
-## Added CSV Reporter and documentation
+## CSV Reporter
+
+CSV reporter is now provided in `metrics.reporters.csv`.
 
 Contributed by Jason Whitlark.
 
-## Added Jmx Reporter and documentation
+## JMX Reporter
+
+JMX reporter is now provided in `metrics.reporters.jmx`.
 
 Contributed by Jason Whitlark.
 
-## Added stop fn to all reporter namespaces
+## Stop Function for Reporter
 
-## Graphite reporter API in Line With the Console One
+All reporter namespace now provide a new function, `stop`, that stops
+their respective reporter.
+
+Contributed by Jason Whitlark.
+
+## Graphite Reporter API in Line With the Console One
 
 `metrics.reporters.graphite/start` is a function that starts the reporter,
 just like other reporter namespaces (e.g. console) do.
@@ -39,6 +49,7 @@ Contributed by Jason Whitlark.
 ### Graphite and Console Reporters Documentation Improvements
 
 Contributed by Jason Whitlark.
+
 
 ## Changes Between 2.1.x and 2.2.0
 
