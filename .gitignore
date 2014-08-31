@@ -8,3 +8,4 @@ docs/build
 target
 checkouts/*
 .nrepl*
+bump_version.sh
