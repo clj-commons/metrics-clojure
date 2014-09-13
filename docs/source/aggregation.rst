@@ -17,12 +17,64 @@ an existing utility that metrics-clojure provides support for.
 Sending Metrics to Graphite
 ---------------------------
 
-**TODO**
+Note: You must include ``metrics-clojure-graphite`` in your project.clj.
+
+metrics-clojure supports aggregating metrics to graphite::
+
+    (require '[metrics.reporters.graphite :as graphite])
+    (import '[java.util.concurrent.TimeUnit])
+    (import '[com.codahale.metrics MetricFilter])
+
+    (def GR (graphite/reporter {:host "your.graphite.host"
+                                :prefix "my-api.common.prefix"
+                                :rate-unit TimeUnit/SECONDS
+                                :duration-unit TimeUnit/MILLISECONDS
+                                :filter MetricFilter/ALL}))
+    (graphite/start GR 10)
+
+This will tell ``metrics`` to aggregate all metrics to graphite every
+ten seconds.
+
+Optional arguments to graphite/reporter are:
+
+- :host
+- :port
+- :prefix
+- :clock
+- :rate-unit
+- :duration-unit
+- :filter
 
 Sending Metrics to Ganglia
 --------------------------
 
-**TODO**
+Note: You must include ``metrics-clojure-ganglia`` in your project.clj.
+
+I don't have a ganglia server to test against, so while this compiles,
+and should work, it still needs testing.
+
+metrics-clojure supports aggregating metrics to ganglia::
+
+    (require '[metrics.reporters.ganglia :as ganglia])
+    (import '[java.util.concurrent.TimeUnit])
+    (import '[com.codahale.metrics MetricFilter])
+
+    (def ganglia (... your ganglia GMetric config here ...))
+    (def GR (ganglia/reporter ganglia
+                              {:rate-unit TimeUnit/SECONDS
+                               :duration-unit TimeUnit/MILLISECONDS
+                               :filter MetricFilter/ALL}))
+    (ganglia/start GR 1)
+
+This will tell ``metrics`` to aggregate all metrics to ganglia every
+minute.
+
+Optional arguments to ganglia/reporter are:
+
+- :rate-unit
+- :duration-unit
+- :filter
+
 
 Implementing a Simple Graphing Server
 -------------------------------------

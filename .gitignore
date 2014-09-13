@@ -8,3 +8,5 @@ docs/build
 target
 checkouts/*
 .nrepl*
+*.sh
+*.bak

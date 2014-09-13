@@ -37,7 +37,7 @@ title to make it easier to define.
 Writing
 -------
 
-Once you have a timer you can record times to it in two different ways.
+Once you have a timer you can record times to it in three different ways.
 
 .. _timers/time!:
 
@@ -67,6 +67,28 @@ instead of a body::
               (fn []
                 (process-image-part-1 ...)
                 (process-image-part-2 ...)))
+
+``start/stop``
+~~~~~~~~~~~~~~
+
+You can also use the start and stop functions in ``metrics.timers``,
+assuming you hang onto the Timer$Context instance that is returned.::
+
+    (require '[metrics.timers :as tmr])
+
+    (tmr/deftimer my-tmr)
+
+    (let [a (tmr/start my-tmr)
+          b (tmr/start my-tmr)
+          c (tmr/start my-tmr)]
+        (Thread/sleep 1000)
+        (println (tmr/stop c))
+        (println (tmr/stop b))
+        (println (tmr/stop a))
+    #_ => 1000266000 ; nanoseconds this instance ran for.
+          1000726000
+          1000908000
+          nil
 
 Reading
 -------

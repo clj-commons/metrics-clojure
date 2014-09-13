@@ -1,6 +1,7 @@
 (ns metrics.reporters.graphite
   "Graphite reporter interface"
-  (:require [metrics.core  :refer [default-registry]])
+  (:require [metrics.core  :refer [default-registry]]
+            [metrics.reporters :as mrep])
   (:import java.util.concurrent.TimeUnit
            java.net.InetSocketAddress
            [com.codahale.metrics Metric MetricRegistry Clock MetricFilter]
@@ -27,3 +28,13 @@
        (when-let [^MetricFilter f (:filter opts)]
          (.filter b f))
        (.build b g))))
+
+(defn start
+  "Report all metrics to graphite periodically."
+  [^GraphiteReporter r ^long seconds]
+  (mrep/start r seconds))
+
+(defn stop
+  "Stops reporting."
+  [^GraphiteReporter r]
+  (mrep/stop r))
