@@ -43,13 +43,12 @@ Create your histogram::
     (def reg (new-registry))
 
     (def search-results-returned
-      (histogram "search-results-returned"))
+      (histogram reg "search-results-returned"))
 
-You can create an unbiased histogram by passing an extra boolean argument
-(though you probably don't want to)::
-
-    (def search-results-returned-biased
-      (histogram reg "search-results-returned-unbiased" false))
+The ``histogram`` function is idempotent, which means that you don't
+need to keep a local reference to the histogram. Once a histogram has been
+registered, a call to ``(histogram reg "search-results-returned")`` will return
+the existing histogram.
 
 .. _histograms/defhistogram:
 
@@ -79,6 +78,10 @@ Update the histogram when you have a new value to record with ``update!``::
     (require '[metrics.histograms :refer [update!]])
 
     (update! search-results-returned 10)
+
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (update! (histogram reg "search-results-returned") 10)
 
 Reading
 -------
@@ -110,6 +113,15 @@ value for that percentile.  In this example:
 * 95% of searches returned 299 or fewer results.
 * ... etc.
 
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (percentiles (histogram reg "search-results-returned"))
+    => { 0.75   180
+         0.95   299
+         0.99   300
+         0.999  340
+         1.0   1345 }
+
 If you want a different set of percentiles just pass them as a sequence::
 
     (require '[metrics.histograms :refer [percentiles]])
@@ -131,6 +143,11 @@ histogram::
     (number-recorded search-results-returned)
     => 12882
 
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (number-recorded (histogram reg "search-results-returned"))
+    => 12882
+
 .. _histograms/smallest:
 
 ``smallest``
@@ -142,6 +159,11 @@ histogram::
     (require '[metrics.histograms :refer [smallest]])
 
     (smallest search-results-returned)
+    => 4
+
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (smallest (histogram reg "search-results-returned"))
     => 4
 
 .. _histograms/largest:
@@ -157,6 +179,11 @@ histogram::
     (largest search-results-returned)
     => 1345
 
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (largest (histogram reg "search-results-returned"))
+    => 1345
+
 .. _histograms/mean:
 
 ``mean``
@@ -170,6 +197,11 @@ histogram::
     (mean search-results-returned)
     => 233.12
 
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (mean (histogram reg "search-results-returned"))
+    => 233.12
+
 .. _histograms/std-dev:
 
 ``std-dev``
@@ -181,6 +213,11 @@ lifetime of this histogram::
     (require '[metrics.histograms :refer [std-dev]])
 
     (std-dev search-results-returned)
+    => 80.2
+
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (std-dev (histogram reg "search-results-returned"))
     => 80.2
 
 .. _histograms/sample:
@@ -197,4 +234,9 @@ know what you're doing.
     (require '[metrics.histograms :refer [sample]])
 
     (sample search-results-returned)
+    => [12 2232 234 122]
+
+Or if you haven't held a reference to ``search-results-returned``, you can do the following::
+
+    (sample (histogram reg "search-results-returned"))
     => [12 2232 234 122]

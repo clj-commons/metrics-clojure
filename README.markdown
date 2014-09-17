@@ -10,7 +10,7 @@ Installation
 
 Add this to your `project.clj`'s dependencies:
 
-    [metrics-clojure "2.2.0"]
+    [metrics-clojure "2.3.0"]
 
 That's it.
 
@@ -26,4 +26,3 @@ More Information
 * Source (Git): <http://github.com/sjl/metrics-clojure/>
 * Issues: <http://github.com/sjl/metrics-clojure/issues/>
 * License: MIT/X11
-
