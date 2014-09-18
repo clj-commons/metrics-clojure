@@ -22,6 +22,11 @@ Create your timer::
 
     (def image-processing-time (timer "image-processing-time"))
 
+The ``timer`` function is idempotent, which means that you don't need
+to keep a local reference to the timer. Once a timer has been
+registered, a call to ``(timer reg "image-processing-time")`` will
+return the existing timer.
+
 .. _timers/deftimer:
 
 You can also use the ``deftimer`` macro to create a timer and bind it to a var
@@ -49,6 +54,12 @@ You can record the time it takes to evaluate one or more expressions with the ``
     (require '[metrics.timers :refer [time!]])
 
     (time! image-processing-time
+           (process-image-part-1 ...)
+           (process-image-part-2 ...))
+
+Or if you haven't held a reference to ``image-processing-time``, you can do the following::
+
+    (time! (timer reg "image-processing-time")
            (process-image-part-1 ...)
            (process-image-part-2 ...))
 

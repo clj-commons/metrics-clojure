@@ -32,10 +32,12 @@ Create your meter::
     (require '[metrics.meters :refer [meter]])
 
     (def reg (new-registry))
-    (def files-served (meter reg "files-served" "files"))
+    (def files-served (meter reg "files-served"))
 
-The second argument to ``meter`` is a string describing the "units" for the
-meter.  In this example it's "files", as in "18732 files".
+The ``meter`` function is idempotent, which means that you don't
+need to keep a local reference to the meter. Once a meter has been
+registered, a call to ``(meter reg "files-served")`` will return
+the existing meter.
 
 .. _meters/defmeter:
 
@@ -44,7 +46,7 @@ in one concise, easy step::
 
     (require '[metrics.meters :refer (defmeter)])
 
-    (defmeter reg files-served "files")
+    (defmeter reg files-served)
 
 All the ``def[metric]`` macros do some :ref:`magic <desugaring>` to the metric
 title to make it easier to define.
@@ -64,6 +66,10 @@ Mark the meter every time the event happens with ``mark!``::
     (require '[metrics.meters :refer [mark!]])
 
     (mark! files-served)
+
+Or if you haven't held a reference to ``files-served``, you can do the following::
+
+    (mark! (meter reg "files-served"))
 
 Reading
 -------
@@ -103,6 +109,11 @@ If you only care about the rate of events during the last minute you can use
     (rate-one files-served)
     => 100.0
 
+Or if you haven't held a reference to ``files-served``, you can do the following::
+
+    (rate-one (meter reg "files-served"))
+    => 100.0
+
 .. _meters/rate-five:
 
 ``rate-five``
@@ -114,6 +125,11 @@ use ``rate-five``::
     (require '[metrics.meters :refer [rate-five]])
 
     (rate-five files-served)
+    => 120.0
+
+Or if you haven't held a reference to ``files-served``, you can do the following::
+
+    (rate-five (meter reg "files-served"))
     => 120.0
 
 .. _meters/rate-fifteen:
@@ -129,6 +145,11 @@ can use ``rate-fifteen``::
     (rate-fifteen files-served)
     => 76.0
 
+Or if you haven't held a reference to ``files-served``, you can do the following::
+
+    (rate-fifteen (meter reg "files-served"))
+    => 76.0
+
 .. _meters/rate-mean:
 
 ``rate-mean``
@@ -140,4 +161,9 @@ you probably don't) you can use ``rate-mean``::
     (require '[metrics.meters :refer [rate-mean]])
 
     (rate-mean files-served)
+    => 204.123
+
+Or if you haven't held a reference to ``files-served``, you can do the following::
+
+    (rate-mean (meter reg "files-served"))
     => 204.123

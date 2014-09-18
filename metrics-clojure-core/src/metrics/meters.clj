@@ -6,6 +6,15 @@
 
 
 (defn meter
+  "Create and return a new Meter metric with the given title. If a
+  Meter already exists with the given title, will return that Meter.
+
+  Title can be a plain string like \"foo\" or a vector of three strings (group,
+  type, and title) like:
+
+      [\"myapp\" \"webserver\" \"connections\"]
+
+  "
   ([title]
    (meter default-registry title))
   ([^MetricRegistry reg title]
@@ -66,4 +75,3 @@
   ([^Meter m n]
    (.mark m (long n))
    m))
-

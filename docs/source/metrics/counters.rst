@@ -32,6 +32,11 @@ Create your counter::
     (def reg (new-registry))
     (def users-connected (counter reg "users-connected"))
 
+The ``counter`` function is idempotent, which means that you don't
+need to keep a local reference to the counter. Once a counter has been
+registered, a call to ``(counter reg "users-connected")`` will return
+the existing counter.
+
 .. _counters/defcounter:
 
 You can also use the ``defcounter`` macro to create a counter and bind it to a var
@@ -62,6 +67,11 @@ omit it to increment by 1::
     (inc! users-connected)
     (inc! users-connected 2)
 
+Or if you haven't held a reference to ``users-connected``, you can do the following::
+
+    (inc! (counter reg "users-connected"))
+    (inc! (counter reg "users-connected") 2)
+
 .. _counters/dec!:
 
 ``dec!``
@@ -74,6 +84,11 @@ omit it to decrement by 1::
 
     (dec! users-connected)
     (dec! users-connected 2)
+
+Or if you haven't held a reference to ``users-connected``, you can do the following::
+
+    (dec! (counter reg "users-connected"))
+    (dec! (counter reg "users-connected") 2)
 
 Reading
 -------
@@ -90,3 +105,10 @@ You can get the current value of a counter with ``value``::
     (require '[metrics.counters :refer [value]])
 
     (value users-connected)
+
+Or if you haven't held a reference to ``users-connected``, you can do the following::
+
+    (value (counter reg "users-connected"))
+
+The counter will be created and return the default value if it hasn't
+been registered before.

@@ -5,11 +5,12 @@
 
 
 (defn histogram
-  "Create and return a Histogram metric with the given title.
+  "Create and return a Histogram metric with the given title. If a
+  Histogram already exists with the given title, will return that Histogram.
 
-  By default a biased Histogram is created.  This is probably what you want, but
-  if you know what you're doing you can pass false to create a uniform one
-  instead."
+  By default a biased Histogram is created.  This is probably what you
+  want. You cannot create an unbiased Histogram from this fn, you'll
+  need to look into the Java interop for that."
   ([title]
    (histogram default-registry title))
   ([^MetricRegistry reg title]
@@ -102,4 +103,3 @@
   [^Histogram h n]
   (.update h (long n))
   h)
-
