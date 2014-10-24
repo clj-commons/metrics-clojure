@@ -91,6 +91,12 @@ A meter measuring the rate of all incoming requests.
 Six separate meters (ending in ``GET``, ``POST``, etc) measuring the rate of
 incoming requests of a given type.
 
+``ring.requests-scheme.rate.*``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Two separate meters (ending in ``http`` or ``https``) measuring the
+rate of incoming requests of a given type.
+
 ``ring.responses.rate``
 ~~~~~~~~~~~~~~~~~~~~~~~
 
