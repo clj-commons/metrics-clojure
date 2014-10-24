@@ -40,7 +40,7 @@
     (mh/update! h 2)
     (mh/update! h 4)
     (mh/update! h 6)
-    (is (= (mh/std-dev h) 2.0))))
+    (is (> (mh/std-dev h) 1.63))))
 
 (deftest test-smallest
   (let [reg (mc/new-registry)
