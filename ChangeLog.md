@@ -1,5 +1,9 @@
 ## Changes Between 2.3.0 and 2.4.0
 
+### Metrics 3.1.0
+
+`metrics-clojure` is now based on [Metrics 3.1.0](https://groups.google.com/forum/#!topic/metrics-user/zwzHnMBcAX4).
+
 ### Improve ring instrumentation.
 
 `metrics-clojure-ring` now instruments the scheme of requests, (http or https).
