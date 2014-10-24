@@ -22,6 +22,8 @@
    (let [active-requests (counter reg ["ring" "requests" "active"])
          requests (meter reg ["ring" "requests" "rate"])
          responses (meter reg ["ring" "responses" "rate"])
+         schemes {:http  (meter reg ["ring" "requests-scheme" "rate.http"])
+                  :https (meter reg ["ring" "requests-scheme" "rate.https"])}
          statuses {2 (meter reg ["ring" "responses" "rate.2xx"])
                    3 (meter reg ["ring" "responses" "rate.3xx"])
                    4 (meter reg ["ring" "responses" "rate.4xx"])
@@ -47,9 +49,11 @@
      (fn [request]
        (inc! active-requests)
        (try
-         (let [request-method (:request-method request)]
+         (let [request-method (:request-method request)
+               request-scheme (:scheme request)]
            (mark! requests)
            (mark-in! request-methods request-method)
+           (mark-in! schemes request-scheme)
            (let [resp (time! (times request-method (times :other))
                              (handler request))
                  status-code (or (:status resp) 404)]

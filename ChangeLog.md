@@ -1,3 +1,11 @@
+## Changes Between 2.3.0 and 2.3.1
+
+### Improve ring instrumentation.
+
+`metrics-clojure-ring` now instruments the scheme of requests, (http or https).
+
+Contributed by Jason Whitlark.
+
 ## Changes Between 2.2.x and 2.3.0
 
 ### Enhanced Timers

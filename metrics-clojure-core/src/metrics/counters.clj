@@ -5,7 +5,8 @@
            java.util.concurrent.TimeUnit))
 
 (defn counter
-  "Create and return a new Counter metric with the given title.
+  "Create and return a new Counter metric with the given title. If a
+  Counter already exists with the given title, will return that Counter.
 
   Title can be a plain string like \"foo\" or a vector of three strings (group,
   type, and title) like:
@@ -68,4 +69,3 @@
   [^Counter c]
   (.dec c (.getCount c))
   c)
-

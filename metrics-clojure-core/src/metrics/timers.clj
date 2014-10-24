@@ -6,6 +6,15 @@
 
 
 (defn ^Timer timer
+  "Create and return a new Timer metric with the given title. If a
+  Timer already exists with the given title, will return that Timer.
+
+  Title can be a plain string like \"foo\" or a vector of three strings (group,
+  type, and title) like:
+
+      [\"myapp\" \"webserver\" \"connections\"]
+
+  "
   ([title]
    (timer default-registry title))
   ([^MetricRegistry reg title]
