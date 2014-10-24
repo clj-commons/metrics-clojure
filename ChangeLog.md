@@ -1,4 +1,4 @@
-## Changes Between 2.3.0 and 2.3.1
+## Changes Between 2.3.0 and 2.4.0
 
 ### Improve ring instrumentation.
 
