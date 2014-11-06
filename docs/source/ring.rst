@@ -39,6 +39,13 @@ If you want to use a different endpoint you can pass it as a parameter::
 
     (def app (expose-metrics-as-json app "/admin/stats/"))
 
+Using compojure::
+
+    (def app
+      (-> (routes home-routes app-routes)
+      (wrap-base-url)
+      (expose-metrics-as-json)))
+
 **WARNING**: this URL will not be protected by a username or password in any way
 (yet), so if you have sensitive metrics you might want to think twice about
 using it (or protect it yourself).
@@ -70,6 +77,13 @@ You can add some common metrics by using the ``instrument`` middleware::
     (require '[metrics.ring.instrument :refer [instrument]])
 
     (def app (instrument app))
+    
+Using compojure::
+
+    (def app
+      (-> (routes home-routes app-routes)
+      (wrap-base-url)
+      (instrument)))
 
 This will add a number of metrics, listed below.
 
