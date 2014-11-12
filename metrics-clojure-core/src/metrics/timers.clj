@@ -58,11 +58,16 @@
   [^Timer m]
   (.getMeanRate m))
 
+(defn ^long number-recorded
+  [^Timer t]
+  (.getCount t))
+
 (defn rates
   [^Timer m]
   {1 (rate-one m)
    5 (rate-five m)
-   15 (rate-fifteen m)})
+   15 (rate-fifteen m)
+   :total (number-recorded m)})
 
 (defn mean
   [^Timer t]
@@ -78,11 +83,6 @@
    (percentiles t [0.75 0.95 0.99 0.999 1.0]))
   ([^Timer t ps]
    (get-percentiles t ps)))
-
-
-(defn ^long number-recorded
-  [^Timer t]
-  (.getCount t))
 
 (defn largest
   "Returns the greatest timing seen by a timer, in nanoseconds"
