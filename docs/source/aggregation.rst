@@ -22,7 +22,7 @@ Note: You must include ``metrics-clojure-graphite`` in your project.clj.
 metrics-clojure supports aggregating metrics to graphite::
 
     (require '[metrics.reporters.graphite :as graphite])
-    (import '[java.util.concurrent.TimeUnit])
+    (import '[java.util.concurrent TimeUnit])
     (import '[com.codahale.metrics MetricFilter])
 
     (def GR (graphite/reporter {:host "your.graphite.host"
@@ -56,7 +56,7 @@ and should work, it still needs testing.
 metrics-clojure supports aggregating metrics to ganglia::
 
     (require '[metrics.reporters.ganglia :as ganglia])
-    (import '[java.util.concurrent.TimeUnit])
+    (import '[java.util.concurrent TimeUnit])
     (import '[com.codahale.metrics MetricFilter])
 
     (def ganglia (... your ganglia GMetric config here ...))
