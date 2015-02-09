@@ -1,5 +1,9 @@
 ## Changes Between 2.4.0 and 2.5.0
 
+### Added remove-all-metrics function
+
+`metrics-clojure` Now has a function to remove all existing metrics from a given registry.
+
 ### Metrics 3.1.1
 
 `metrics-clojure` is now based on [Metrics 3.1.1](https://github.com/dropwizard/metrics/issues/694#issuecomment-77668929).
