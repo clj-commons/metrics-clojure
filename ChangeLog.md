@@ -1,3 +1,11 @@
+## Changes Between 2.4.0 and 2.5.0
+
+### Added remove-all-metrics function
+
+`metrics-clojure` Now has a function to remove all existing metrics from a given registry.
+
+Contributed by Jason Whitlark.
+
 ## Changes Between 2.3.0 and 2.4.0
 
 ### Metrics 3.1.0
