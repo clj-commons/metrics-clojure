@@ -1,3 +1,9 @@
+## Changes Between 2.4.0 and 2.5.0
+
+### Metrics 3.1.1
+
+`metrics-clojure` is now based on [Metrics 3.1.1](https://github.com/dropwizard/metrics/issues/694#issuecomment-77668929).
+
 ## Changes Between 2.3.0 and 2.4.0
 
 ### Metrics 3.1.0
