@@ -58,7 +58,7 @@
   [^Timer m]
   (.getMeanRate m))
 
-(defn ^long number-recorded
+(defn ^clojure.core$long number-recorded
   [^Timer t]
   (.getCount t))
 
@@ -112,7 +112,7 @@
 (defn start
   "Start a timer, returning the context object that will be used to
   stop this particular instance."
-  ^Timer$Context [^Timer t]
+  ^com.codahale.metrics.Timer$Context [^Timer t]
   (.time t))
 
 (defn stop
