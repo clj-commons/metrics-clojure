@@ -36,7 +36,7 @@
   "
   ([title]
    (let [[s title] (desugared-title title)]
-     `(def ~s (counter ~default-registry '~title))))
+     `(def ~s (counter '~title))))
   ([^MetricRegistry reg title]
    (let [[s title] (desugared-title title)]
      `(def ~s (counter ~reg '~title)))))
