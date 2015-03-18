@@ -58,7 +58,7 @@
   [^Timer m]
   (.getMeanRate m))
 
-(defn ^clojure.core$long number-recorded
+(defn ^long number-recorded
   [^Timer t]
   (.getCount t))
 
