@@ -8,7 +8,7 @@
            [com.codahale.metrics.graphite Graphite GraphiteReporter GraphiteReporter$Builder]))
 
 
-(defn ^GraphiteReporter reporter
+(defn ^com.codahale.metrics.graphite.GraphiteReporter reporter
   ([opts]
      (reporter default-registry opts))
   ([^MetricRegistry reg opts]

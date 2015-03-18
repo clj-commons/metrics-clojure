@@ -5,7 +5,7 @@
   default-registry
   (MetricRegistry.))
 
-(defn ^MetricRegistry new-registry
+(defn ^com.codahale.metrics.MetricRegistry new-registry
   []
   (MetricRegistry.))
 
