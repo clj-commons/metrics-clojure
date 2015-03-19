@@ -7,7 +7,7 @@
            java.io.PrintStream
            java.util.Locale))
 
-(defn ^ConsoleReporter reporter
+(defn ^com.codahale.metrics.ConsoleReporter reporter
   ([opts]
    (reporter default-registry opts))
   ([^MetricRegistry reg opts]

@@ -4,7 +4,7 @@
   (:import java.util.concurrent.TimeUnit
            [com.codahale.metrics JmxReporter MetricRegistry MetricFilter]))
 
-(defn ^JmxReporter reporter
+(defn ^com.codahale.metrics.JmxReporter reporter
   ([opts]
    (reporter default-registry opts))
   ([^MetricRegistry reg opts]

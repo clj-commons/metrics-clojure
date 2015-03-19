@@ -6,7 +6,7 @@
            [com.codahale.metrics MetricRegistry MetricFilter]
            [com.codahale.metrics.ganglia GangliaReporter GangliaReporter$Builder]))
 
-(defn ^GangliaReporter reporter
+(defn ^com.codahale.metrics.ganglia.GangliaReporter reporter
   ([ganglia opts]
      (reporter default-registry opts))
   ([^MetricRegistry reg ganglia opts]

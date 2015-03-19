@@ -5,7 +5,7 @@
            java.util.concurrent.TimeUnit))
 
 
-(defn ^Timer timer
+(defn ^com.codahale.metrics.Timer timer
   "Create and return a new Timer metric with the given title. If a
   Timer already exists with the given title, will return that Timer.
 
