@@ -120,3 +120,10 @@
   was returned when it was started."
   [^Timer$Context tc]
   (.stop tc))
+
+(defmacro start-stop-time!
+  [^Timer t & body]
+  `(let [^Timer$Context start# (start ~t)
+         out# (do ~@body)]
+     (metrics.timers/stop start#)
+     out#))

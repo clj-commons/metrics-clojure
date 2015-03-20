@@ -62,3 +62,34 @@
     (is (= (mt/time! t (sleep-100)) 100))
     (Thread/sleep expiration-delay)
     (is (> (mt/rate-fifteen t) 0.0))))
+
+(deftest test-rate-mean-start-stop
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-mean"])]
+    (is (= (mt/rate-mean t) 0.0))
+    (is (= (mt/start-stop-time! t (sleep-100)) 100))
+    (is (> (mt/rate-mean t) 0.0))))
+
+(deftest test-rate-one-start-stop
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-one"])]
+    (is (= (mt/rate-one t) 0.0))
+    (is (= (mt/start-stop-time! t (sleep-100)) 100))
+    (Thread/sleep expiration-delay)
+    (is (> (mt/rate-one t) 0.0))))
+
+(deftest test-rate-five-start-stop
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-five"])]
+    (is (= (mt/rate-five t) 0.0))
+    (is (= (mt/start-stop-time! t (sleep-100)) 100))
+    (Thread/sleep expiration-delay)
+    (is (> (mt/rate-five t) 0.0))))
+
+(deftest test-rate-fifteen-start-stop
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-rate-fifteen"])]
+    (is (= (mt/rate-fifteen t) 0.0))
+    (is (= (mt/start-stop-time! t (sleep-100)) 100))
+    (Thread/sleep expiration-delay)
+    (is (> (mt/rate-fifteen t) 0.0))))
