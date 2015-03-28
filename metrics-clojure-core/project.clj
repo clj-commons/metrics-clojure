@@ -1,4 +1,4 @@
-(defproject metrics-clojure "2.5.0-SNAPSHOT"
+(defproject metrics-clojure "2.5.0"
   :description "A Clojure façade for Coda Hale's metrics library."
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [io.dropwizard.metrics/metrics-core "3.1.1"]]
