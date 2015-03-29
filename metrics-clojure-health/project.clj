@@ -1,6 +1,6 @@
-(defproject metrics-clojure-health "2.5.1-SNAPSHOT"
+(defproject metrics-clojure-health "2.5.1"
   :description "Gluing together metrics-clojure and healthchecks."
   :url "https://github.com/sjl/metrics-clojure"
   :license {:name "MIT"}  
-  :dependencies [[metrics-clojure "2.5.1-SNAPSHOT"]
+  :dependencies [[metrics-clojure "2.5.1"]
                  [io.dropwizard.metrics/metrics-healthchecks "3.1.1"]])
