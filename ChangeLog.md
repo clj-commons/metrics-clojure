@@ -1,3 +1,14 @@
+## Changes Between 2.5.0 and 2.6.0
+
+### Infinite Recursion in Ganglia
+
+Ganglia reporter had an infinite recursion.
+
+GH issue: #71.
+
+
+
+
 ## Changes Between 2.4.0 and 2.5.0
 
 ### Type Hints Use Fully-Qualified Names
