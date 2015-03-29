@@ -1,4 +1,47 @@
-## Changes Between 2.3.0 and 2.3.1
+## Changes Between 2.5.0 and 2.5.1
+
+### Infinite Recursion in Ganglia
+
+Ganglia reporter had an infinite recursion.
+
+GH issue: #71.
+
+
+## Changes Between 2.4.0 and 2.5.0
+
+### Type Hints Use Fully-Qualified Names
+
+Type hints across the libraries now use fully-qualified names, which means
+returned types don't have to be imported in the caller namespaces.
+
+Contributed by Jason Whitlark.
+
+### :total Key In Timers
+
+`metrics.timers/rate` return value now includes `:total`.
+
+Contributed by Andrew Rudenko.
+
+
+### Added remove-all-metrics function
+
+`metrics-clojure` Now has a function to remove all existing metrics from a given registry.
+
+Contributed by Jason Whitlark.
+
+
+### Metrics 3.1.1
+
+`metrics-clojure` is now based on [Metrics 3.1.1](https://github.com/dropwizard/metrics/issues/694#issuecomment-77668929).
+
+Contributed by Jason Whitlark.
+
+
+## Changes Between 2.3.0 and 2.4.0
+
+### Metrics 3.1.0
+
+`metrics-clojure` is now based on [Metrics 3.1.0](https://groups.google.com/forum/#!topic/metrics-user/zwzHnMBcAX4).
 
 ### Improve ring instrumentation.
 

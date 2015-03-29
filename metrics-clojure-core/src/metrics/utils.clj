@@ -2,7 +2,7 @@
   (:require [metrics.core :refer [default-registry]])
   (:import [com.codahale.metrics MetricRegistry Sampling Snapshot]))
 
-(defn ^Snapshot snapshot
+(defn ^com.codahale.metrics.Snapshot snapshot
   [^Sampling h]
   (.getSnapshot h))
 

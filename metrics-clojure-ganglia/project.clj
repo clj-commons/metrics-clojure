@@ -1,4 +1,6 @@
-(defproject metrics-clojure-ganglia "2.3.2-SNAPSHOT"
+(defproject metrics-clojure-ganglia "2.5.1-SNAPSHOT"
   :description "Ganglia reporter integration for metrics-clojure"
-  :dependencies [[metrics-clojure "2.3.2-SNAPSHOT"]
-                 [com.codahale.metrics/metrics-ganglia "3.0.2"]])
+  :url "https://github.com/sjl/metrics-clojure"
+  :license {:name "MIT"}
+  :dependencies [[metrics-clojure "2.5.1-SNAPSHOT"]
+                 [io.dropwizard.metrics/metrics-ganglia "3.1.1"]])

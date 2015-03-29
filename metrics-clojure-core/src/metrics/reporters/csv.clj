@@ -16,7 +16,7 @@
      (when-not (.isDirectory d)
        (throw (java.io.IOException. (str d " is not a directory.")))))
 
-(defn ^CsvReporter reporter
+(defn ^com.codahale.metrics.CsvReporter reporter
   ([dir opts]
    (reporter default-registry dir opts))
   ([^MetricRegistry reg dir opts]

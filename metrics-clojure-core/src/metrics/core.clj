@@ -5,7 +5,7 @@
   default-registry
   (MetricRegistry.))
 
-(defn ^MetricRegistry new-registry
+(defn ^com.codahale.metrics.MetricRegistry new-registry
   []
   (MetricRegistry.))
 
@@ -34,6 +34,14 @@
    (remove-metric default-registry title))
   ([^MetricRegistry reg title]
    (.remove reg (metric-name title))))
+
+(defn remove-all-metrics
+  "Remove all the metrics in the given registry, or the default
+  registry if no registry given."
+  ([] (remove-all-metrics default-registry))
+  ([^MetricRegistry reg]
+   (doseq [metric (.getNames reg)]
+     (.remove reg metric))))
 
 (defn replace-metric
   "Replace a metric with the given title."
