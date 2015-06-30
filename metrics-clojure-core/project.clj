@@ -3,7 +3,7 @@
   :url "https://github.com/sjl/metrics-clojure"
   :license {:name "MIT"}
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [io.dropwizard.metrics/metrics-core "3.1.1"]]
+                 [io.dropwizard.metrics/metrics-core "3.1.2"]]
   :repositories {"repo.codahale.com" "http://repo.codahale.com"
                  ;; to get Clojure snapshots
                  "sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
