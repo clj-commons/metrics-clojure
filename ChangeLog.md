@@ -6,8 +6,11 @@ Ganglia reporter had an infinite recursion.
 
 GH issue: #71.
 
+### Add support for timing expressions in core.async/go blocks
 
+Added the macro `metrics.timers/start-stop-time` to enable timing expressions that include parking functions in `core.async/go` blocks.
 
+Contributed by Wil Yegelwel.
 
 ## Changes Between 2.4.0 and 2.5.0
 
