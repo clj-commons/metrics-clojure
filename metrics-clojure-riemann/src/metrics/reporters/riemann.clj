@@ -29,7 +29,7 @@
     :host-name     - Override source host name
     :tags          - collection of tags to attach to event"
   ([riemann opts]
-   (reporter riemann-client default-registry opts))
+   (reporter riemann default-registry opts))
   ([riemann registry {:keys [clock
                              prefix
                              rate-unit
