@@ -56,7 +56,7 @@
            (mark-in! schemes request-scheme)
            (let [resp (time! (times request-method (times :other))
                              (handler request))
-                 ^int status-code (or (:status resp) 404)]
+                 ^{:tag "int"} status-code (or (:status resp) 404)]
              (mark! responses)
              (mark-in! statuses (int (/ status-code 100)))
              resp))
