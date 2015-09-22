@@ -102,7 +102,7 @@
     (expose-metrics-as-json handler uri registry {:pretty-print? false}))
   ([handler uri registry opts]
     (fn [request]
-      (let [request-uri (:uri request)]
+      (let [^String request-uri (:uri request)]
         (if (or (.startsWith request-uri (sanitize-uri uri))
                 (= request-uri uri))
           (serve-metrics request registry opts)
