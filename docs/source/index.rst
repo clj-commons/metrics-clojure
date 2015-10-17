@@ -5,7 +5,7 @@ metrics-clojure
 around Coda Hale's wonderful `metrics <http://metrics.codahale.com/>`_ library.
 
 metrics-clojure is a thin wrapper around metrics, so if you don't know what any
-of the words in this documentaion mean you should probably read the `metrics
+of the words in this documentation mean you should probably read the `metrics
 documentation <http://metrics.codahale.com/>`_ and/or watch the `talk
 <http://pivotallabs.com/talks/139-metrics-metrics-everywhere>`_.
 
