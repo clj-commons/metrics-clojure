@@ -19,11 +19,14 @@ Creating
 Create your gauge using ``gauge-fn``::
 but you have to pass it a function, not just a body::
 
-    (require '[metrics.gauges :refer [gauge-fn]])
+    (require '[metrics.gauges :refer [gauge-fn gauge]])
 
     (def files-open
       (gauge-fn "files-open"
              #(return-number-of-files-open ...)))
+
+Once a gauge has been registered, a call to ``(gauge "files-open")`` will
+return the existing gauge.
 
 .. _gauges/defgauge:
 
