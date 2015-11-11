@@ -1,7 +1,7 @@
 HealthChecks
 ============
 
-``metrics-clojure-healthchecks`` will allow you to define and run healthcheck.
+``metrics-clojure-health`` will allow you to define and run healthcheck.
 
 example
 -------
