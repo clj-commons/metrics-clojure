@@ -2,7 +2,7 @@ Extras for Ring
 ===============
 
 metrics-clojure contains some extra glue code you can use with your `Ring
-<https://github.com/mmcgrana/ring>`_ apps.
+<https://github.com/ring-clojure/ring>`_ apps.
 
 Installation
 ------------
@@ -43,8 +43,8 @@ Using compojure::
 
     (def app
       (-> (routes home-routes app-routes)
-      (wrap-base-url)
-      (expose-metrics-as-json)))
+          (wrap-base-url)
+          (expose-metrics-as-json)))
 
 **WARNING**: this URL will not be protected by a username or password in any way
 (yet), so if you have sensitive metrics you might want to think twice about
@@ -82,8 +82,8 @@ Using compojure::
 
     (def app
       (-> (routes home-routes app-routes)
-      (wrap-base-url)
-      (instrument)))
+          (wrap-base-url)
+          (instrument)))
 
 This will add a number of metrics, listed below.
 
