@@ -10,7 +10,7 @@ DropWizard Metrics was upgraded to `3.1.2`.
 
 Contributed by Matthias Nüßler.
 
-### DropWizard Metrics Upgrade
+### Cheshire Metrics Upgrade
 
 Cheshire was upgraded to `5.5.0`.
 
