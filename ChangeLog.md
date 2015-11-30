@@ -1,5 +1,28 @@
 ## Changes Between 2.5.0 and 2.6.0
 
+### Riemann Reporter
+
+Contribited by Ragnar Dahlén.
+
+### DropWizard Metrics Upgrade
+
+DropWizard Metrics was upgraded to `3.1.2`.
+
+Contributed by Matthias Nüßler.
+
+### DropWizard Metrics Upgrade
+
+Cheshire was upgraded to `5.5.0`.
+
+Contributed by Shantanu Kumar.
+
+### Predicate-based Metric Removal
+
+`metrics.core/remove-metrics` is a new function that removes
+metrics based on a predicate.
+
+Contributed by Vincent Bernat.
+
 ### Infinite Recursion in Ganglia
 
 Ganglia reporter had an infinite recursion.
