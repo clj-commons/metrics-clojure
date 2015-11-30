@@ -1,4 +1,4 @@
-(ns mobiles-data-hub.common.riemann
+(ns metrics.reporters.riemann
   (:require [metrics.core :refer [default-registry]]
             [com.stuartsierra.component :as component])
   (:import [java.util.concurrent TimeUnit]
