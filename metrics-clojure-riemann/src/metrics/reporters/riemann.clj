@@ -49,7 +49,7 @@
                    ttl (.withTtl (float ttl))
                    separator (.useSeparator separator)
                    host-name (.localHost host-name)
-                   tags (.useSeparator tags))
+                   tags (.tags tags))
          riemann (if (instance? IRiemannClient riemann)
                    (make-riemann riemann)
                    riemann)]
