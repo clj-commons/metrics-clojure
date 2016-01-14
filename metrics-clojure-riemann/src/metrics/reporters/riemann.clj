@@ -1,6 +1,5 @@
 (ns metrics.reporters.riemann
-  (:require [metrics.core :refer [default-registry]]
-            [com.stuartsierra.component :as component])
+  (:require [metrics.core :refer [default-registry]])
   (:import [java.util.concurrent TimeUnit]
            [com.codahale.metrics.riemann Riemann RiemannReporter RiemannReporter$Builder]
            [com.aphyr.riemann.client IRiemannClient]))
