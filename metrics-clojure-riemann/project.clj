@@ -3,4 +3,4 @@
   :url "https://github.com/sjl/metrics-clojure"
   :license {:name "MIT"}
   :dependencies [[metrics-clojure "2.7.0-SNAPSHOT"]
-                 [com.aphyr/riemann-java-client "0.3.1"]])
+                 [com.aphyr/metrics3-riemann-reporter "0.4.1"]])
