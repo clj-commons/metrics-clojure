@@ -88,7 +88,7 @@ Contributed by Jason Whitlark.
 ### metrics.health
 
 `metrics-clojure-health` is a new sub-project that makes implementing
-[health checks](http://metrics.codahale.com/manual/healthchecks/) easier in Clojure.
+[health checks](http://metrics.dropwizard.io/3.1.0/manual/healthchecks/) easier in Clojure.
 
 Contributed by Jason Whitlark.
 
