@@ -3,7 +3,7 @@ metrics-clojure
 
 `metrics-clojure` is a Clojure façade around Coda Hale's [metrics][] library.
 
-[metrics]: http://metrics.codahale.com/
+[metrics]: http://metrics.dropwizard.io
 
 Installation
 ------------

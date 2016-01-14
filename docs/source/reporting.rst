@@ -60,7 +60,7 @@ JMX and ``jvisualvm``
 ---------------------
 
 metrics-clojure also supports `JMX reporting
-<http://metrics.codahale.com/manual.html#jmx-reporter>`_, since it's built into
+<http://metrics.dropwizard.io/3.1.0/manual/core/#jmx>`_, since it's built into
 ``metrics`` itself.::
 
     (require '[metrics.reporters.jmx :as jmx])
