@@ -1,6 +1,8 @@
-## Changes Between 2.6.0 and 2.6.1
+## Changes Between 2.6.0 and 2.6.1 (Jan 19th, 2016)
 
-No changes yet.
+### Dependencies Update
+
+Contributed by Pierre-Yves Ritschard.
 
 
 ## Changes Between 2.5.0 and 2.6.0 (Nov 30th, 2015)
