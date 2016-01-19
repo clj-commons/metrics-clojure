@@ -3,14 +3,14 @@ metrics-clojure
 
 `metrics-clojure` is a Clojure façade around Coda Hale's [metrics][] library.
 
-[metrics]: http://metrics.codahale.com/
+[metrics]: http://metrics.dropwizard.io
 
 Installation
 ------------
 
 Add this to your `project.clj`'s dependencies:
 
-    [metrics-clojure "2.4.0"]
+    [metrics-clojure "2.6.0"]
 
 That's it.
 

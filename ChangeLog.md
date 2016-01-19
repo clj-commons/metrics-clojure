@@ -1,10 +1,44 @@
-## Changes Between 2.5.0 and 2.5.1
+## Changes Between 2.6.0 and 2.6.1
+
+No changes yet.
+
+
+## Changes Between 2.5.0 and 2.6.0 (Nov 30th, 2015)
+
+### Riemann Reporter
+
+Contribited by Ragnar Dahlén.
+
+### DropWizard Metrics Upgrade
+
+DropWizard Metrics was upgraded to `3.1.2`.
+
+Contributed by Matthias Nüßler.
+
+### Cheshire Upgrade
+
+Cheshire was upgraded to `5.5.0`.
+
+Contributed by Shantanu Kumar.
+
+### Predicate-based Metric Removal
+
+`metrics.core/remove-metrics` is a new function that removes
+metrics based on a predicate.
+
+Contributed by Vincent Bernat.
 
 ### Infinite Recursion in Ganglia
 
 Ganglia reporter had an infinite recursion.
 
 GH issue: #71.
+
+### Add support for timing expressions in core.async/go blocks
+
+Added the macro `metrics.timers/start-stop-time` to enable timing expressions that include parking functions in `core.async/go` blocks.
+
+Contributed by Wil Yegelwel.
 
 
 ## Changes Between 2.4.0 and 2.5.0
@@ -60,7 +94,7 @@ Contributed by Jason Whitlark.
 ### metrics.health
 
 `metrics-clojure-health` is a new sub-project that makes implementing
-[health checks](http://metrics.codahale.com/manual/healthchecks/) easier in Clojure.
+[health checks](http://metrics.dropwizard.io/3.1.0/manual/healthchecks/) easier in Clojure.
 
 Contributed by Jason Whitlark.
 

@@ -11,7 +11,7 @@ They're used when you have a type of data for which the following are true:
 * Comparisons of these numeric values are meaningful.
 
 For example: HTTP status codes do *not* fit this because comparisons between the
-numeric values are not meaingful.  The fact that 404 happens to be less than 500
+numeric values are not meaningful.  The fact that 404 happens to be less than 500
 doesn't tell you anything.
 
 Contrast this with something like "search results returned": one value being

@@ -1,7 +1,7 @@
 (ns metrics.gauges
   (:require [metrics.core :refer [default-registry metric-name]]
             [metrics.utils :refer [desugared-title]])
-  (:import [com.codahale.metrics MetricRegistry Gauge]
+  (:import [com.codahale.metrics MetricRegistry MetricFilter Gauge]
            clojure.lang.IFn))
 
 (defn gauge-fn
@@ -18,6 +18,17 @@
          s (metric-name title)]
      (.remove reg s)
      (.register reg s g))))
+
+(defn gauge
+  "Retrieve an existing gauge from the provided registry (or the
+  default registry) from its name. Returns nil when not found."
+  ([title]
+   (gauge default-registry title))
+  ([^MetricRegistry reg title]
+   (when-let [matches (seq (.getGauges reg (reify MetricFilter
+                                             (matches [this name _]
+                                               (= name (metric-name title))))))]
+     (val (first matches)))))
 
 
 (defmacro defgauge

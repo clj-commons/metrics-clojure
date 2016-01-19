@@ -14,3 +14,12 @@
         g (gauges/gauge-fn ["test" "gauges" "test-gauge-fn"]
                            #(+ 100 2))]
     (is (= (gauges/value g) 102))))
+
+(deftest test-gauge
+  (let [r (mc/new-registry)
+        g (gauges/gauge-fn ["test" "gauges" "test-gauge"]
+                           #(+ 100 3))
+        g2 (gauges/gauge ["test" "gauges" "test-gauge"])
+        g3 (gauges/gauge ["test" "gauges" "test-gauge-not"])]
+    (is (= (gauges/value g2) 103))
+    (is (= g3 nil))))

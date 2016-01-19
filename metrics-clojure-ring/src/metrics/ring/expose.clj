@@ -82,13 +82,19 @@
 ;; API
 ;;
 
+(defn render-metrics
+  ([]
+   (render-metrics default-registry))
+  ([registry]
+   (into {} (map render-metric (all-metrics registry)))))
+
 (defn serve-metrics
   ([request]
      (serve-metrics request default-registry))
   ([request registry]
      (serve-metrics request registry false))
   ([request registry {:keys [pretty-print?] :as opts}]
-     (let [metrics-map (into {} (map render-metric (all-metrics registry)))
+     (let [metrics-map (render-metrics registry)
            json        (generate-string metrics-map {:pretty pretty-print?})]
        (-> (response json)
          (header "Content-Type" "application/json")))))
@@ -102,7 +108,7 @@
     (expose-metrics-as-json handler uri registry {:pretty-print? false}))
   ([handler uri registry opts]
     (fn [request]
-      (let [request-uri (:uri request)]
+      (let [^String request-uri (:uri request)]
         (if (or (.startsWith request-uri (sanitize-uri uri))
                 (= request-uri uri))
           (serve-metrics request registry opts)

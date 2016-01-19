@@ -38,10 +38,11 @@
   ([title ^IFn hc-fn]
      (healthcheck-fn default-healthcheck-registry title hc-fn))
   ([^HealthCheckRegistry reg title ^IFn hc-fn]
-     (let [hc (new-hc hc-fn)]
+     (let [hc (new-hc hc-fn)
+           s (metric-name title)]
        ;; REVIEW: Should this automatically remove a previous check of
        ;; the same title? (jw 14-08-28)
-       (.register reg title hc)
+       (.register reg s hc)
        hc)))
 
 (defmacro defhealthcheck

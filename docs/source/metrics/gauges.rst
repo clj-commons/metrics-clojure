@@ -19,11 +19,16 @@ Creating
 Create your gauge using ``gauge-fn``::
 but you have to pass it a function, not just a body::
 
-    (require '[metrics.gauges :refer [gauge-fn]])
+    (require '[metrics.core :refer [new-registry]])
+    (require '[metrics.gauges :refer [gauge-fn gauge]])
 
+    (def reg (new-registry))
     (def files-open
-      (gauge-fn "files-open"
+      (gauge-fn reg "files-open"
              #(return-number-of-files-open ...)))
+
+Once a gauge has been registered, a call to ``(gauge reg "files-open")`` will
+return the existing gauge.
 
 .. _gauges/defgauge:
 
@@ -32,7 +37,7 @@ in one concise, easy step::
 
     (require '[metrics.gauges :refer [defgauge]])
 
-    (defgauge files-open
+    (defgauge reg files-open
       (fn []
         (return-number-of-files-open ...)))
 
@@ -63,3 +68,7 @@ You can read the value of a gauge at any time with ``value``::
     (require '[metrics.gauges :refer [value]])
 
     (value files-open)
+
+Or if you haven't held a reference to ``files-open``, you can do the following::
+
+    (value (gauge reg "files-open"))
