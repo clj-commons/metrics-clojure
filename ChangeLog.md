@@ -1,3 +1,8 @@
+## Changes Between 2.6.1 and 2.6.2 (unreleased)
+
+No changes yet.
+
+
 ## Changes Between 2.6.0 and 2.6.1 (Jan 19th, 2016)
 
 ### Dependencies Update
