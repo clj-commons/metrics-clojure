@@ -3,7 +3,16 @@ HealthChecks
 
 ``metrics-clojure-health`` will allow you to define and run healthcheck.
 
-example
+Install
+-------
+
+``metrics-clojure-health`` is provided as a separate package from ``metrics.core``.
+To install add the following to your ``project.clj``::
+
+    [metrics-clojure-health "2.6.1"]
+
+
+Example
 -------
 
 An example using the default HealthCheckRegistry, (which is different
