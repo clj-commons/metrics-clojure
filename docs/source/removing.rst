@@ -12,3 +12,6 @@ course::
 
     (remove-metric ["webservice" "views" "response-time"])
 
+You can also remove a bunch of metrics by using a predicate::
+
+    (remove-metrics #(= "webservice" (first %)))
