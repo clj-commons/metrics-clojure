@@ -7,9 +7,11 @@ Install
 -------
 
 ``metrics-clojure-health`` is provided as a separate package from ``metrics.core``.
-To install add the following to your ``project.clj``::
+To install add the following to your ``project.clj``:
 
-    [metrics-clojure-health "2.6.1"]
+.. parsed-literal::
+
+    [metrics-clojure-health "|release|"]
 
 
 Example

@@ -10,9 +10,11 @@ The extra JVM-related functionality is in a separate ``metrics-clojure-jvm``
 library so its installation is optional.
 
 
-To install it, add this to your ``project.clj``'s dependencies::
+To install it, add this to your ``project.clj``'s dependencies:
 
-    [metrics-clojure-jvm "0.1.0-SNAPSHOT"]
+.. parsed-literal::
+
+    [metrics-clojure-jvm "|release|"]
 
 
 Instrumenting the JVM

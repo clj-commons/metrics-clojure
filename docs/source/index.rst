@@ -33,6 +33,7 @@ Table of Contents
    reporting
    aggregation
    ring
+   jvm
    healthchecks
    contributing
    changelog
