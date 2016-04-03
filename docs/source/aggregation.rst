@@ -75,6 +75,38 @@ Optional arguments to ganglia/reporter are:
 - :duration-unit
 - :filter
 
+Sending Metrics to Riemann
+--------------------------
+
+Note: You must include ``metrics-clojure-riemann`` in your project.clj.
+
+metrics-clojure supports aggregating metrics to riemann::
+
+    (require '[metrics.reporters.riemann :as riemann])
+    (import '[java.util.concurrent TimeUnit])
+    (import '[com.codahale.metrics MetricFilter])
+
+    (def riemann-client (riemann/make-riemann "localhost" 5555))
+    (def RR (riemann/reporter riemann-client
+                              {:rate-unit TimeUnit/SECONDS
+                               :duration-unit TimeUnit/MILLISECONDS
+                               :filter MetricFilter/ALL}))
+    (riemann/start RR 1)
+
+This will tell ``metrics`` to aggregate all metrics to Riemann every
+minute.
+
+Optional arguments to riemann/reporter are:
+
+- :clock - Clock instance to use for time
+- :prefix - String to prefix all metrics with
+- :rate-unit - TimeUnit to convert rates to
+- :duration-unit - TimeUnit to convert durations to
+- :filter - MetricFilter for filtering reported metrics
+- :ttl - Time to live for reported metrics
+- :separator - Separator between metric name components
+- :host-name - Override source host name
+- :tags - collection of tags to attach to event
 
 Implementing a Simple Graphing Server
 -------------------------------------
