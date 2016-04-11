@@ -9,7 +9,7 @@
 (defn ^com.codahale.metrics.ganglia.GangliaReporter reporter
   ([ganglia opts]
      (reporter default-registry ganglia opts))
-  ([^MetricRegistry reg ganglia {:keys [rate-unit duration-unit] :as opts}]
+  ([^MetricRegistry reg ganglia {:keys [rate-unit duration-unit filter] :as opts}]
      (let [b (GangliaReporter/forRegistry reg)]
        (when-let [^TimeUnit ru rate-unit]
          (.convertRatesTo b ru))
