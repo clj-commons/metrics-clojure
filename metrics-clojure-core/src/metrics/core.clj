@@ -58,3 +58,28 @@
   ([^MetricRegistry reg title ^Metric metric]
    (remove-metric reg (metric-name title))
    (add-metric reg (metric-name title) metric)))
+
+(defn meters
+  "Returns a map of all the meters in the registry and their names."
+  [^MetricRegistry reg]
+  (.getMeters reg))
+
+(defn histograms
+  "Returns a map of all the histograms in the registry and their names."
+  [^MetricRegistry reg]
+  (.getHistograms reg))
+
+(defn timers
+  "Returns a map of all the timers in the registry and their names."
+  [^MetricRegistry reg]
+  (.getTimers reg))
+
+(defn gauges
+  "Returns a map of all the gauges in the registry and their names."
+  [^MetricRegistry reg]
+  (.getGauges reg))
+
+(defn counters
+  "Returns a map of all the counters in the registry and their names."
+  [^MetricRegistry reg]
+  (.getCounters reg))
