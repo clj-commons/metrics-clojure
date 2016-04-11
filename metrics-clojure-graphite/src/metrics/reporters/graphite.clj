@@ -11,21 +11,22 @@
 (defn ^com.codahale.metrics.graphite.GraphiteReporter reporter
   ([opts]
      (reporter default-registry opts))
-  ([^MetricRegistry reg opts]
-     (let [g (Graphite. (InetSocketAddress. (or (:host opts)
-                                                (:hostname opts)
+  ([^MetricRegistry reg {:keys [host hostname port prefix clock rate-unit duration-unit filter] :as opts
+                         :or {port 2003}}]
+     (let [g (Graphite. (InetSocketAddress. (or host
+                                                hostname
                                                 "localhost")
-                                            (get opts :port 2003)))
+                                            port))
            b (GraphiteReporter/forRegistry reg)]
-       (when-let [^String s (:prefix opts)]
+       (when-let [^String s prefix]
          (.prefixedWith b s))
-       (when-let [^Clock c (:clock opts)]
+       (when-let [^Clock c clock]
          (.withClock b c))
-       (when-let [^TimeUnit ru (:rate-unit opts)]
+       (when-let [^TimeUnit ru rate-unit]
          (.convertRatesTo b ru))
-       (when-let [^TimeUnit du (:duration-unit opts)]
+       (when-let [^TimeUnit du duration-unit]
          (.convertDurationsTo b du))
-       (when-let [^MetricFilter f (:filter opts)]
+       (when-let [^MetricFilter f filter]
          (.filter b f))
        (.build b g))))
 
