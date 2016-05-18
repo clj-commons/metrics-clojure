@@ -10,9 +10,11 @@ Installation
 The extra Ring-related functionality is in a separate ``metrics-clojure-ring``
 library so you don't have to install it unless you want it.
 
-To install it, add this to your ``project.clj``'s dependencies::
+To install it, add this to your ``project.clj``'s dependencies:
 
-    [metrics-clojure-ring "2.0.0"]
+.. parsed-literal::
+
+    [metrics-clojure-ring "|release|"]
 
 **Note:** the versions of metrics-clojure and metrics-clojure-ring should always
 be the same.
