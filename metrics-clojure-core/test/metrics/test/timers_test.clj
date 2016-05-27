@@ -93,3 +93,14 @@
     (is (= (mt/start-stop-time! t (sleep-100)) 100))
     (Thread/sleep expiration-delay)
     (is (> (mt/rate-fifteen t) 0.0))))
+
+(deftest test-timer-with-reservoir
+  (let [r (mc/new-registry)
+        s (mc/sliding-window-reservoir 1000)]
+    (mt/timer-with-reservoir r s "timer")
+    (try
+      (mt/timer-with-reservoir r s "timer")
+      (is false)
+      (catch IllegalArgumentException _
+        (is true)))
+    (is (some? (mt/timer r"timer")))))

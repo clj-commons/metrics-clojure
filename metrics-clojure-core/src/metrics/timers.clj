@@ -1,7 +1,7 @@
 (ns metrics.timers
   (:require [metrics.core :refer [default-registry metric-name]]
             [metrics.utils :refer [get-percentiles desugared-title snapshot]])
-  (:import [com.codahale.metrics MetricRegistry Timer Timer$Context]
+  (:import [com.codahale.metrics MetricRegistry Reservoir Timer Timer$Context]
            java.util.concurrent.TimeUnit))
 
 
@@ -20,6 +20,13 @@
   ([^MetricRegistry reg title]
    (.timer reg (metric-name title))))
 
+(defn timer-with-reservoir
+  "Create timer with a custom reservoir. If a Timer already exists with
+  given title, this function will throw IllegalArgumentException."
+  [^MetricRegistry reg ^Reservoir reservoir title]
+  (let [metric (Timer. reservoir)]
+    (.register ^MetricRegistry reg title metric)
+    metric))
 
 (defmacro deftimer
   "Define a new Timer metric with the given title.
@@ -40,7 +47,10 @@
      `(def ~s (timer '~title))))
   ([^MetricRegistry reg title]
    (let [[s title] (desugared-title title)]
-     `(def ~s (timer ~reg '~title)))))
+     `(def ~s (timer ~reg '~title))))
+  ([^MetricRegistry reg ^Reservoir reservoir title]
+   (let [[s title] (desugared-title title)]
+     `(def ~s (timer ~reg ~reservoir '~title)))))
 
 (defn rate-one
   [^Timer m]
