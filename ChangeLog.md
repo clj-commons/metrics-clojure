@@ -1,5 +1,32 @@
 ## Changes Between 2.6.0 and 2.7.0 (unreleased)
 
+### Functions for Working with Reservoirs
+
+Ning Sun contributed several new functions that instantiate
+various reservoir types:
+
+ * `metrics.core/uniform-reservior`
+ * `metrics.core/exponentially-decaying-reservoir`
+ * `metrics.core/sliding-time-window-reservoir`
+ * `metrics.core/sliding-window-reservoir`
+
+and a few more.
+
+GH issue: [#104](https://github.com/sjl/metrics-clojure/pull/104)
+
+### Easier to Retrieve Metrics
+
+Ning Sun contributed several new functions that retrieve different
+type of metrics from a registry:
+
+ * `metrics.core/meters`
+ * `metrics.core/histograms`
+ * `metrics.core/timers`
+ * `metrics.core/gauges`
+ * `metrics.core/counters`
+
+GH issue: [#102](https://github.com/sjl/metrics-clojure/pull/102)
+
 ### Dependencies Update
 
 Contributed by Pierre-Yves Ritschard.
