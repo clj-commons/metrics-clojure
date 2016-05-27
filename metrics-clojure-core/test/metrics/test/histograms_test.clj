@@ -2,7 +2,8 @@
   (:require [metrics.core :as mc]
             [metrics.histograms :as mh]
             [metrics.test.test-utils :refer :all]
-            [clojure.test :refer :all]))
+            [clojure.test :refer :all])
+  (:import [java.util.concurrent TimeUnit]))
 
 
 (let [reg (mc/new-registry)]
@@ -68,3 +69,14 @@
                          {0.75 75, 0.95 95, 0.99 99, 0.999 100, 1.00 100}))
     (is (maps-within-one (mh/percentiles h [0.10 0.50])
                          {0.10 10, 0.50 50}))))
+
+(deftest test-histogram-with-reservoir
+  (let [r (mc/new-registry)
+        s (mc/sliding-time-window-reservoir 10 TimeUnit/MINUTES)]
+    (mh/histogram-with-reservoir r s "histo")
+    (try
+      (mh/histogram-with-reservoir r s "histo")
+      (is false)
+      (catch IllegalArgumentException _
+        (is true)))
+    (is (some? (mh/histogram r "histo")))))

@@ -1,7 +1,7 @@
 (ns metrics.histograms
   (:require [metrics.core :refer [default-registry metric-name]]
             [metrics.utils :refer [get-percentiles desugared-title snapshot]])
-  (:import [com.codahale.metrics MetricRegistry Histogram Snapshot]))
+  (:import [com.codahale.metrics MetricRegistry Histogram Snapshot Reservoir]))
 
 
 (defn histogram
@@ -16,6 +16,13 @@
   ([^MetricRegistry reg title]
    (.histogram reg (metric-name title))))
 
+(defn histogram-with-reservoir
+  "Create histogram with a custom reservoir. If a Histogram already exists with
+  given title, this function will throw IllegalArgumentException."
+  [^MetricRegistry reg ^Reservoir reservoir title]
+  (let [metric (Histogram. reservoir)]
+    (.register ^MetricRegistry reg title metric)
+    metric))
 
 (defmacro defhistogram
   "Define a Histogram metric with the given title.

@@ -1,5 +1,8 @@
 (ns metrics.core
-  (:import [com.codahale.metrics MetricRegistry Metric]))
+  (:import [com.codahale.metrics MetricRegistry Metric
+            UniformReservoir ExponentiallyDecayingReservoir
+            SlidingWindowReservoir SlidingTimeWindowReservoir]
+           [java.util.concurrent TimeUnit]))
 
 (def ^{:tag MetricRegistry :doc "Default registry used by public API functions when no explicit registry argument is given"}
   default-registry
@@ -83,3 +86,33 @@
   "Returns a map of all the counters in the registry and their names."
   [^MetricRegistry reg]
   (.getCounters reg))
+
+(defn uniform-reservior
+  "Create a uniform reservior, which uses Vitter's Algorithm R to
+  produce a statistically representative sample. Default size: 1028."
+  ([]
+   (UniformReservoir.))
+  ([size]
+   (UniformReservoir. size)))
+
+(defn exponentially-decaying-reservoir
+  "Create an exponentially decaying reservior, which uses Cormode et al's
+  forward-decaying priority reservoir sampling method to produce a
+  statistically representative sampling reservoir, exponentially biased
+  towards newer entries. Default size: 1028, alpha 0.015"
+  ([]
+   (ExponentiallyDecayingReservoir.))
+  ([size alpha]
+   (ExponentiallyDecayingReservoir. size alpha)))
+
+(defn sliding-time-window-reservoir
+  "Create a reservior backed by a sliding window that stores only the
+  measurements made in the last N seconds"
+  [window ^TimeUnit unit]
+  (SlidingTimeWindowReservoir. window unit))
+
+(defn sliding-window-reservoir
+  "Create a reservior backed by a sliding window that stores the last
+  N measurements."
+  [size]
+  (SlidingWindowReservoir. size))
