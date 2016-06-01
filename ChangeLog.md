@@ -1,4 +1,10 @@
-## Changes Between 2.6.0 and 2.7.0 (unreleased)
+## Changes Between 2.7.0 and 2.8.0 (unreleased)
+
+No changes yet.
+
+
+
+## Changes Between 2.6.0 and 2.7.0 (June 1st, 2016)
 
 ### Functions for Working with Reservoirs
 
