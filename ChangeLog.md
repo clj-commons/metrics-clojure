@@ -27,7 +27,7 @@ type of metrics from a registry:
 
 GH issue: [#102](https://github.com/sjl/metrics-clojure/pull/102)
 
-### Dependencies Update
+### Updated Dependencies
 
 Contributed by Pierre-Yves Ritschard.
 
