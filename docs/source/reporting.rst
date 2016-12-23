@@ -14,7 +14,7 @@ error)::
 
     (require '[metrics.reporters.console :as console])
 
-    (def CR (console/reporter {}))
+    (def CR (console/reporter reg {}))
     (console/start CR 10)
 
 This will tell ``metrics`` to print all metrics to the console every ten
@@ -36,7 +36,7 @@ metrics-clojure supports reporting metrics into csv files (one file per metric):
 
     (require '[metrics.reporters.csv :as csv])
 
-    (def CR (csv/reporter "/tmp/csv_reporter" {}))
+    (def CR (csv/reporter reg "/tmp/csv_reporter" {}))
     (csv/start CR 1)
 
 This will tell ``metrics`` to append the most recent value or each
@@ -65,7 +65,7 @@ metrics-clojure also supports `JMX reporting
 
     (require '[metrics.reporters.jmx :as jmx])
 
-    (def JR (jmx/reporter {}))
+    (def JR (jmx/reporter reg {}))
     (jmx/start JR)
 
 This will tell ``metrics`` to make all metrics available via ``JMX`` under ``metrics`` domain.
