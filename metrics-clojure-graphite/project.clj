@@ -1,6 +1,6 @@
-(defproject metrics-clojure-graphite "2.8.0"
+(defproject metrics-clojure-graphite "2.9.0-SNAPSHOT"
   :description "Graphite reporter integration for metrics-clojure"
   :url "https://github.com/sjl/metrics-clojure"
   :license {:name "MIT"}
-  :dependencies [[metrics-clojure "2.8.0"]
+  :dependencies [[metrics-clojure "2.9.0-SNAPSHOT"]
                  [io.dropwizard.metrics/metrics-graphite "3.1.2"]])
