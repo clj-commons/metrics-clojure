@@ -1,6 +1,21 @@
-## Changes Between 2.7.0 and 2.8.0 (unreleased)
+## Changes Between 2.8.0 and 2.9.0 (unreleased)
 
 No changes yet.
+
+
+
+## Changes Between 2.7.0 and 2.8.0 (Dec 28th, 2016)
+
+### Updated Dependencies
+
+Contributed by Pierre-Yves Ritschard.
+
+
+### InfluxDB Reporter
+
+Contributed by Andrew Jones.
+
+
 
 
 
