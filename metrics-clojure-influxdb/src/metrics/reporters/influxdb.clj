@@ -12,7 +12,7 @@
   ([opts]
    (reporter default-registry opts))
   ([^MetricRegistry reg {:keys [host hostname port prefix tags fields auth connect-timeout read-timeout
-                                group-guages duration-unit measurement-mappings db-name excludes] :as opts
+                                group-gauges duration-unit measurement-mappings db-name excludes] :as opts
                          :or {port 8086
                               db-name "metrics"}}]
    (let [b (InfluxDbReporterFactory.)]
@@ -31,8 +31,8 @@
        (.setConnectTimeout b connect-timeout))
      (when read-timeout
        (.setConnectTimeout b read-timeout))
-     (when group-guages
-       (.setGroupGauges b group-guages))
+     (when group-gauges
+       (.setGroupGauges b group-gauges))
      (when-let [^TimeUnit du duration-unit]
        (.setPrecision b du))
      (when-let [^java.util.Map mm measurement-mappings]
