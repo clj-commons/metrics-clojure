@@ -19,7 +19,7 @@
 (defn unhealthy
   "Returns a unhealthy result."
   ([^String message & args]
-     (HealthCheck$Result/unhealthy (apply format message args))))
+     (HealthCheck$Result/unhealthy ^String (apply format message args))))
 
 (defn new-hc
   "Wrap a fn to ensure it returns healthy/unhealthy. Any exception or
@@ -70,7 +70,7 @@
 (defn check
   "Run a given HealthCheck."
   [^HealthCheck h]
-  (.check ^HealthCheck h))
+  (.execute h))
 
 (defn check-all
   "Returns a map with the keys :healthy & :unhealthy, each containing

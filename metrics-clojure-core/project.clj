@@ -15,6 +15,7 @@
     :profiles {:1.6    {:dependencies [[org.clojure/clojure "1.6.0"]]}
                :1.7    {:dependencies [[org.clojure/clojure "1.7.0"]]}
                :1.9    {:dependencies [[org.clojure/clojure "1.9.0-alpha4"]]}
-               :master {:dependencies [[org.clojure/clojure "1.9.0-master-SNAPSHOT"]]}}
+               :master {:dependencies [[org.clojure/clojure "1.9.0-master-SNAPSHOT"]]}
+               :dev    {:global-vars {*warn-on-reflection* true}}}
   :aliases  {"all" ["with-profile" "+dev:+1.6:+1.7:+1.9:+master"]}
   :global-vars {*warn-on-reflection* true})

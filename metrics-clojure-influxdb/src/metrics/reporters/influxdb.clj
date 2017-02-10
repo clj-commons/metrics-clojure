@@ -32,7 +32,7 @@
      (when read-timeout
        (.setConnectTimeout b read-timeout))
      (when group-guages
-       (.setGroupGuages b group-guages))
+       (.setGroupGauges b group-guages))
      (when-let [^TimeUnit du duration-unit]
        (.setPrecision b du))
      (when-let [^java.util.Map mm measurement-mappings]
