@@ -1,7 +1,15 @@
 ## Changes Between 2.8.0 and 2.9.0 (unreleased)
 
-No changes yet.
+### InfluxDB Reporter Option Renamed
 
+The misspelled `:group-guages` option was renamed to `:group-gauges`.
+
+Contributed by Pierre-Yves Ritschard.
+
+
+### Reflection Fixes
+
+Contributed by Pierre-Yves Ritschard.
 
 
 ## Changes Between 2.7.0 and 2.8.0 (Dec 28th, 2016)
