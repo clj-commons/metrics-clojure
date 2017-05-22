@@ -117,7 +117,7 @@
 
 (defn time-fn!
   [^Timer t ^clojure.lang.IFn f]
-  (.time t (cast Callable f)))
+  (.time t ^Callable f))
 
 (defn start
   "Start a timer, returning the context object that will be used to
