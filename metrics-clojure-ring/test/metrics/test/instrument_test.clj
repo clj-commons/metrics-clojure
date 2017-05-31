@@ -5,6 +5,13 @@
 
 (deftest test-instrument
   ;; ensure that ring.instrument compiles
-  (let [dummy-handler (fn [handler] (fn [request] request))]
-    (instrument dummy-handler (MetricRegistry. ))))
+  (testing "instrument without custom prefix"
+    (println "testing without custom prefix")
+    (let [dummy-handler (fn [handler] (fn [request] request))]
+      (instrument dummy-handler (MetricRegistry. ))))
+
+  (testing "instrument with custom prefix"
+    (println "testing with custom prefix")    
+    (let [dummy-handler (fn [handler] (fn [request] request))]
+      (instrument dummy-handler (MetricRegistry.) ["yolo"]))))
 
