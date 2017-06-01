@@ -12,7 +12,7 @@
   (when-let [metric (metric-map k (metric-map :other))]
     (mark! metric)))
 
-(defn- ring-metrics [reg prefix]
+(defn- ring-metrics [reg {:keys [prefix] :as options}]
   (let [active-requests (counter reg (concat prefix ["ring" "requests" "active"]))
         requests (meter reg (concat prefix ["ring" "requests" "rate"]))
         responses (meter reg (concat prefix ["ring" "responses" "rate"]))
@@ -62,7 +62,7 @@
   ([handler ^MetricRegistry reg
     {:keys [prefix] :as options}]
    (let [{:keys [active-requests requests responses schemes statuses times request-methods]}
-         (ring-metrics reg prefix)]
+         (ring-metrics reg options)]
      (fn [request]
        (inc! active-requests)
        (try
