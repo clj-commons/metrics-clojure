@@ -1,6 +1,7 @@
 (ns metrics.ring.expose
   (:import (com.codahale.metrics Gauge Timer Counter Histogram Meter))
-  (:require [metrics.gauges :as gauges]
+  (:require [clojure.string :as string]
+            [metrics.gauges :as gauges]
             [metrics.meters :as meters]
             [metrics.histograms :as histograms]
             [metrics.counters :as counters]
@@ -77,24 +78,45 @@
 (defn- render-metric [[metric-name metric]]
   [metric-name (render-to-basic metric)])
 
+(defn- placeholder? [c]
+  (#{"" "*"} c))
+
+(defn- filter-matches? [kn filter]
+  (every? identity
+          (map (fn [k f]
+                 (or (placeholder? f)
+                     (= k f)))
+               (string/split kn #"\.")
+               (string/split filter #"\."))))
 
 ;;
 ;; API
 ;;
 
+(defn filter-metrics [^String filter metrics]
+  (if (string/blank? filter)
+    metrics
+    (into {}
+          (for [[k v] metrics :when (filter-matches? k filter)]
+            [k v]))))
+
 (defn render-metrics
   ([]
-   (render-metrics default-registry))
-  ([registry]
-   (into {} (map render-metric (all-metrics registry)))))
+   (render-metrics default-registry nil))
+  ([filter]
+    (render-metrics default-registry filter))
+  ([registry filter]
+   (into {} (map render-metric (->> registry
+                                    (all-metrics)
+                                    (filter-metrics filter))))))
 
 (defn serve-metrics
   ([request]
      (serve-metrics request default-registry))
   ([request registry]
      (serve-metrics request registry false))
-  ([request registry {:keys [pretty-print?] :as opts}]
-     (let [metrics-map (render-metrics registry)
+  ([request registry {:keys [pretty-print? filter] :as opts}]
+     (let [metrics-map (render-metrics registry filter)
            json        (generate-string metrics-map {:pretty pretty-print?})]
        (-> (response json)
          (header "Content-Type" "application/json")))))
@@ -108,8 +130,9 @@
     (expose-metrics-as-json handler uri registry {:pretty-print? false}))
   ([handler uri registry opts]
     (fn [request]
-      (let [^String request-uri (:uri request)]
+      (let [^String request-uri (:uri request)
+            ^String filter (get-in request [:params :filter])]
         (if (or (.startsWith request-uri (sanitize-uri uri))
                 (= request-uri uri))
-          (serve-metrics request registry opts)
+          (serve-metrics request registry (merge {:filter filter} opts))
           (handler request))))))
