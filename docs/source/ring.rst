@@ -136,7 +136,7 @@ Options
 An optional map may be supplied to the instrument function to configure how metrics
 are registered. The options supported are as follows:-
 
-``:prefix``
+``prefix``
 
 A vector of strings that will be used as the prefix when creating the metric name. The
 vector will be concatenated with the metric names described above before being joined
@@ -145,7 +145,7 @@ into a string to produce metric names such as
 foo.ring.responses.rate
 foo.ring.handling-time
 
-This is useful if you want to break your metrics down by endpoint
+This is useful if you want to break your metrics down by endpoint.
 
 Troubleshooting
 ---------------

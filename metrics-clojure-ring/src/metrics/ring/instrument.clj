@@ -12,6 +12,43 @@
   (when-let [metric (metric-map k (metric-map :other))]
     (mark! metric)))
 
+(defn- ring-metrics [reg prefix]
+  (let [active-requests (counter reg (concat prefix ["ring" "requests" "active"]))
+        requests (meter reg (concat prefix ["ring" "requests" "rate"]))
+        responses (meter reg (concat prefix ["ring" "responses" "rate"]))
+        schemes {:http  (meter reg (concat prefix ["ring" "requests-scheme" "rate.http"]))
+                 :https (meter reg (concat prefix ["ring" "requests-scheme" "rate.https"]))}
+        statuses {2 (meter reg (concat prefix ["ring" "responses" "rate.2xx"]))
+                  3 (meter reg (concat prefix ["ring" "responses" "rate.3xx"]))
+                  4 (meter reg (concat prefix ["ring" "responses" "rate.4xx"]))
+                  5 (meter reg (concat prefix ["ring" "responses" "rate.5xx"]))}
+        times {:get     (timer reg (concat prefix ["ring" "handling-time" "GET"]))
+               :put     (timer reg (concat prefix ["ring" "handling-time" "PUT"]))
+               :post    (timer reg (concat prefix ["ring" "handling-time" "POST"]))
+               :head    (timer reg (concat prefix ["ring" "handling-time" "HEAD"]))
+               :delete  (timer reg (concat prefix ["ring" "handling-time" "DELETE"]))
+               :options (timer reg (concat prefix ["ring" "handling-time" "OPTIONS"]))
+               :trace   (timer reg (concat prefix ["ring" "handling-time" "TRACE"]))
+               :connect (timer reg (concat prefix ["ring" "handling-time" "CONNECT"]))
+               :other   (timer reg (concat prefix ["ring" "handling-time" "OTHER"]))}
+        request-methods {:get     (meter reg (concat prefix ["ring" "requests" "rate.GET"]))
+                         :put     (meter reg (concat prefix ["ring" "requests" "rate.PUT"]))
+                         :post    (meter reg (concat prefix ["ring" "requests" "rate.POST"]))
+                         :head    (meter reg (concat prefix ["ring" "requests" "rate.HEAD"]))
+                         :delete  (meter reg (concat prefix ["ring" "requests" "rate.DELETE"]))
+                         :options (meter reg (concat prefix ["ring" "requests" "rate.OPTIONS"]))
+                         :trace   (meter reg (concat prefix ["ring" "requests" "rate.TRACE"]))
+                         :connect (meter reg (concat prefix ["ring" "requests" "rate.CONNECT"]))
+                         :other   (meter reg (concat prefix ["ring" "requests" "rate.OTHER"]))}]
+    {:active-requests active-requests
+     :requests requests
+     :responses responses
+     :schemes schemes
+     :statuses statuses
+     :times times
+     :request-methods request-methods}))
+
+
 (defn instrument
   "Instrument a ring handler.
 
@@ -24,33 +61,8 @@
    (instrument handler reg default-options))
   ([handler ^MetricRegistry reg
     {:keys [prefix] :as options}]
-   (let [active-requests (counter reg (concat prefix ["ring" "requests" "active"]))
-         requests (meter reg (concat prefix ["ring" "requests" "rate"]))
-         responses (meter reg (concat prefix ["ring" "responses" "rate"]))
-         schemes {:http  (meter reg (concat prefix ["ring" "requests-scheme" "rate.http"]))
-                  :https (meter reg (concat prefix ["ring" "requests-scheme" "rate.https"]))}
-         statuses {2 (meter reg (concat prefix ["ring" "responses" "rate.2xx"]))
-                   3 (meter reg (concat prefix ["ring" "responses" "rate.3xx"]))
-                   4 (meter reg (concat prefix ["ring" "responses" "rate.4xx"]))
-                   5 (meter reg (concat prefix ["ring" "responses" "rate.5xx"]))}
-         times {:get     (timer reg (concat prefix ["ring" "handling-time" "GET"]))
-                :put     (timer reg (concat prefix ["ring" "handling-time" "PUT"]))
-                :post    (timer reg (concat prefix ["ring" "handling-time" "POST"]))
-                :head    (timer reg (concat prefix ["ring" "handling-time" "HEAD"]))
-                :delete  (timer reg (concat prefix ["ring" "handling-time" "DELETE"]))
-                :options (timer reg (concat prefix ["ring" "handling-time" "OPTIONS"]))
-                :trace   (timer reg (concat prefix ["ring" "handling-time" "TRACE"]))
-                :connect (timer reg (concat prefix ["ring" "handling-time" "CONNECT"]))
-                :other   (timer reg (concat prefix ["ring" "handling-time" "OTHER"]))}
-         request-methods {:get     (meter reg (concat prefix ["ring" "requests" "rate.GET"]))
-                          :put     (meter reg (concat prefix ["ring" "requests" "rate.PUT"]))
-                          :post    (meter reg (concat prefix ["ring" "requests" "rate.POST"]))
-                          :head    (meter reg (concat prefix ["ring" "requests" "rate.HEAD"]))
-                          :delete  (meter reg (concat prefix ["ring" "requests" "rate.DELETE"]))
-                          :options (meter reg (concat prefix ["ring" "requests" "rate.OPTIONS"]))
-                          :trace   (meter reg (concat prefix ["ring" "requests" "rate.TRACE"]))
-                          :connect (meter reg (concat prefix ["ring" "requests" "rate.CONNECT"]))
-                          :other   (meter reg (concat prefix ["ring" "requests" "rate.OTHER"]))}]
+   (let [{:keys [active-requests requests responses schemes statuses times request-methods]}
+         (ring-metrics reg prefix)]
      (fn [request]
        (inc! active-requests)
        (try
