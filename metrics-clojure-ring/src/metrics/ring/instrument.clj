@@ -59,8 +59,7 @@
    (instrument handler default-registry))
   ([handler ^MetricRegistry reg]
    (instrument handler reg default-options))
-  ([handler ^MetricRegistry reg
-    {:keys [prefix] :as options}]
+  ([handler ^MetricRegistry reg options]
    (let [{:keys [active-requests requests responses schemes statuses times request-methods]}
          (ring-metrics reg options)]
      (fn [request]
