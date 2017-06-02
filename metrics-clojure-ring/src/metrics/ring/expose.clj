@@ -81,17 +81,17 @@
 (defn- placeholder? [c]
   (#{"" "*"} c))
 
-(defn- filter-matches? [kn filter]
+;;
+;; API
+;;
+
+(defn filter-matches? [kn filter]
   (every? identity
           (map (fn [k f]
                  (or (placeholder? f)
                      (= k f)))
                (string/split kn #"\.")
                (string/split filter #"\."))))
-
-;;
-;; API
-;;
 
 (defn filter-metrics [^String filter metrics]
   (if (string/blank? filter)
