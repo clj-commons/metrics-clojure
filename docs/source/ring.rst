@@ -130,22 +130,20 @@ outgoing responses of a given type.
 Six separate timers (ending in ``GET``, ``POST``, etc) measuring the time taken
 to handle incoming requests of a given type.
 
-Options
--------
+Dynamic Instrumentation
+------------------------
 
-An optional map may be supplied to the instrument function to configure how metrics
-are registered. The options supported are as follows:-
+`instrument-by` allows more dynamic collection of metrics at the cost of slightly more
+complex API. It accepts a `metrics-prefix` function which takes a request and returns
+a prefix (as a vector of strings). All the metrics described above will be collected
+for each prefix returned by this function.
 
-``prefix``
-
-A vector of strings that will be used as the prefix when creating the metric name. The
-vector will be concatenated with the metric names described above before being joined
-into a string to produce metric names such as
-
-foo.ring.responses.rate
-foo.ring.handling-time
+For example, if you use `instrument-by` with the `uri-prefix` function, you'll end up
+with a set of metrics for each distinct URI (not including query parameters) handled
+by your app.
 
 This is useful if you want to break your metrics down by endpoint.
+
 
 Troubleshooting
 ---------------

@@ -67,16 +67,19 @@
           resp))
       (finally (dec! active-requests)))))
 
-(defn metrics-by-uri [metrics-db registry request]
+(defn metrics-for
+  [metrics-db prefix registry]
+  (if-let [prefix-metrics (get @metrics-db prefix)]
+    prefix-metrics
+    (let [prefix-metrics (ring-metrics registry {:prefix prefix})]
+      (swap! metrics-db assoc prefix prefix-metrics)
+      prefix-metrics)))  
+
+(defn uri-prefix [request]
   (let [empty-strings? (complement #{""})
         path (-> (:uri request)
-                 (string/split #"/"))
-        uri-path (filter empty-strings? path)]
-    (if-let [path-metrics (get @metrics-db uri-path)]
-      path-metrics
-      (let [path-metrics (ring-metrics registry {:prefix uri-path})]
-        (swap! metrics-db assoc uri-path path-metrics)
-        path-metrics))))
+                 (string/split #"/"))]
+    (filter empty-strings? path)))
 
 (defn instrument
   ([handler]
@@ -98,11 +101,10 @@
    This middleware should be added as late as possible (nearest to the outside of
    the \"chain\") for maximum effect.
   "
-  ([handler]
-   (instrument handler default-registry))
-  ([handler ^MetricRegistry reg metrics-by]
+  ([handler ^MetricRegistry reg metrics-prefix]
    (let [metrics-db (atom {})]
      (fn [request]
-       (handle-request handler
-                       (metrics-by metrics-db reg request)
-                       request)))))
+       (let [prefix (metrics-prefix request)]
+         (handle-request handler
+                         (metrics-for metrics-db prefix reg)
+                         request))))))
