@@ -142,7 +142,13 @@ For example, if you use `instrument-by` with the `uri-prefix` function, you'll e
 with a set of metrics for each distinct URI (not including query parameters) handled
 by your app.
 
-This is useful if you want to break your metrics down by endpoint.
+This is useful if you want to break your metrics down by endpoint. The example from
+above adapted to collect metrics per endpoint would be as follows::
+
+    (def app
+      (-> (routes home-routes app-routes)
+          (wrap-base-url)
+          (instrument-by uri-prefix)))
 
 
 Troubleshooting

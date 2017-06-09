@@ -101,6 +101,8 @@
    This middleware should be added as late as possible (nearest to the outside of
    the \"chain\") for maximum effect.
   "
+  ([handler ^MetricRegistry metrics-prefix]
+   (instrument-by handler default-registry metrics-prefix))
   ([handler ^MetricRegistry reg metrics-prefix]
    (let [metrics-db (atom {})]
      (fn [request]
