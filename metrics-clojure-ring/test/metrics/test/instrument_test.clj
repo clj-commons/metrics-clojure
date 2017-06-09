@@ -1,7 +1,8 @@
 (ns metrics.test.instrument-test
   (:require [clojure.test :refer :all]
-            [metrics.ring.instrument :refer [instrument]]
-            [ring.mock.request :as mock])
+            [metrics.ring.instrument :refer [instrument metrics-by-uri]]
+            [ring.mock.request :as mock]
+            [ring.util.request :as request])
   (:import [com.codahale.metrics MetricRegistry]))
 
 (def dummy-handler (fn [req]
@@ -48,17 +49,24 @@
 
 (deftest test-instrument
   (testing "instrument without custom prefix"
-    (let [reg (MetricRegistry. )]
+    (let [reg (MetricRegistry. )
+          app (instrument dummy-handler reg)]
 
-      (instrument dummy-handler reg)
-
-      (doseq [m expected-metrics]
-        (is (tracked? reg m)))))
-
-  (testing "instrument with custom prefix"
-    (let [reg (MetricRegistry.)]
-
-      (instrument dummy-handler reg {:prefix ["yolo"]})
+      (app (mock/request :get "/yolo" {}))
 
       (doseq [m expected-metrics]
-        (is (tracked? reg (str "yolo." m)))))))
+        (is (tracked? reg m))))))
+
+(deftest test-metrics-by-uri
+  (let [db (atom {})
+        reg (MetricRegistry.)]
+
+    (testing "first request initializes metrics"
+      (is (= [:active-requests :requests :responses :schemes :statuses :times :request-methods]
+             (-> (metrics-by-uri db reg (mock/request :get "/yolo"))
+                 keys))))
+
+    (testing "subsequent requests to same uri return same metrics"
+      (let [m1 (metrics-by-uri db reg (mock/request :get "/foo"))
+            m2 (metrics-by-uri db reg (mock/request :get "/foo"))]
+        (is (= m1 m2))))))

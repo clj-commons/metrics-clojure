@@ -2,7 +2,8 @@
   (:require [metrics.core :refer [default-registry]]
             [metrics.counters :refer (counter inc! dec!)]
             [metrics.meters :refer (meter mark!)]
-            [metrics.timers :refer (timer time!)])
+            [metrics.timers :refer (timer time!)]
+            [clojure.string :as string])
   (:import [com.codahale.metrics MetricRegistry]))
 
 (def default-options
@@ -48,32 +49,60 @@
      :times times
      :request-methods request-methods}))
 
+(defn handle-request [handler metrics request]
+  (let [{:keys [active-requests requests responses
+                schemes statuses times request-methods]} metrics]
+    (inc! active-requests)
+    (try
+      (let [request-method (:request-method request)
+            request-scheme (:scheme request)]
+        (mark! requests)
+        (mark-in! request-methods request-method)
+        (mark-in! schemes request-scheme)
+        (let [resp (time! (times request-method (times :other))
+                          (handler request))
+              ^{:tag "int"} status-code (or (:status resp) 404)]
+          (mark! responses)
+          (mark-in! statuses (int (/ status-code 100)))
+          resp))
+      (finally (dec! active-requests)))))
+
+(defn metrics-by-uri [metrics-db registry request]
+  (let [empty-strings? (complement #{""})
+        path (-> (:uri request)
+                 (string/split #"/"))
+        uri-path (filter empty-strings? path)]
+    (if-let [path-metrics (get @metrics-db uri-path)]
+      path-metrics
+      (let [path-metrics (ring-metrics registry {:prefix uri-path})]
+        (swap! metrics-db assoc uri-path path-metrics)
+        path-metrics))))
 
 (defn instrument
-  "Instrument a ring handler.
-
-  This middleware should be added as late as possible (nearest to the outside of
-  the \"chain\") for maximum effect.
-  "
   ([handler]
    (instrument handler default-registry))
   ([handler ^MetricRegistry reg]
-   (instrument handler reg default-options))
-  ([handler ^MetricRegistry reg options]
-   (let [{:keys [active-requests requests responses schemes statuses times request-methods]}
-         (ring-metrics reg options)]
+   (fn [request]
+     (handle-request handler
+                     (ring-metrics reg {:prefix []})
+                     request))))
+
+(defn instrument-by
+  "Instrument a ring handler using the metrics returned by the `metrics-for`
+   function. `metrics-by` should be a function which takes an atom, a registry
+   and a request and return a collection of metrics objects that pertain to
+   some type of request.
+
+   For example, `metrics-by-uri` maintains separate metrics for each endpoint
+
+   This middleware should be added as late as possible (nearest to the outside of
+   the \"chain\") for maximum effect.
+  "
+  ([handler]
+   (instrument handler default-registry))
+  ([handler ^MetricRegistry reg metrics-by]
+   (let [metrics-db (atom {})]
      (fn [request]
-       (inc! active-requests)
-       (try
-         (let [request-method (:request-method request)
-               request-scheme (:scheme request)]
-           (mark! requests)
-           (mark-in! request-methods request-method)
-           (mark-in! schemes request-scheme)
-           (let [resp (time! (times request-method (times :other))
-                             (handler request))
-                 ^{:tag "int"} status-code (or (:status resp) 404)]
-             (mark! responses)
-             (mark-in! statuses (int (/ status-code 100)))
-             resp))
-         (finally (dec! active-requests)))))))
+       (handle-request handler
+                       (metrics-by metrics-db reg request)
+                       request)))))
