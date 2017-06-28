@@ -5,4 +5,5 @@
   :dependencies [[cheshire "5.7.0"]
                  [metrics-clojure "2.10.0-SNAPSHOT"]]
   :profiles {:dev {:global-vars {*warn-on-reflection* true}
-                   :dependencies [[ring "1.4.0"]]}})
+                   :dependencies [[ring "1.4.0"]
+                                  [ring/ring-mock "0.3.0"]]}})
