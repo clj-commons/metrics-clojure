@@ -37,6 +37,7 @@ ten seconds.
 
 Optional arguments to graphite/reporter are:
 
+- :graphite
 - :host
 - :port
 - :prefix
@@ -44,6 +45,11 @@ Optional arguments to graphite/reporter are:
 - :rate-unit
 - :duration-unit
 - :filter
+
+Note: The :graphite argument allows an existing ``com.codahale.metrics.graphite.Graphite``
+instance to be specified. If specified, this instance will be used rather than a new
+instance constructed using the :host and :port arguments. This is useful if you need
+to supply a specially-constructed Graphite instance.
 
 Sending Metrics to Ganglia
 --------------------------
