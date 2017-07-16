@@ -79,14 +79,14 @@
   [metric-name (render-to-basic metric)])
 
 (defn- placeholder? [c]
-  (#{"" "*"} c))
+  (contains? #{"" "*"} c))
 
 ;;
 ;; API
 ;;
 
 (defn filter-matches? [kn filter]
-  (every? identity
+  (every? true?
           (map (fn [k f]
                  (or (placeholder? f)
                      (= k f)))
