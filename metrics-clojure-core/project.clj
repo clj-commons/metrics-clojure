@@ -1,4 +1,4 @@
-(defproject metrics-clojure "2.10.0-SNAPSHOT"
+(defproject malesch/metrics-clojure "2.9.1"
   :description "A Clojure façade for Coda Hale's metrics library."
   :url "https://github.com/sjl/metrics-clojure"
   :license {:name "MIT"}
