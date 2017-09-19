@@ -1,6 +1,39 @@
-## Changes Between 2.9.0 and 2.10.0 (unreleased)
+## Changes Between 2.10.0 and 2.11.0 (unreleased)
 
 No changes yet.
+
+
+## Changes Between 2.9.0 and 2.10.0 (Sep 19th, 2017)
+
+### JSON Filtering of Metrics
+
+GitHub issues: [#124](https://github.com/sjl/metrics-clojure/pull/124), [#123](https://github.com/sjl/metrics-clojure/pull/123)
+
+Contributed by Marcus Spiegel.
+
+### Per Ring Endpoint Metrics
+
+GitHub issue: [#119](https://github.com/sjl/metrics-clojure/issues/119)
+
+Contributed by Andy Chambers.
+
+### Graphite Reporter Accepts Arbitrary Graphite Instances
+
+GitHub issue: [#122](https://github.com/sjl/metrics-clojure/pull/122)
+
+Contributed by Taylor Wood.
+
+### Fewer Transient Dependencies
+
+GitHub issue: [#117](https://github.com/sjl/metrics-clojure/pull/117)
+
+Contributed by Joe Littlejohn.
+
+### Cheshire Dependency Bump
+
+GitHub issue: [#125](https://github.com/sjl/metrics-clojure/pull/125).
+
+Contribyted by Shantanu Kumar.
 
 
 
