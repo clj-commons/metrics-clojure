@@ -19,6 +19,13 @@ Usage
 
 [Read the docs](http://metrics-clojure.rtfd.org/).
 
+
+Change Log
+-----------
+
+[Right here](https://github.com/sjl/metrics-clojure/blob/master/ChangeLog.md)
+
+
 More Information
 ----------------
 
