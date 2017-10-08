@@ -125,9 +125,9 @@ This returns a map of the percentiles you probably care about.  The keys are the
 percentiles (doubles between 0 and 1 inclusive) and the values are the maximum
 time taken for that percentile.  In this example:
 
-* 75% of images were processed in 232.00 milliseconds or less.
-* 95% of images were processed in 240.23 milliseconds or less.
-* ... etc.
+* 75% of images were processed in 232 nanoseconds or less
+* 95% of images were processed in 240 nanoseconds or less
+* ... etc
 
 If you want a different set of percentiles just pass them as a sequence::
 
