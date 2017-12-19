@@ -24,7 +24,7 @@
      (reporter default-registry opts))
   ([^MetricRegistry reg {:keys [graphite host hostname port prefix clock rate-unit duration-unit filter] :as opts
                          :or {port 2003}}]
-     (let [g (or graphite
+     (let [g (or ^Graphite graphite
                  (graphite-sender (or host hostname "localhost") port))
            b (builder-for-registry reg)]
        (when-let [^String s prefix]
