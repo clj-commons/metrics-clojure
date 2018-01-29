@@ -1,5 +1,6 @@
 (ns metrics.ring.expose
-  (:import (com.codahale.metrics Gauge Timer Counter Histogram Meter))
+  (:import (com.codahale.metrics Gauge Timer Counter Histogram Meter)
+           (java.util.concurrent TimeUnit))
   (:require [clojure.string :as string]
             [metrics.gauges :as gauges]
             [metrics.meters :as meters]
@@ -9,39 +10,43 @@
             [ring.util.response :refer [header response]]
             [metrics.core :refer [default-registry]]
             [metrics.utils :refer [all-metrics]]
+            [metrics.ring.unit :as unit]
             [cheshire.core :refer [generate-string]]))
 
 
 ; Define rendering protocol ---------------------------------------------------
 (defprotocol RenderableMetric
-  (render-to-basic [metric] "Turn a metric into a basic Clojure datastructure."))
+  (render-to-basic [metric unit-opts] "Turn a metric into a basic Clojure datastructure."))
 
 (extend-type Gauge
   RenderableMetric
-  (render-to-basic [g]
+  (render-to-basic [g _]
     {:type :gauge
      :value (gauges/value g)}))
 
 (extend-type Timer
   RenderableMetric
-  (render-to-basic [t]
-    {:type :timer
-     :rates (timers/rates t)
-     :percentiles (timers/percentiles t)
-     :max (timers/largest t)
-     :min (timers/smallest t)
-     :mean (timers/mean t)
-     :standard-deviation (timers/std-dev t)}))
+  (render-to-basic [t unit-opts]
+    {:type               :timer
+     :duration-unit      (:duration-unit-label unit-opts)
+     :rate-unit          (:rate-unit-label unit-opts)
+     :rates              (unit/convert-rates (timers/rates t) unit-opts)
+     :percentiles        (unit/convert-percentiles (timers/percentiles t) unit-opts)
+     :max                (unit/convert-duration (timers/largest t) unit-opts)
+     :min                (unit/convert-duration (timers/smallest t) unit-opts)
+     :mean               (unit/convert-duration (timers/mean t) unit-opts)
+     :standard-deviation (unit/convert-duration (timers/std-dev t) unit-opts)}))
 
 (extend-type Meter
   RenderableMetric
-  (render-to-basic [m]
-    {:type :meter
-     :rates (meters/rates m)}))
+  (render-to-basic [m unit-opts]
+    {:type  :meter
+     :rate-unit (:rate-unit-label unit-opts)
+     :rates (unit/convert-rates (meters/rates m) unit-opts)}))
 
 (extend-type Histogram
   RenderableMetric
-  (render-to-basic [h]
+  (render-to-basic [h _]
     {:type :histogram
      :max (histograms/largest h)
      :min (histograms/smallest h)
@@ -51,7 +56,7 @@
 
 (extend-type Counter
   RenderableMetric
-  (render-to-basic [c]
+  (render-to-basic [c _]
     {:type :counter
      :value (counters/value c)}))
 
@@ -75,8 +80,8 @@
          strip-trailing-slash)
        \/))
 
-(defn- render-metric [[metric-name metric]]
-  [metric-name (render-to-basic metric)])
+(defn- render-metric [[metric-name metric] unit-opts]
+  [metric-name (render-to-basic metric unit-opts)])
 
 (defn- placeholder? [c]
   (contains? #{"" "*"} c))
@@ -102,21 +107,21 @@
 
 (defn render-metrics
   ([]
-   (render-metrics default-registry nil))
+   (render-metrics default-registry nil nil))
   ([filter]
-    (render-metrics default-registry filter))
-  ([registry filter]
-   (into {} (map render-metric (->> registry
-                                    (all-metrics)
-                                    (filter-metrics filter))))))
+    (render-metrics default-registry filter nil))
+  ([registry filter unit-context]
+   (into {} (map #(render-metric % unit-context) (->> registry
+                                                      (all-metrics)
+                                                      (filter-metrics filter))))))
 
 (defn serve-metrics
   ([request]
      (serve-metrics request default-registry))
   ([request registry]
      (serve-metrics request registry false))
-  ([request registry {:keys [pretty-print? filter] :as opts}]
-     (let [metrics-map (render-metrics registry filter)
+  ([request registry {:keys [pretty-print? filter rate-unit duration-unit]}]
+     (let [metrics-map (render-metrics registry filter (unit/build-options rate-unit duration-unit))
            json        (generate-string metrics-map {:pretty pretty-print?})]
        (-> (response json)
          (header "Content-Type" "application/json")))))
@@ -134,5 +139,7 @@
             ^String filter (get-in request [:params :filter])]
         (if (or (.startsWith request-uri (sanitize-uri uri))
                 (= request-uri uri))
-          (serve-metrics request registry (merge {:filter filter} opts))
+          (serve-metrics request registry (merge {:filter filter
+                                                  :rate-unit TimeUnit/SECONDS
+                                                  :duration-unit TimeUnit/NANOSECONDS} opts))
           (handler request))))))
