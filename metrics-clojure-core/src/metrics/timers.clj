@@ -77,6 +77,7 @@
   {1 (rate-one m)
    5 (rate-five m)
    15 (rate-fifteen m)
+   :mean (rate-mean m)
    :total (number-recorded m)})
 
 (defn mean
