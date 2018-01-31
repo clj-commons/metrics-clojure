@@ -91,7 +91,7 @@
 (defn percentiles
   "Returns timing percentiles seen by a timer, in nanoseconds"
   ([^Timer t]
-   (percentiles t [0.75 0.95 0.99 0.999 1.0]))
+   (percentiles t [0.5 0.75 0.95 0.99 0.999 1.0]))
   ([^Timer t ps]
    (get-percentiles t ps)))
 

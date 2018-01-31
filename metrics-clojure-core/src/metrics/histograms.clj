@@ -72,9 +72,9 @@
   * 100% were less than or equal to 500
 
   If you don't pass a list of desired percentiles, the default will be
-  [0.75 0.95 0.99 0.999 1.0]."
+  [0.5 0.75 0.95 0.99 0.999 1.0]."
   ([^Histogram h]
-   (percentiles h [0.75 0.95 0.99 0.999 1.0]))
+   (percentiles h [0.5 0.75 0.95 0.99 0.999 1.0]))
   ([^Histogram h ps]
    (get-percentiles h ps)))
 
