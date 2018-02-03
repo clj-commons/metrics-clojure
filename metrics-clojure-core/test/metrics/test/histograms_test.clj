@@ -66,7 +66,7 @@
         h   (mh/histogram reg ["test" "histograms" "test-percentiles"])]
     (dorun (map (partial mh/update! h) (range 1 101)))
     (is (maps-within-one (mh/percentiles h)
-                         {0.75 75, 0.95 95, 0.99 99, 0.999 100, 1.00 100}))
+                         {0.5 50 0.75 75, 0.95 95, 0.99 99, 0.999 100, 1.00 100}))
     (is (maps-within-one (mh/percentiles h [0.10 0.50])
                          {0.10 10, 0.50 50}))))
 
