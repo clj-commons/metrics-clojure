@@ -1,4 +1,4 @@
-(defproject metrics-clojure "2.11.0-SNAPSHOT"
+(defproject metrics-clojure "3.0.0-SNAPSHOT"
   :description "A Clojure façade for Coda Hale's metrics library."
   :url "https://github.com/sjl/metrics-clojure"
   :license {:name "MIT"}
@@ -12,10 +12,8 @@
                  "sonatype-snapshots" {:url "http://oss.sonatype.org/content/repositories/snapshots"
                                        :snapshots true
                                        :releases {:checksum :fail :update :always}}}
-    :profiles {:1.6    {:dependencies [[org.clojure/clojure "1.6.0"]]}
-               :1.7    {:dependencies [[org.clojure/clojure "1.7.0"]]}
-               :1.9    {:dependencies [[org.clojure/clojure "1.9.0-alpha14"]]}
-               :master {:dependencies [[org.clojure/clojure "1.9.0-master-SNAPSHOT"]]}
+    :profiles {:1.8    {:dependencies [[org.clojure/clojure "1.8.0"]]}
+               :master {:dependencies [[org.clojure/clojure "1.10.0-master-SNAPSHOT"]]}
                :dev    {:global-vars {*warn-on-reflection* true}}}
-  :aliases  {"all" ["with-profile" "+dev:+1.6:+1.7:+1.9:+master"]}
+  :aliases  {"all" ["with-profile" "+dev:+1.8:+master"]}
   :global-vars {*warn-on-reflection* true})
