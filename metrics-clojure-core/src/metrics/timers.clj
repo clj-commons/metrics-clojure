@@ -68,7 +68,7 @@
   [^Timer m]
   (.getMeanRate m))
 
-(defn ^long number-recorded
+(defn number-recorded ^long
   [^Timer t]
   (.getCount t))
 
