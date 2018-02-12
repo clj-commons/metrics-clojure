@@ -104,3 +104,11 @@
       (catch IllegalArgumentException _
         (is true)))
     (is (some? (mt/timer r"timer")))))
+
+(deftest test-number-recorded-return-type
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-num-recorded"])]
+    (binding [*warn-on-reflection* false]
+      (is (= java.lang.Long
+             (.getClass (mt/number-recorded t)))))))
+
