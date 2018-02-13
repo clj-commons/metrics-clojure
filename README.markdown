@@ -1,7 +1,8 @@
 metrics-clojure
 ===============
 
-`metrics-clojure` is a Clojure façade around Coda Hale's [metrics][] library.
+`metrics-clojure` is a Clojure façade around Coda Hale's [metrics][] library, originally
+by [Steve Losh](http://stevelosh.com/).
 
 [metrics]: http://metrics.dropwizard.io
 
