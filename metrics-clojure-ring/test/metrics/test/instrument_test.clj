@@ -8,6 +8,9 @@
 (def dummy-handler (fn [req]
                      req))
 
+(def dummy-handler-async (fn [req respond raise] 
+                           (respond req)))
+
 (defn tracked? [^MetricRegistry reg metric]
   (->> (.getMetrics reg)
        (map (fn [[k v]] k))
@@ -55,6 +58,15 @@
       (app (mock/request :get "/yolo" {}))
 
       (doseq [m expected-metrics]
+        (is (tracked? reg m)))))
+
+  (testing "instrument without custom prefix and async handler"
+    (let [reg (MetricRegistry. )
+          app (instrument dummy-handler-async reg)]
+
+      (app (mock/request :get "/yolo" {}) identity identity)
+
+      (doseq [m expected-metrics]
         (is (tracked? reg m))))))
 
 (deftest test-uri-prefix
@@ -64,10 +76,20 @@
          (uri-prefix (mock/request :get "/foo/bar/baz")))))
 
 (deftest test-instrument-by-uri-prefix
-  (let [reg (MetricRegistry.)
-        app (instrument-by dummy-handler reg uri-prefix)]
+  (testing "instrument by uri prefix"
+    (let [reg (MetricRegistry.)
+          app (instrument-by dummy-handler reg uri-prefix)]
 
-    (app (mock/request :get "/yolo" {}))
+      (app (mock/request :get "/yolo" {}))
 
-    (doseq [m expected-metrics]
-      (is (tracked? reg (str "yolo." m))))))
+      (doseq [m expected-metrics]
+        (is (tracked? reg (str "yolo." m))))))
+
+  (testing "instrument by uri prefix and async handler"
+    (let [reg (MetricRegistry.)
+          app (instrument-by dummy-handler-async reg uri-prefix)]
+
+      (app (mock/request :get "/yolo" {}) identity identity)
+
+      (doseq [m expected-metrics]
+        (is (tracked? reg (str "yolo." m)))))))
