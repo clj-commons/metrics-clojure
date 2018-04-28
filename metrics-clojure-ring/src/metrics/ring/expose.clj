@@ -116,7 +116,7 @@
                                                       (filter-metrics filter))))))
 (defn- serve-metrics*
   ([request registry]
-     (render-metrics request registry false))
+     (serve-metrics* request registry false))
   ([request registry {:keys [pretty-print? filter rate-unit duration-unit]}]
      (let [metrics-map (render-metrics registry filter (unit/build-options rate-unit duration-unit))
            json        (generate-string metrics-map {:pretty pretty-print?})]
@@ -140,21 +140,22 @@
   ([handler uri registry]
     (expose-metrics-as-json handler uri registry {:pretty-print? false}))
   ([handler uri registry opts]
-    (fn [request]
-      (let [^String request-uri (:uri request)
-            ^String filter (get-in request [:params :filter])]
-        (if (or (.startsWith request-uri (sanitize-uri uri))
-                (= request-uri uri))
-          (serve-metrics request registry (merge {:filter filter
-                                                  :rate-unit TimeUnit/SECONDS
-                                                  :duration-unit TimeUnit/NANOSECONDS} opts))
-          (handler request))))
-     (fn [request respond raise]
-       (let [^String request-uri (:uri request)
-             ^String filter (get-in request [:params :filter])]
-         (if (or (.startsWith request-uri (sanitize-uri uri))
-                 (= request-uri uri))
-           (serve-metrics request registry (merge {:filter filter
+    (fn 
+      ([request]
+        (let [^String request-uri (:uri request)
+              ^String filter (get-in request [:params :filter])]
+          (if (or (.startsWith request-uri (sanitize-uri uri))
+                  (= request-uri uri))
+            (serve-metrics* request registry (merge {:filter filter
+                                                    :rate-unit TimeUnit/SECONDS
+                                                    :duration-unit TimeUnit/NANOSECONDS} opts))
+            (handler request))))
+      ([request respond raise]
+        (let [^String request-uri (:uri request)
+              ^String filter (get-in request [:params :filter])]
+          (if (or (.startsWith request-uri (sanitize-uri uri))
+                  (= request-uri uri))
+            (serve-metrics* request registry (merge {:filter filter
                                                    :rate-unit TimeUnit/SECONDS
                                                    :duration-unit TimeUnit/NANOSECONDS} opts))
-           (handler request respond raise))))))
+            (handler request respond raise)))))))
