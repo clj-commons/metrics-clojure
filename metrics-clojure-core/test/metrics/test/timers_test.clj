@@ -18,10 +18,14 @@
 
 (let [reg (mc/new-registry)]
   (mt/deftimer reg ["test" "timers" "deftimered"])
+  (mt/deftimer reg (mc/uniform-reservior) deftimered-3-arity)
 
   (deftest test-deftimer
     (is (= (mt/rate-mean deftimered) 0.0))
     (is (= (mt/time! deftimered (sleep-100)) 100))
+    (is (> (mt/rate-mean deftimered) 0.0))
+    (is (= (mt/rate-mean deftimered-3-arity) 0.0))
+    (is (= (mt/time! deftimered-3-arity (sleep-100))))
     (is (> (mt/rate-mean deftimered) 0.0))))
 
 

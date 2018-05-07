@@ -50,7 +50,7 @@
      `(def ~s (timer ~reg '~title))))
   ([^MetricRegistry reg ^Reservoir reservoir title]
    (let [[s title] (desugared-title title)]
-     `(def ~s (timer ~reg ~reservoir '~title)))))
+     `(def ~s (timer-with-reservoir ~reg ~reservoir '~title)))))
 
 (defn rate-one
   [^Timer m]
