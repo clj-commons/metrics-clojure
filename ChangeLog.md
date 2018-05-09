@@ -1,6 +1,10 @@
-## Changes Between 2.10.0 and 2.11.0 (unreleased)
 
-No changes yet.
+## Changes Between 2.10.0 and 3.0.0 (unreleased)
+
+
+### Riemann Client updated
+
+Riemann Client was migrated to io.riemann package from com.aphyr as of version 0.4.3.
 
 
 ## Changes Between 2.9.0 and 2.10.0 (Sep 19th, 2017)

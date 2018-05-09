@@ -2,7 +2,7 @@
   (:require [metrics.core :refer [default-registry]])
   (:import [java.util.concurrent TimeUnit]
            [com.codahale.metrics.riemann Riemann RiemannReporter RiemannReporter$Builder]
-           [com.aphyr.riemann.client IRiemannClient]))
+           [io.riemann.riemann.client IRiemannClient]))
 
 (defn make-riemann
   ([riemann-client]

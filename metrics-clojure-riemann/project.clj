@@ -4,4 +4,4 @@
   :license {:name "MIT"}
   :profiles {:dev {:global-vars {*warn-on-reflection* true}}}
   :dependencies [[metrics-clojure "3.0.0-SNAPSHOT"]
-                 [com.aphyr/metrics3-riemann-reporter "0.4.1"]])
+                 [io.riemann/metrics3-riemann-reporter "0.4.6"]])
