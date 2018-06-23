@@ -115,8 +115,6 @@
                                                       (all-metrics)
                                                       (filter-metrics filter))))))
 (defn- serve-metrics*
-  ([request registry]
-     (serve-metrics* request registry false))
   ([request registry {:keys [pretty-print? filter rate-unit duration-unit]}]
      (let [metrics-map (render-metrics registry filter (unit/build-options rate-unit duration-unit))
            json        (generate-string metrics-map {:pretty pretty-print?})]
@@ -125,11 +123,19 @@
 
 (defn serve-metrics
   ([request]
-     (serve-metrics* request default-registry))
+    (let [^String filter (get-in request [:params :filter])]
+     (serve-metrics* request default-registry {:pretty-print? false
+                                               :filter filter
+                                               :rate-unit TimeUnit/SECONDS
+                                               :duration-unit TimeUnit/NANOSECONDS})))
   ([request respond raise]
-     (try 
-       (respond (serve-metrics* request default-registry))
-       (catch Exception e (raise e)))))
+    (let [^String filter (get-in request [:params :filter])]
+          (try            
+            (serve-metrics* request default-registry {:pretty-print? false
+                                                      :filter filter
+                                                      :rate-unit TimeUnit/SECONDS
+                                                      :duration-unit TimeUnit/NANOSECONDS})
+            (catch Exception e (raise e))))))
 
 
 (defn expose-metrics-as-json
