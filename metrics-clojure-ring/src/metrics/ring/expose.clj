@@ -131,10 +131,11 @@
   ([request respond raise]
     (let [^String filter (get-in request [:params :filter])]
           (try            
-            (serve-metrics* request default-registry {:pretty-print? false
+            (respond 
+              (serve-metrics* request default-registry {:pretty-print? false
                                                       :filter filter
                                                       :rate-unit TimeUnit/SECONDS
-                                                      :duration-unit TimeUnit/NANOSECONDS})
+                                                      :duration-unit TimeUnit/NANOSECONDS}))
             (catch Exception e (raise e))))))
 
 
