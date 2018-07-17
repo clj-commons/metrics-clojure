@@ -87,7 +87,7 @@
   [^MetricRegistry reg]
   (.getCounters reg))
 
-(defn uniform-reservior
+(defn uniform-reservoir
   "Create a uniform reservior, which uses Vitter's Algorithm R to
   produce a statistically representative sample. Default size: 1028."
   ([]
