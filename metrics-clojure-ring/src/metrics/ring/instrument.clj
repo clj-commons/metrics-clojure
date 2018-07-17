@@ -2,7 +2,7 @@
   (:require [metrics.core :refer [default-registry]]
             [metrics.counters :refer (counter inc! dec!)]
             [metrics.meters :refer (meter mark!)]
-            [metrics.timers :refer (timer time!)]
+            [metrics.timers :refer (timer time! start stop)]
             [clojure.string :as string])
   (:import [com.codahale.metrics MetricRegistry]))
 
@@ -51,23 +51,31 @@
      :times times
      :request-methods request-methods}))
 
-(defn handle-request [handler metrics request]
-  (let [{:keys [active-requests requests responses
-                schemes statuses times request-methods]} metrics]
-    (inc! active-requests)
-    (try
-      (let [request-method (:request-method request)
-            request-scheme (:scheme request)]
-        (mark! requests)
-        (mark-in! request-methods request-method)
-        (mark-in! schemes request-scheme)
-        (let [resp (time! (times request-method (times :other))
-                          (handler request))
-              ^{:tag "int"} status-code (or (:status resp) 404)]
-          (mark! responses)
-          (mark-in! statuses (int (/ status-code 100)))
-          resp))
-      (finally (dec! active-requests)))))
+(defn- time-request [thunk metrics request]
+    (let [{:keys [active-requests requests responses
+                  schemes statuses times request-methods]} metrics]
+      (inc! active-requests)
+      (try
+        (let [request-method (:request-method request)
+              request-scheme (:scheme request)]
+          (mark! requests)
+          (mark-in! request-methods request-method)
+          (mark-in! schemes request-scheme)
+          (let [resp (time! (times request-method (times :other))
+                            (thunk))
+                ^{:tag "int"} status-code (or (:status resp) 404)]
+            (mark! responses)
+            (mark-in! statuses (int (/ status-code 100)))
+            resp))
+        (finally (dec! active-requests)))))
+
+(defn handle-request 
+  ([handler metrics request]
+    (time-request #(handler request) metrics request))
+  ([handler metrics request respond raise]
+    (try 
+      (time-request #(handler request respond raise) metrics request)
+      (catch Exception e (raise e)))))
 
 (defn metrics-for
   [metrics-db prefix registry]
@@ -87,10 +95,15 @@
   ([handler]
    (instrument handler default-registry))
   ([handler ^MetricRegistry reg]
-   (fn [request]
-     (handle-request handler
-                     (ring-metrics reg {:prefix []})
-                     request))))
+   (fn 
+     ([request]
+      (handle-request handler
+                      (ring-metrics reg {:prefix []})
+                      request))
+     ([request respond raise]
+      (handle-request handler
+                      (ring-metrics reg {:prefix []})
+                      request respond raise)))))
 
 (defn instrument-by
   "Instrument a ring handler using the metrics returned by the `metrics-for`
@@ -107,8 +120,12 @@
    (instrument-by handler default-registry metrics-prefix))
   ([handler ^MetricRegistry reg metrics-prefix]
    (let [metrics-db (atom {})]
-     (fn [request]
-       (let [prefix (metrics-prefix request)]
-         (handle-request handler
-                         (metrics-for metrics-db prefix reg)
-                         request))))))
+    (fn 
+     ([request]
+      (handle-request handler
+                      (metrics-for metrics-db (metrics-prefix request) reg)
+                      request))
+     ([request respond raise]
+      (handle-request handler
+                      (metrics-for metrics-db (metrics-prefix request) reg)
+                      request respond raise))))))
