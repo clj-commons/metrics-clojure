@@ -2,7 +2,7 @@
   (:require [metrics.core :refer [default-registry metric-name]]
             [metrics.utils :refer [get-percentiles desugared-title snapshot]])
   (:import [com.codahale.metrics MetricRegistry Reservoir Timer Timer$Context]
-           java.util.concurrent.TimeUnit))
+           [java.util.concurrent TimeUnit]))
 
 
 (defn ^com.codahale.metrics.Timer timer
@@ -119,6 +119,9 @@
 (defn time-fn!
   [^Timer t ^clojure.lang.IFn f]
   (.time t ^Callable f))
+
+(defn update! [^Timer t ^long duration, ^TimeUnit unit]
+  (.update t duration unit))
 
 (defn start
   "Start a timer, returning the context object that will be used to
