@@ -122,6 +122,6 @@
         t (mt/timer r ["test" "timers" "test-update-timer"])
         expected-time 666
         expected-time-unit TimeUnit/SECONDS]
-    (is (= 0 (mt/largest t)))
+    (is (zero? (mt/largest t)))
     (mt/update! t expected-time expected-time-unit)
     (is (= (.toNanos expected-time-unit expected-time) (mt/largest t)))))
