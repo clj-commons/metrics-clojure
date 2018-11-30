@@ -2,7 +2,8 @@
   (:require [metrics.core :as mc]
             [metrics.timers :as mt]
             [metrics.test.test-utils :refer :all]
-            [clojure.test :refer :all]))
+            [clojure.test :refer :all])
+  (:import [java.util.concurrent TimeUnit]))
 
 (def ^:const expiration-delay 6000)
 
@@ -18,7 +19,7 @@
 
 (let [reg (mc/new-registry)]
   (mt/deftimer reg ["test" "timers" "deftimered"])
-  (mt/deftimer reg (mc/uniform-reservior) deftimered-3-arity)
+  (mt/deftimer reg (mc/uniform-reservoir) deftimered-3-arity)
 
   (deftest test-deftimer
     (is (= (mt/rate-mean deftimered) 0.0))
@@ -116,3 +117,11 @@
       (is (= java.lang.Long
              (.getClass (mt/number-recorded t)))))))
 
+(deftest test-update-timer
+  (let [r (mc/new-registry)
+        t (mt/timer r ["test" "timers" "test-update-timer"])
+        expected-time 666
+        expected-time-unit TimeUnit/SECONDS]
+    (is (zero? (mt/largest t)))
+    (mt/update! t expected-time expected-time-unit)
+    (is (= (.toNanos expected-time-unit expected-time) (mt/largest t)))))
