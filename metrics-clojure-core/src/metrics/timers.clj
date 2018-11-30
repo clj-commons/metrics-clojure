@@ -120,7 +120,8 @@
   [^Timer t ^clojure.lang.IFn f]
   (.time t ^Callable f))
 
-(defn update! [^Timer t ^long duration, ^TimeUnit unit]
+(defn update!
+  [^Timer t ^long duration, ^TimeUnit unit]
   (.update t duration unit))
 
 (defn start
