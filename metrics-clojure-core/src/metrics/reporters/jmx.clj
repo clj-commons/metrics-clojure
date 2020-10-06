@@ -1,10 +1,11 @@
 (ns metrics.reporters.jmx
   "JMX reporting"
   (:require [metrics.core  :refer [default-registry]])
-  (:import java.util.concurrent.TimeUnit
-           [com.codahale.metrics JmxReporter MetricRegistry MetricFilter]))
+  (:import [com.codahale.metrics MetricRegistry MetricFilter]
+           com.codahale.metrics.jmx.JmxReporter
+           java.util.concurrent.TimeUnit))
 
-(defn ^com.codahale.metrics.JmxReporter reporter
+(defn ^JmxReporter reporter
   ([opts]
    (reporter default-registry opts))
   ([^MetricRegistry reg opts]

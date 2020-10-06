@@ -1,7 +1,7 @@
 (ns metrics.jvm.core
-  (:import (com.codahale.metrics MetricRegistry JvmAttributeGaugeSet)
+  (:import (com.codahale.metrics MetricRegistry)
            (com.codahale.metrics.jvm ThreadStatesGaugeSet GarbageCollectorMetricSet FileDescriptorRatioGauge
-                                     MemoryUsageGaugeSet))
+                                     MemoryUsageGaugeSet  JvmAttributeGaugeSet))
   (:require [metrics.core :refer [add-metric default-registry]]))
 
 (defn register-jvm-attribute-gauge-set
