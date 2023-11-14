@@ -11,3 +11,7 @@ checkouts/*
 .nrepl*
 *.sh
 *.bak
+
+.portal
+.lsp/.cache
+.clj-kondo/.cache
