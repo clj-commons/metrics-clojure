@@ -4,4 +4,5 @@
 
 (deftest regression-default-registry-tag
   (testing "Ensure default-registry no longer has invalid reflection :tag"
-    (.getMeters core/default-registry)))
+    (is (instance? java.util.Collections$UnmodifiableSortedMap
+                   (.getMeters core/default-registry)))))

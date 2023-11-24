@@ -26,7 +26,7 @@
     (is (= (mt/time! deftimered (sleep-100)) 100))
     (is (> (mt/rate-mean deftimered) 0.0))
     (is (= (mt/rate-mean deftimered-3-arity) 0.0))
-    (is (= (mt/time! deftimered-3-arity (sleep-100))))
+    (is (= (mt/time! deftimered-3-arity (sleep-100)) 100))
     (is (> (mt/rate-mean deftimered) 0.0))))
 
 
