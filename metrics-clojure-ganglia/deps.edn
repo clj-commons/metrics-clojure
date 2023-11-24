@@ -1,0 +1,4 @@
+{:paths ["src" "resources"],
+ :deps
+ {metrics-clojure/metrics-clojure {:mvn/version "3.0.0-SNAPSHOT"},
+  io.dropwizard.metrics/metrics-ganglia {:mvn/version "3.2.2"}}}

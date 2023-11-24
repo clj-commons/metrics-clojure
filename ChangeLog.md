@@ -10,6 +10,16 @@ Added ORIGINATOR and CODEOWNERS files.
 
 Added a Dockerfile using sphinx image so documentation can be built without having sphinx locally.
 
+### Migration to deps.edn
+
+Migration was done using `lein2deps` tool for each repo
+
+```shell
+ bb -Sdeps '{:deps {io.github.borkdude/lein2deps {:git/sha "1fdaf45577edc9a6aeee027501e50924b9b793f5"}}}'    -m lein2deps.api --write-file deps.edn
+```
+
+- Added deps.edn to metrics-clojure-core and dropped codahale repo - service shut down
+- Added deps.edn to metrics-clojure-ganglia
 
 ### Riemann Client updated
 
