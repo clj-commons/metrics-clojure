@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [io.dropwizard.metrics/metrics-core "4.0.5"]
                  [io.dropwizard.metrics/metrics-jmx "4.0.5"]]
-  :repositories {"repo.codahale.com" "http://repo.codahale.com"
+  :repositories {
                  ;; to get Clojure snapshots
                  "sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
                              :snapshots false

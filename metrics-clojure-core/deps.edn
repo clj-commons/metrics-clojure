@@ -1,0 +1,14 @@
+{:paths ["src" "resources"],
+ :deps
+ {org.clojure/clojure {:mvn/version "1.8.0"},
+  io.dropwizard.metrics/metrics-core {:mvn/version "4.0.5"},
+  io.dropwizard.metrics/metrics-jmx {:mvn/version "4.0.5"}},
+ :mvn/repos
+ {"sonatype"
+  {:url "http://oss.sonatype.org/content/repositories/releases",
+   :snapshots false,
+   :releases {:checksum :fail, :update :always}},
+  "sonatype-snapshots"
+  {:url "http://oss.sonatype.org/content/repositories/snapshots",
+   :snapshots true,
+   :releases {:checksum :fail, :update :always}}}}
