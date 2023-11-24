@@ -1,6 +1,15 @@
 
 ## Changes Between 2.10.0 and 3.0.0 (unreleased)
 
+### Migration to clj-commons
+
+Project was migrated to clj-commons org and new source is [clj-commons/metrics-clojure](https://github.com/clj-commons/metrics-clojure/)
+Added ORIGINATOR and CODEOWNERS files.
+
+### Dockerfile for documentation build
+
+Added a Dockerfile using sphinx image so documentation can be built without having sphinx locally.
+
 
 ### Riemann Client updated
 

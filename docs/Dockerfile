@@ -15,8 +15,11 @@ FROM ${SPHINX_IMAGE}:${SPHINX_TAG}
 WORKDIR /docs
 COPY . /docs
 
+# Documentation is generated in build dir
 VOLUME [ "/docs/build" ]
 
+# Entrypoint is the makefile run with --entrypoint bash to change
 ENTRYPOINT [ "make" ]
+# By default we run the html make target. Use help to see full list.
 CMD [ "html" ]
 
