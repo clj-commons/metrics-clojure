@@ -5,7 +5,7 @@
 
 (deftest test-expose-metrics-as-json
   ;; Ensure that ring.expose compiles
-  (expose-metrics-as-json (constantly nil)))
+  (is (instance? Object (expose-metrics-as-json (constantly nil)))))
 
 (deftest test-filter-matches?
   (is (true? (filter-matches? "ring.requests-scheme.rate.https" "")))

@@ -1,4 +1,23 @@
 {:paths ["src" "resources"],
  :deps
  {cheshire/cheshire {:mvn/version "5.10.0"},
-  metrics-clojure/metrics-clojure {:mvn/version "3.0.0-SNAPSHOT"}}}
+  metrics-clojure/metrics-clojure {:mvn/version "2.2.0"}}
+ :aliases {:clojure-1.9 {:extra-deps {org.clojure/clojure {:mvn/version "1.9.0"}}}
+           :clojure-1.11 {:extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}}
+           :clojure-next {:extra-deps {org.clojure/clojure {:mvn/version "1.12.0-alpha5"}}}
+           :dev {:extra-paths ["test"]
+                 :override-deps {metrics-clojure/metrics-clojure
+                                 {:local/root "../metrics-clojure-core"}}
+                 :extra-deps {ring/ring {:mvn/version "1.4.0"}
+                              ring/ring-mock {:mvn/version "0.3.0"}
+                              org.slf4j/slf4j-simple {:mvn/version "2.0.9"}}}
+           :test {:extra-deps {org.slf4j/slf4j-simple {:mvn/version "2.0.9"}
+                               lambdaisland/kaocha {:mvn/version "1.87.1366"}}
+                  :exec-fn kaocha.runner/exec-fn
+                  :exec-args {}}
+           :watch-test {:extra-deps {org.slf4j/slf4j-simple {:mvn/version "2.0.9"}
+                                     lambdaisland/kaocha {:mvn/version "1.87.1366"}}
+                        :exec-fn kaocha.runner/exec-fn
+                        :exec-args {:watch? true
+                                    :skip-meta :slow
+                                    :fail-fast? true}}}}

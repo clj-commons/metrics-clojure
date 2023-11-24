@@ -16,3 +16,4 @@ checkouts/*
 .lsp/.cache
 .clj-kondo/.cache
 **/.calva/
+**/.cpcache
