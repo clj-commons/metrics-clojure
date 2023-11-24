@@ -18,8 +18,14 @@ Migration was done using `lein2deps` tool for each repo
  bb -Sdeps '{:deps {io.github.borkdude/lein2deps {:git/sha "1fdaf45577edc9a6aeee027501e50924b9b793f5"}}}'    -m lein2deps.api --write-file deps.edn
 ```
 
-- Added deps.edn to metrics-clojure-core and dropped codahale repo - service shut down
+- Added deps.edn to metrics-clojure-core and dropped codahale repo since service shut down
 - Added deps.edn to metrics-clojure-ganglia
+- Added deps.edn to metrics-clojure-graphite
+- Added deps.edn to metrics-clojure-health
+- Added deps.edn to metrics-clojure-influxdb
+- Added deps.edn to metrics-clojure-jvm
+- Added deps.edn to metrics-clojure-riemann
+- Added deps.edn to metrics-clojure-ring
 
 ### Riemann Client updated
 
