@@ -51,7 +51,7 @@ To instantiate a registry, use `metrics.core/new-registry`::
   (mtr/new-registry)
 
 
-See `GH #19 <https://github.com/sjl/metrics-clojure/issues/19>`_ for
+See `GH #19 <https://github.com/clj-commons/metrics-clojure/issues/19>`_ for
 discussion.
 
 defgauge Restricted to Functions Only

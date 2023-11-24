@@ -10,9 +10,9 @@ documentation <http://metrics.dropwizard.io/>`_ and/or watch the `talk
 <https://vimeo.com/51320606>`_.
 
 * Source (Mercurial): http://bitbucket.org/sjl/metrics-clojure/
-* Source (Git): http://github.com/sjl/metrics-clojure/
+* Source (Git): http://github.com/clj-commons/metrics-clojure/
 * Documentation: http://metrics-clojure.rtfd.org/
-* Issues: http://github.com/sjl/metrics-clojure/issues/
+* Issues: http://github.com/clj-commons/metrics-clojure/issues/
 * License: MIT/X11
 
 Table of Contents

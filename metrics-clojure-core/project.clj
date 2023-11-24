@@ -1,6 +1,6 @@
 (defproject metrics-clojure "3.0.0-SNAPSHOT"
   :description "A Clojure façade for Coda Hale's metrics library."
-  :url "https://github.com/sjl/metrics-clojure"
+  :url "https://github.com/clj-commons/metrics-clojure"
   :license {:name "MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [io.dropwizard.metrics/metrics-core "4.0.5"]

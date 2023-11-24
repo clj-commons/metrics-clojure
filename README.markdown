@@ -24,13 +24,13 @@ Usage
 Change Log
 -----------
 
-[Right here](https://github.com/sjl/metrics-clojure/blob/master/ChangeLog.md)
+[Right here](https://github.com/clj-commons/metrics-clojure/blob/master/ChangeLog.md)
 
 
 More Information
 ----------------
 
 * Documentation: <http://metrics-clojure.rtfd.org/>
-* Source (Git): <http://github.com/sjl/metrics-clojure/>
-* Issues: <http://github.com/sjl/metrics-clojure/issues/>
+* Source (Git): <http://github.com/clj-commons/metrics-clojure/>
+* Issues: <http://github.com/clj-commons/metrics-clojure/issues/>
 * License: MIT/X11

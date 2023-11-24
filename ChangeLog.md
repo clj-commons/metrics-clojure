@@ -1,10 +1,11 @@
 
-## Changes Between 2.10.0 and 3.0.0 (unreleased)
+## Changes Between 2.10.0 and 2.11.0 (unreleased)
 
 ### Migration to clj-commons
 
 Project was migrated to clj-commons org and new source is [clj-commons/metrics-clojure](https://github.com/clj-commons/metrics-clojure/)
-Added ORIGINATOR and CODEOWNERS files.
+- Added ORIGINATOR and CODEOWNERS files.
+- Renamed links to use new github url
 
 ### Dockerfile for documentation build
 
