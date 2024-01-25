@@ -14,7 +14,7 @@
                                        :snapshots true
                                        :releases {:checksum :fail :update :always}}}
     :profiles {:1.8    {:dependencies [[org.clojure/clojure "1.8.0"]]}
-               :master {:dependencies [[org.clojure/clojure "1.10.0-master-SNAPSHOT"]]}
+               :1.10 {:dependencies [[org.clojure/clojure "1.10.0"]]}
                :dev    {:global-vars {*warn-on-reflection* true}}}
-  :aliases  {"all" ["with-profile" "+dev:+1.8:+master"]}
+  :aliases  {"all" ["with-profile" "+dev:+1.8:+1.10"]}
   :global-vars {*warn-on-reflection* true})

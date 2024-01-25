@@ -1,0 +1,11 @@
+{:min-bb-version "1.3.187"
+ :paths ["script"]
+ :tasks {test {:doc "Test all projects"
+               :task (do
+                       (println "Install metrics-clojure-core in $HOME/.m2/repository")
+                       (shell {:dir "metrics-clojure-core"} "lein install")
+                       (doseq [proj ["core" "ganglia" "graphite" "health"
+                                     "influxdb" "jvm" "riemann" "ring"]]
+                         (let [dir (str "metrics-clojure-" proj)]
+                           (println "Testing project:" dir)
+                           (shell {:dir dir} "lein test"))))}}}
