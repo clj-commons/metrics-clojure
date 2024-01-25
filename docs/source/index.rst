@@ -9,7 +9,6 @@ of the words in this documentation mean you should probably read the `metrics
 documentation <http://metrics.dropwizard.io/>`_ and/or watch the `talk
 <https://vimeo.com/51320606>`_.
 
-* Source (Mercurial): http://bitbucket.org/sjl/metrics-clojure/
 * Source (Git): http://github.com/clj-commons/metrics-clojure/
 * Documentation: http://metrics-clojure.rtfd.org/
 * Issues: http://github.com/clj-commons/metrics-clojure/issues/

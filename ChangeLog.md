@@ -6,6 +6,7 @@
 Project was migrated to clj-commons org and new source is [clj-commons/metrics-clojure](https://github.com/clj-commons/metrics-clojure/)
 - Added ORIGINATOR and CODEOWNERS files.
 - Renamed links to use new github url
+- Fixed readthedocs publishing - account was transfered to @ieugen
 
 ### Dockerfile for documentation build
 
