@@ -13,6 +13,11 @@ Add this to your `project.clj`'s dependencies:
 
     [metrics-clojure "2.10.0"]
 
+Or to your `deps.edn`'s `:deps` map:
+
+    metrics-clojure/metrics-clojure {:mvn/version "2.10.0"}
+
+
 That's it.
 
 Usage

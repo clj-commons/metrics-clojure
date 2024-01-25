@@ -7,6 +7,8 @@ Project was migrated to clj-commons org and new source is [clj-commons/metrics-c
 - Added ORIGINATOR and CODEOWNERS files.
 - Renamed links to use new github url
 - Fixed readthedocs publishing - account was transfered to @ieugen
+- Upgraded com.izettle/dropwizard-metrics-influxdb to 1.3.4 since 1.2.4 is no longer on Maven Central.
+- Added bb.edn with test task to automate project testing
 
 ### Dockerfile for documentation build
 

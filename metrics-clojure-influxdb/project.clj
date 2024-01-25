@@ -4,5 +4,4 @@
   :license {:name "MIT"}
   :profiles {:dev {:global-vars {*warn-on-reflection* true}}}
   :dependencies [[metrics-clojure "3.0.0-SNAPSHOT"]
-                 ;; FIXME: not yet released upstream
-                 [com.izettle/dropwizard-metrics-influxdb "1.2.4"]])
+                 [com.izettle/dropwizard-metrics-influxdb "1.3.4"]])
