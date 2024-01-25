@@ -6,4 +6,4 @@
                  [metrics-clojure "3.0.0-SNAPSHOT"]]
   :profiles {:dev {:global-vars {*warn-on-reflection* true}
                    :dependencies [[ring "1.4.0"]
-                                  [ring/ring-mock "0.3.0"]]}})
+                                  [ring/ring-mock "0.4.0"]]}})
