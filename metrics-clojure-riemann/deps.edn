@@ -1,4 +1,4 @@
 {:paths ["src" "resources"],
  :deps
  {metrics-clojure/metrics-clojure {:mvn/version "3.0.0-SNAPSHOT"},
-  io.riemann/metrics4-riemann-reporter {:mvn/version "0.5.1"}}}
+  io.riemann/metrics4-riemann-reporter {:mvn/version "0.5.3"}}}
